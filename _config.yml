@@ -1,4 +1,4 @@
-baseurl:/my blog website
+BASE_PATH:/my blog website/
 # Basic
 title: Robotkang
 subtitle: 自留地
