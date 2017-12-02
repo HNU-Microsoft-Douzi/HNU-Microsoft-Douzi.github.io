@@ -7,7 +7,7 @@ ul {list-style: none;}
 a {text-decoration:none;}	
 .blank{ height:5px; overflow:hidden; width:100%; margin:auto; clear:both}
 /* header */
-header{width:980px;margin:0 auto;position:relative; z-index:1000; height:100px}
+header{width:980px;margin:0 auto;position:relative; z-index:1000; height:20px}
 #logo{width:20%;height:50px;float:left;margin:25px 0 0 0;padding:0;}
 #logo img{ float:left; margin-right:10px;transition:All 1s ease;-webkit-transition:All 1s ease;-moz-transition:All 1s ease;-o-transition:All 1s ease;}
 #logo img:hover{transform: rotate(360deg);-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-o-transform:rotate(360deg);-ms-transform:rotate(360deg);}
@@ -114,3 +114,47 @@ footer h2{ color:#FFF; font-size:14px; line-height:40px}
 #footer-bottom ul {width: 980px;height: 40px;margin: 0 auto; line-height:40px}
 #footer-bottom ul p,#footer-bottom ul p a{ color:#fff}
 #footer-bottom ul p a:hover{ text-decoration:underline}
+
+
+/* post*/
+.tag_head{
+	color: rgba(251, 251, 251, 0.5);
+	font-size:40px;
+	font-family:"造字工房俊雅锐宋体验版常规体";
+}
+.tag_box_inline {
+	font-size: 25px;
+	padding-left:30px;
+}
+.tag_box_inline a{
+	color: #cfcfcf;
+}
+.tag_box_inline a:hover{
+	color: #ff641c;
+}
+.card{
+	margin-top:20px;
+	padding-left:30px;
+}
+.card h3{
+	color: #e5e62f;
+	font-size:20px;
+	font-family:"造字工房俊雅锐宋体验版常规体";
+	background-color: #9e9dff;
+	text-indent: 4px;
+	border-radius:5px;
+	border-left:6px solid #5c4aff;
+	box-shadow:7px 4px #969a91;
+}
+.card ul{
+	margin-top:5px;
+	margin-bottom:20px;
+	margin-left:4px;
+	font-size:15px;
+}
+.card a{
+	color:#cfcfcf
+}
+.card a:hover{
+	color: #ffb500;
+}

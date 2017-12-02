@@ -1,13 +1,13 @@
 ---
 layout: page
-title:tags
+title: tags
 header: 根据快速导航到相应的文章
 group: navigation
 ---
 
 {% include JB/setup %}
-
-<ul class="tag_box inline">
+<h1 class = "tag_head">导航</h1>
+<ul class="tag_box_inline">
     {% assign tags_list = site.tags %}
     {% include JB/tags_list %}
 </ul>
