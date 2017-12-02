@@ -1,0 +1,75 @@
+<script>
+	if("233"==prompt("Please input password"))
+	{
+		alert("Right");
+	}
+	else
+	{
+		alert("Wrong");
+		location="http://robotkang.cc";
+	}
+</script>
+
+<h2 id="visual-studio-code">Visual Studio Code</h2>
+
+<p>　Microsoft在2015年4月30日Build 开发者大会上正式宣布了 Visual Studio Code 项目：一个运行于 <code class="highlighter-rouge">Mac OS X</code>、<code class="highlighter-rouge">Windows</code>和 <code class="highlighter-rouge">Linux</code> 之上的，针对于编写现代 Web 和云应用的跨平台源代码编辑器。      <br />
+    看到<code class="highlighter-rouge">Visual Studio Code</code>还是蛮激动的，界面也很好看，非常轻量级，搭配各种插件的话，就可以重现Visual Studio的强大功能。<code class="highlighter-rouge"> 微软</code> 这两年来不断开放的姿态，越来越让我们看到微软的情怀和未来。Visual Studio Code的定位应该还是Editor，一个全功能的Editor，通过Editor反推微软的SDK，.NET(开源，跨平台)等产品铺路。</p>
+
+<h2 id="vs-code-配置python">VS Code 配置Python</h2>
+
+<p><strong> 1. 进入VS Code官网，下载软件</strong> </p>
+
+<ul>
+  <li>官网: <a href="https://code.visualstudio.com/Download#">https://code.visualstudio.com/Download#</a></li>
+</ul>
+
+<p>Python也要在本地下载安装好，我现在安装的是<code class="highlighter-rouge"> python 3.5.2</code> ，配置好环境变量.</p>
+
+<p><strong> 2.安装VS Code的Python插件，选择安装次数最多的那个</strong>     <br />
+<img src="http://omjh2j5h3.bkt.clouddn.com/vscode/1.jpg" width="800" height="500" alt="photos" /></p>
+
+<p><strong> 3.安装其他插件</strong>  <br />
+ <strong>3.1 配置flake8</strong>    <br />
+ 安装flake8之后写代码的时候编辑器就会提示哪里出错，代码格式不规范也会提示.           <br />
+<code class="highlighter-rouge">1.</code>打开命令行「windows：cmd」
+<code class="highlighter-rouge">2.</code>输入 <code class="highlighter-rouge">pip install flake8</code>.
+<code class="highlighter-rouge">3.</code>安装flake8成功后，打开VScode，文件-&gt;首选项-&gt;用户设置，在settings.json文件中输入”python.linting.flake8Enabled”: true
+<img src="http://omjh2j5h3.bkt.clouddn.com/vscode/2.jpg" width="750" height="250" alt="photos" />
+ <strong>3.2 配置yapf</strong>      <br />
+ 安装yapf之后在VScode中按<code class="highlighter-rouge">Alt+Shift+F</code>即可自动格式化代码      <br />
+<code class="highlighter-rouge">1.</code>打开命令行
+<code class="highlighter-rouge">2.</code>输入 <code class="highlighter-rouge">pip install yapf</code>.
+<code class="highlighter-rouge">3.</code>安装yapf成功后，打开VScode，文件-&gt;首选项-&gt;用户设置，在settings.json文件中输入”python.formatting.provider”: “yapf”</p>
+
+<p> <strong>3.3软件自带插件，直接在软件中安装</strong>      <br />
+ <code class="highlighter-rouge">1</code> <strong>vscode-icons</strong>：可以使VScode左侧的资源管理器根据文件类型显示图标      <br />
+  Enable the extension：
+Go to File &gt; Preferences &gt; File Icon Theme &gt; VSCode Icons.      <br />
+ <code class="highlighter-rouge">2</code> <strong>markdown</strong>：Markdown 编辑器   <br />
+ <code class="highlighter-rouge">3</code> <strong>Guides</strong>：缩进辅助线. Guides is simply an extension that add various indentation guide lines       <br />
+ <code class="highlighter-rouge">4</code> <strong>Git History</strong>：Git 历史       <br />
+ <code class="highlighter-rouge">5</code> <strong>Settings Sync</strong>：用户配置同步      <br />
+ <code class="highlighter-rouge">6</code> <strong>View in Browser</strong>：Extension for vscode to view a html file in a browser.<code class="highlighter-rouge">Ctrl + F1</code></p>
+
+<p><strong>4.设置快捷键</strong>        <br />
+ 文件-&gt;首选项-&gt;键盘快捷方式，将需要的修改的快捷键的整个大括号里面的内容复制到右边keybindings.json文件中，然后修改“key”的值为你需要的快捷键即可。我这边只修改了复制一行和删除一行的快捷键。</p>
+
+<p><img src="http://omjh2j5h3.bkt.clouddn.com/vscode/4.jpg" width="700" height="180" alt="photos" /></p>
+
+<h2 id="总结">总结</h2>
+
+<p> 好了，接下来就可以愉快的敲代码了O(∩_∩)O哈哈~</p>
+
+<p> 到这边VScode就可以编辑python代码了，新建一个文件夹，用VSCode打开该文件夹，并在其中新建一个test.py文件来做测试。编辑完代码按F5即可运行。初次运行会让你选环境，选择python即可。默认按F5后需要再按一次F5程序才会运行，如果要按F5马上运行需要将launch.json文件的 <code class="highlighter-rouge">"stopOnEntry": true</code>,改为<code class="highlighter-rouge"> "stopOnEntry": false</code>。</p>
+
+<p><img src="http://omjh2j5h3.bkt.clouddn.com/vscode/5.jpg" width="800" height="500" alt="photos" /></p>
+
+<p> 有什么需要补充或者哪里有错误的欢迎大家指出(｡・`ω´･)</p>
+
+<hr />
+<blockquote>
+  <p>哥们儿，我们内蒙喝酒有个规矩。我先介绍一下今天桌上的几个朋友，然后咱们先喝一圈。 喝完之后你能说出来他们的名字，就是你认我们这些朋友，我们自己喝一杯。 要是你说不出来名字，就是情谊还没到，你自己喝一杯。准备好没？ 先从你旁边的噶拉仓巴拉丹扎木苏日丹开始，再往下是乌勒吉德勒格列日图愣…</p>
+</blockquote>
+
+<p><br /></p>
+
