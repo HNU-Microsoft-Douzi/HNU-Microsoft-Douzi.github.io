@@ -3,6 +3,7 @@ BASE_PATH:/my blog website/
 title: Robotkang
 subtitle: 自留地
 description: 欢迎来到我的个人网站~
+safe: true
 # 头像里面的标题
 avatarTitle: RobotKang
 # 头像里面的描述
@@ -22,6 +23,7 @@ social:
 
 permalink: /:year/:month/:title/
 # Format
+markdown: kramdown
 highlighter: rouge
 
 textColor: #FF0000
