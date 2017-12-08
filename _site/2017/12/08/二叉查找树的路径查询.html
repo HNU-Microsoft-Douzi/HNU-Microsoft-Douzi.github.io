@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/style_blog.css" rel="stylesheet">
+    <script src="/js/jquery-1.4.4.min.js"></script>
+    <script src="/js/main.js"></script>
+    <meta charset="UTF-8">
+    <title>All my blogs</title>
+</head>
+<body>
+<div class="navigation">
+    <div class="main-content">
+        <div class="content-photo">
+            <img src="/images/logo.png" alt="您要查找的图片不存在啦！">
+        </div>
+        <h1>Zhang Xiaoyi</h1>
+        <hr class="line">
+        <p>
+            welcome come to my blog,my dear!
+        </p>
+        <ul id="header-menu">
+            <li><a href="/">网站首页</a></li>
+            <li><a href="http://www.hao123.com" title="技术博文">技术博文</a>
+            </li>
+            <li><a href="/">个人留言</a></li>
+            <li><a href="/">友情链接</a></li>
+        </ul>
+    </div>
+</div>
+<div class="blog-content">
+    <div class="Wrapper">
+        <div class="Header"></div>
+        <div class="Content">
+            <h2 id="一什么是二叉查找树">一、什么是二叉查找树？</h2>
+
+<p>二叉查找树(Binary Search Tree)，又称二叉排序树(Binary Sort Tree)，又叫做二叉搜索树。(详细的介绍自己百度，这里不过多阐述。)
+<br /></p>
+
+<h2 id="二关于二叉查找树的定义">二、关于二叉查找树的定义!</h2>
+<p><br />
+   二叉查找数是基于二叉树之上的一种数据存储结构，它独特的数据存储方式让数据的查询变得简单。
+   对于二叉查找树的每一个节点，都存在一个key值和两个指针域lchild(左孩子),rchild(右孩子)，对于每一个节点而言，它的key值比它的左子树上任意一个节点的key值都大，它的key值比之右子树任意一个节点的key值都要小。
+   <img src="#" /></p>
+
+<h2 id="三对二叉查找树实现的核心思想">三、对二叉查找树实现的核心思想</h2>
+<p><br />我们在这里额外设置一个pparent指针用来指向每个节点的父节点，这样做的好处是便于查找指定节点的双亲节点，也就是说，以下的操作会将树的双亲表示法和孩子表示法联立在一起，关于树的表示法甚至是图的表示法，这里不多做讨论，会在其它的章节中做一个总结。
+<br /></p>
+<p style="color:blue">详细代码如下：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//构造节点类	
+class Node
+{
+public:
+    Node():data(0),pparent(NULL),lchild(NULL),rchild(NULL) {};
+    Node(int k):data(k),pparent(NULL),lchild(NULL),rchild(NULL) {};
+public:
+    int data;
+    Node* pparent;
+    Node* lchild;
+    Node* rchild;
+};//双亲孩子表示法，查找双亲和孩子都非常方便
+//构造二叉查找树
+class BSTree
+{
+public:
+    BSTree();
+    void insert(int k);
+    bool search(int k);//当查找到以后，我要求你返回整个查找树的路径
+    void preOrder();
+    void show_path();
+private:
+    void insert(Node* p, int k);
+    bool search(Node* p, int k);
+    void preOrder(Node *p);
+private:
+    Node* root;
+    stack&lt;int&gt; array;//用来存储树中遍历的路径
+    int size;
+    int search_count;//用来控制查找时树的遍历元素个数
+    bool flag = false;
+};
+	bool flag = false;
+}; ### 插入函数的核心思想  ### 对于查询二叉树而言，它的输入方式以层序的方式进行存入，但是为了满足查询二叉树的特点，我们需要在构建整颗树的过程中对树的状态不断进行调整（这一点的思想在AVL中尤其重要），使其始终满足节点key值大于左子树key值而小于右子树key值，了解了这个以后，我们便可以通过递归地方式对整棵树进行插入操作。
+</code></pre></div></div>
+<p style="color:blue">详细代码如下：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void BSTree::insert(int k)
+{
+    insert(root,k);
+}
+
+void BSTree::insert(Node* p,int k)
+{
+    size++;
+    Node *parent = p;
+    if(root-&gt;data == NULL)
+    {
+        root-&gt;data = k;
+        return;
+    }
+    else
+    {
+        if(k &lt; p-&gt;data)
+        {
+            if(p-&gt;lchild == NULL)
+            {
+                Node *newNode = new Node(k);
+                newNode-&gt;pparent = p;
+                p-&gt;lchild = newNode;
+            }
+            else
+                insert(p-&gt;lchild, k);
+        }
+        else if(k &gt; p-&gt;data)
+        {
+            if(p-&gt;rchild == NULL)
+            {
+                Node *newNode = new Node(k);
+                newNode-&gt;pparent = p;
+                p-&gt;rchild = newNode;
+            }
+            else
+                insert(p-&gt;rchild, k);
+    }
+    else
+        return;
+} } 这样的话，我们已经完成了树的构建，并且完整的将所有的数据存入树中。
+</code></pre></div></div>
+
+<h2 id="四二叉查找树的遍历">四、二叉查找树的遍历</h2>
+<p>树总共有三种遍历方式：前序、中序和后序。
+这里我们默认前序进行输出用以检查整个程序在对树的处理上是否出现了问题。
+对于二叉查找树的查询，我们构建一个函数并传入要查询的数值k，设置起始点为树的根节点root,从root开始遍历，设置当前节点为pnode，如果pnode-&gt;key小于我们的要查询的k，那么我们递归传入该节点的左子树(pnode-&gt;lchild)，反之，则传入该节点的右子树(pnode-&gt;rchild)，如果在树中找到了k，则返回true(这里我们构造查询函数的返回类型为bool类型),若遍历完整颗树都没有找到，则返回flase。</p>
+<p style="color:blue">详细代码如下：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bool BSTree::search(int k)
+{
+    search(root, k);
+}
+
+bool BSTree::search(Node* p, int k)
+{
+    search_count++;
+    if(k == p-&gt;data)
+    {
+        flag = true;
+        array.push(p-&gt;data);
+        cout&lt;&lt;"您要查找的数存在于树中";
+        return true;
+    }
+    else if(k &lt; p-&gt;data)
+    {
+        search(p-&gt;lchild,k);
+        if(flag) array.push(p-&gt;data);
+    }
+
+    else
+    {
+        search(p-&gt;rchild,k);
+        if(flag) array.push(p-&gt;data);
+    }
+    if(search_count == size)
+    {
+        cout&lt;&lt;"您要查找的元素不存在于树中"&lt;&lt;endl;
+        return false;
+    }
+}
+</code></pre></div></div>
+
+<h2 id="五如何实现二叉查找树的路径返回">五、如何实现二叉查找树的路径返回</h2>
+<p>其实一开始想的时候没有什么思路，但是仔细想想又有种豁然开朗的感觉，下面说说自己的做法。
+我在递归查询的过程中，假设我输入的元素在树中可以找到（如果不能找到的话就没有路径返回这一说了），那么我将查找到的元素压入栈中，在递归地过程中，查询完以后，它会向上层返回，这样的话，我只要立一个flag初始化为false,当查找到输入元素时，就让flag为true,然后在每次节点的递归中进行判断，如果说flag为true的话，我就将该节点的key值压入栈中，直到所有操作结束后，一次性返回输出就可以了。</p>
+<p style="color:blue">详细代码如下：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	void BSTree::show_path()
+	{
+	    while(!array.empty())
+	    {
+	        if(array.size() != 1)
+	        {
+	            cout&lt;&lt;array.top()&lt;&lt;"-&gt;";
+	        }
+	        else
+	            cout&lt;&lt;array.top();
+	        array.pop();
+	    }
+}
+</code></pre></div></div>
+
+<p style="font-size:25px;font-weight:bold;color:orange">下面是整个程序的完整代码：</p>
+<p>#include <iostream>
+		#include <stack>
+		using namespace std;</stack></iostream></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	class Node
+	{
+	public:
+	    Node():data(0),pparent(NULL),lchild(NULL),rchild(NULL) {};
+	    Node(int k):data(k),pparent(NULL),lchild(NULL),rchild(NULL) {};
+	public:
+	    int data;
+	    Node* pparent;
+	    Node* lchild;
+	    Node* rchild;
+	};//双亲孩子表示法，查找双亲和孩子都非常方便
+	
+	class BSTree
+	{
+	public:
+	    BSTree();
+	    void insert(int k);
+	    bool search(int k);//当查找到以后，我要求你返回整个查找树的路径
+	    void preOrder();
+	    void show_path();
+	private:
+	    void insert(Node* p, int k);
+	    bool search(Node* p, int k);
+	    void preOrder(Node *p);
+	private:
+	    Node* root;
+	    stack&lt;int&gt; array;//用来存储树中遍历的路径
+	    int size;
+	    int search_count;//用来控制查找时树的遍历元素个数
+	    bool flag = false;
+	};
+	
+	BSTree::BSTree():size(0),search_count(0)
+	{
+	    root = new Node;
+	}
+	
+	void BSTree::insert(int k)
+	{
+	    insert(root,k);
+	}
+	
+	void BSTree::insert(Node* p,int k)
+	{
+	    size++;
+	    Node *parent = p;
+	    if(root-&gt;data == NULL)
+	    {
+	        root-&gt;data = k;
+	        return;
+	    }
+	    else
+	    {
+	        if(k &lt; p-&gt;data)
+	        {
+	            if(p-&gt;lchild == NULL)
+	            {
+	                Node *newNode = new Node(k);
+	                newNode-&gt;pparent = p;
+	                p-&gt;lchild = newNode;
+	            }
+	            else
+	                insert(p-&gt;lchild, k);
+	        }
+	        else if(k &gt; p-&gt;data)
+	        {
+	            if(p-&gt;rchild == NULL)
+	            {
+	                Node *newNode = new Node(k);
+	                newNode-&gt;pparent = p;
+	                p-&gt;rchild = newNode;
+	            }
+	            else
+	                insert(p-&gt;rchild, k);
+	        }
+	        else
+	            return;
+	    }
+	}
+	
+	bool BSTree::search(int k)
+	{
+	    search(root, k);
+	}
+	
+	bool BSTree::search(Node* p, int k)
+	{
+	    search_count++;
+	    if(k == p-&gt;data)
+	    {
+	        flag = true;
+	        array.push(p-&gt;data);
+	        cout&lt;&lt;"您要查找的数存在于树中";
+	        return true;
+	    }
+	    else if(k &lt; p-&gt;data)
+	    {
+	        search(p-&gt;lchild,k);
+	        if(flag) array.push(p-&gt;data);
+	    }
+	
+	    else
+	    {
+	        search(p-&gt;rchild,k);
+	        if(flag) array.push(p-&gt;data);
+	    }
+	    if(search_count == size)
+	    {
+	        cout&lt;&lt;"您要查找的元素不存在于树中"&lt;&lt;endl;
+	        return false;
+	    }
+	}
+	
+	void BSTree::show_path()
+	{
+	    while(!array.empty())
+	    {
+	        if(array.size() != 1)
+	        {
+	            cout&lt;&lt;array.top()&lt;&lt;"-&gt;";
+	        }
+	        else
+	            cout&lt;&lt;array.top();
+	        array.pop();
+	    }
+	}
+	
+	void BSTree::preOrder()//默认前序输出
+	{
+	    preOrder(root);
+	}
+	
+	void BSTree::preOrder(Node *p)
+	{
+	    if(p == NULL) return;
+	    else
+	    {
+	        cout&lt;&lt;p-&gt;data&lt;&lt;" ";
+	        preOrder(p-&gt;lchild);
+	        preOrder(p-&gt;rchild);
+	    }
+	}
+	
+	int main()
+	{
+	    BSTree bstree;
+	    cout&lt;&lt;"情输入您的二叉查找树的元素个数:";
+	    int n;
+	    cin&gt;&gt;n;
+	    cout&lt;&lt;"请输入您的二叉查找树:";
+	    for(int i=0; i&lt;n; i++)
+	    {
+	        int k;
+	        cin&gt;&gt;k;
+	        bstree.insert(k);
+	    }
+	    cout&lt;&lt;"您的二叉树前序输出为：";
+	    bstree.preOrder();
+	    cout&lt;&lt;endl;
+	    while(1)
+	    {
+	        cout&lt;&lt;"请输入您要查找的元素:";
+	        int m;
+	        cin&gt;&gt;m;
+	        if(bstree.search(m))
+	            bstree.show_path();
+	        cout&lt;&lt;endl;
+	    }
+	    return 0;
+} (blog未曾建设完全，之后会将自己的代码全部托管到github网站上，敬请期待！Bingo~~)
+</code></pre></div></div>
+
+        </div>
+        <div class="FooterPush"></div>
+    </div>
+    <div class="footer-bottom">
+        <ul>
+            <p>
+                Copyright 2017 design by
+                <a href="/">Zhang Xiaoyi</a>
+            </p>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+
+    var a_idx = 0;
+    jQuery(document).ready(function($) {
+        $("body").click(function(e) {
+            var a = new Array("不前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福...", "没有光明是不幸的吗？需要光明才是真正的不幸！", "我不知道别离的滋味是这样的凄凉，我不知道说声再见要这么坚强", "我不是天生的王者，但我骨子里流动着不让我低头的血液", "我手里拿着刀，没法保护你。我放下刀，没法拥抱你...", "温柔善良的人总是难以生存，因为这世界既不温柔，也不正确", "错的不是我，是这个世界..." ,"人一生会遇到越2920万人，你爱上我的概率是0.000049，所以你不爱我，我不怪你", "不相信自己的人，连努力的价值都没有", "这世界上所有的不公平都是因为当事人能力的不足导致的", "曾经发生过的事情不可能忘记，只不过是想不起", "只要有你想要保护的东西，那就拔剑好了");
+            var $i = $("<span/>").text(a[a_idx]);
+            a_idx = (a_idx + 1) % a.length;
+            var x = e.pageX,
+                    y = e.pageY;
+            $i.css({
+                "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+                "top": y - 20,
+                "left": x,
+                "position": "absolute",
+                "font-weight": "bold",
+                "color": "#ff6651"
+            });
+            $("body").append($i);
+            $i.animate({
+                        "top": y - 180,
+                        "opacity": 0
+                    },
+                    1500,
+                    function() {
+                        $i.remove();
+                    });
+        });
+    });
+</script>
+</body>
+</html>
