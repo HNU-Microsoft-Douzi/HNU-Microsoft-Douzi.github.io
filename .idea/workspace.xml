@@ -31,15 +31,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="2017-12-08-二叉查找树的路径查询.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="2017-12-08-二叉查找树的路径查询.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_posts/2017-12-08-二叉查找树的路径查询.md">
           <provider editor-type-id="MarkdownFxPreviewEditor">
             <state />
           </provider>
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="FIRST">
-              <first_editor vertical-scroll-proportion="0.6472946">
-                <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+              <first_editor vertical-scroll-proportion="0.7334669">
+                <caret line="68" column="33" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -47,18 +47,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="2017-05-19-如何高效且优雅的翻墙.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_posts/2017-05-19-如何高效且优雅的翻墙.md">
-          <provider editor-type-id="MarkdownFxPreviewEditor">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-            <state split_layout="FIRST">
-              <first_editor vertical-scroll-proportion="0.43263757">
-                <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-                <folding />
-              </first_editor>
-              <second_editor />
+      <file leaf-file-name="blog.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/_layouts/blog.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.17117117">
+              <caret line="8" column="75" selection-start-line="8" selection-start-column="75" selection-end-line="8" selection-end-column="75" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -244,7 +238,7 @@
     <option name="totallyTimeSpent" value="2567000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -289,20 +283,6 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/_posts/2017-12-08-二叉查找树的路径查询.md">
-      <provider editor-type-id="MarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor vertical-scroll-proportion="0.0">
-            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2017-05-19-如何高效且优雅的翻墙.md">
       <provider editor-type-id="MarkdownFxPreviewEditor">
         <state />
       </provider>
@@ -520,57 +500,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_layouts/page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34234235">
-          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2017-03-25-博客之二三事.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13693693">
-          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2014-06-07-一封来自重庆的短信.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17117117">
-          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tags/tags.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58198196">
-          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../jasper2-master/_layouts/default.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.034234233">
           <caret line="32" column="50" selection-start-line="0" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2012-04-25-那段高考岁月[1].md">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-        </state>
-      </provider>
-      <provider editor-type-id="MarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor vertical-scroll-proportion="0.28842506">
-            <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-            <folding />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -644,26 +577,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/2017-05-19-如何高效且优雅的翻墙.md">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="MarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="FIRST">
-          <first_editor vertical-scroll-proportion="0.43263757">
-            <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/rouge.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.6785714">
@@ -688,10 +601,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_layouts/blog.html">
+    <entry file="file://$PROJECT_DIR$/tags/tags.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27387387">
-          <caret line="8" column="75" selection-start-line="8" selection-start-column="75" selection-end-line="8" selection-end-column="75" />
+        <state vertical-scroll-proportion="0.06846847">
+          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_layouts/page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5135135">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -708,11 +629,19 @@
       </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="FIRST">
-          <first_editor vertical-scroll-proportion="0.6472946">
-            <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <first_editor vertical-scroll-proportion="0.7334669">
+            <caret line="68" column="33" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
             <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_layouts/blog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17117117">
+          <caret line="8" column="75" selection-start-line="8" selection-start-column="75" selection-end-line="8" selection-end-column="75" />
+          <folding />
         </state>
       </provider>
     </entry>
