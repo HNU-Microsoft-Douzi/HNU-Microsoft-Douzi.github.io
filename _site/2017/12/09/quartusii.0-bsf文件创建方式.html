@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/style_blog.css" rel="stylesheet">
+    <script src="/js/jquery-1.4.4.min.js"></script>
+    <script src="/js/main.js"></script>
+    <meta charset="UTF-8">
+    <title>All my blogs</title>
+</head>
+<body>
+<div class="navigation">
+    <div class="main-content">
+        <div class="content-photo">
+            <img src="/images/logo.png" alt="您要查找的图片不存在啦！">
+        </div>
+        <h1>Zhang Xiaoyi</h1>
+        <hr class="line">
+        <p>
+            welcome come to my blog,my dear!
+        </p>
+        <ul id="header-menu">
+            <li><a href="/">网站首页</a></li>
+            <li><a href="http://www.hao123.com" title="技术博文">技术博文</a>
+            </li>
+            <li><a href="/">个人留言</a></li>
+            <li><a href="/">友情链接</a></li>
+        </ul>
+    </div>
+</div>
+<div class="blog-content">
+    <div class="Wrapper">
+        <div class="Header"></div>
+        <div class="Content">
+            <h1 id="如何建立一个quartus-的bsf文件呢">如何建立一个quartus 的bsf文件呢？</h1>
+<p><span style="color:blue">file——create/update symbol for current file</span>就可以了，前提是<span style="color:blue">current file</span>必须是当前正打开的file，然后<span style="color:blue">New——block/schematic file</span>,在出现的原理图窗口中双击即可出现“<span style="color:red">symbol</span>对话框，在框中即可看到“<span style="color:blue">project</span>”下已经生成的<span style="color:red">symbol</span>，接下来的操作和普通的<span style="color:red">symbol</span>操作时一样的</p>
+
+        </div>
+        <div class="FooterPush"></div>
+    </div>
+    <div class="footer-bottom">
+        <ul>
+            <p>
+                Copyright 2017 design by
+                <a href="/">Zhang Xiaoyi</a>
+            </p>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+
+    var a_idx = 0;
+    jQuery(document).ready(function($) {
+        $("body").click(function(e) {
+            var a = new Array("不前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福...", "没有光明是不幸的吗？需要光明才是真正的不幸！", "我不知道别离的滋味是这样的凄凉，我不知道说声再见要这么坚强", "我不是天生的王者，但我骨子里流动着不让我低头的血液", "我手里拿着刀，没法保护你。我放下刀，没法拥抱你...", "温柔善良的人总是难以生存，因为这世界既不温柔，也不正确", "错的不是我，是这个世界..." ,"人一生会遇到越2920万人，你爱上我的概率是0.000049，所以你不爱我，我不怪你", "不相信自己的人，连努力的价值都没有", "这世界上所有的不公平都是因为当事人能力的不足导致的", "曾经发生过的事情不可能忘记，只不过是想不起", "只要有你想要保护的东西，那就拔剑好了");
+            var $i = $("<span/>").text(a[a_idx]);
+            a_idx = (a_idx + 1) % a.length;
+            var x = e.pageX,
+                    y = e.pageY;
+            $i.css({
+                "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+                "top": y - 20,
+                "left": x,
+                "position": "absolute",
+                "font-weight": "bold",
+                "color": "#ff6651"
+            });
+            $("body").append($i);
+            $i.animate({
+                        "top": y - 180,
+                        "opacity": 0
+                    },
+                    1500,
+                    function() {
+                        $i.remove();
+                    });
+        });
+    });
+</script>
+</body>
+</html>

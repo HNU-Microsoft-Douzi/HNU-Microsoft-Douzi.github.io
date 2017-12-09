@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/styles_bp.css" rel="stylesheet">
     <link href="/css/style_blog.css" rel="stylesheet">
     <script src="/js/jquery-1.4.4.min.js"></script>
     <script src="/js/main.js"></script>
@@ -32,7 +32,16 @@
     <div class="Wrapper">
         <div class="Header"></div>
         <div class="Content">
-            <h1 id="一什么是二叉查找树">一、什么是二叉查找树？</h1>
+            <head>
+    <title>Rouge</title>
+    <link media="all" rel="stylesheet" type="textcss/" href="\css\rouge.css" />
+    <style>
+        pre{
+            background: rgba(0, 0, 0, 0.95);
+        }
+    </style>
+</head>
+<h1 id="一什么是二叉查找树">一、什么是二叉查找树？</h1>
 
 <p>二叉查找树(Binary Search Tree)，又称二叉排序树(Binary Sort Tree)，又叫做二叉搜索树。(详细的介绍自己百度，这里不过多阐述。)</p>
 
@@ -47,40 +56,74 @@
 <br /></p>
 <p style="color:blue">详细代码如下：</p>
 
-<figure class="highlight"><pre><code class="language-rough" data-lang="rough">	//构造节点类	
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre></td><td class="code"><pre>	//构造节点类	
 	class Node
-	{
+	<span class="o">{</span>
 	public:
-	    Node():data(0),pparent(NULL),lchild(NULL),rchild(NULL) {};
-	    Node(int k):data(k),pparent(NULL),lchild(NULL),rchild(NULL) {};
+	    Node<span class="o">()</span>:data<span class="o">(</span>0<span class="o">)</span>,pparent<span class="o">(</span>NULL<span class="o">)</span>,lchild<span class="o">(</span>NULL<span class="o">)</span>,rchild<span class="o">(</span>NULL<span class="o">)</span> <span class="o">{}</span><span class="p">;</span>
+	    Node<span class="o">(</span>int k<span class="o">)</span>:data<span class="o">(</span>k<span class="o">)</span>,pparent<span class="o">(</span>NULL<span class="o">)</span>,lchild<span class="o">(</span>NULL<span class="o">)</span>,rchild<span class="o">(</span>NULL<span class="o">)</span> <span class="o">{}</span><span class="p">;</span>
 	public:
-	    int data;
-	    Node* pparent;
-	    Node* lchild;
-	    Node* rchild;
-	};//双亲孩子表示法，查找双亲和孩子都非常方便
+	    int data<span class="p">;</span>
+	    Node<span class="k">*</span> pparent<span class="p">;</span>
+	    Node<span class="k">*</span> lchild<span class="p">;</span>
+	    Node<span class="k">*</span> rchild<span class="p">;</span>
+	<span class="o">}</span><span class="p">;</span>//双亲孩子表示法，查找双亲和孩子都非常方便
 	//构造二叉查找树
 	class BSTree
-	{
+	<span class="o">{</span>
 	public:
-	    BSTree();
-	    void insert(int k);
-	    bool search(int k);//当查找到以后，我要求你返回整个查找树的路径
-	    void preOrder();
-	    void show_path();
+	    BSTree<span class="o">()</span><span class="p">;</span>
+	    void insert<span class="o">(</span>int k<span class="o">)</span><span class="p">;</span>
+	    bool search<span class="o">(</span>int k<span class="o">)</span><span class="p">;</span>//当查找到以后，我要求你返回整个查找树的路径
+	    void preOrder<span class="o">()</span><span class="p">;</span>
+	    void show_path<span class="o">()</span><span class="p">;</span>
 	private:
-	    void insert(Node* p, int k);
-	    bool search(Node* p, int k);
-	    void preOrder(Node *p);
+	    void insert<span class="o">(</span>Node<span class="k">*</span> p, int k<span class="o">)</span><span class="p">;</span>
+	    bool search<span class="o">(</span>Node<span class="k">*</span> p, int k<span class="o">)</span><span class="p">;</span>
+	    void preOrder<span class="o">(</span>Node <span class="k">*</span>p<span class="o">)</span><span class="p">;</span>
 	private:
-	    Node* root;
-	    stack&lt;int&gt; array;//用来存储树中遍历的路径
-	    int size;
-	    int search_count;//用来控制查找时树的遍历元素个数
-	    bool flag = false;
-	};
-		bool flag = false;
-	};</code></pre></figure>
+	    Node<span class="k">*</span> root<span class="p">;</span>
+	    stack&lt;int&gt; array<span class="p">;</span>//用来存储树中遍历的路径
+	    int size<span class="p">;</span>
+	    int search_count<span class="p">;</span>//用来控制查找时树的遍历元素个数
+	    bool flag <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+	<span class="o">}</span><span class="p">;</span>
+		bool flag <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+	<span class="o">}</span><span class="p">;</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <h3 id="插入函数的核心思想">插入函数的核心思想</h3>
 <p>对于查询二叉树而言，它的输入方式以层序的方式进行存入，但是为了满足查询二叉树的特点，我们需要在构建整颗树的过程中对树的状态不断进行调整（这一点的思想在AVL中尤其重要），使其始终满足节点key值大于左子树key值而小于右子树key值，了解了这个以后，我们便可以通过递归地方式对整棵树进行插入操作。</p>
