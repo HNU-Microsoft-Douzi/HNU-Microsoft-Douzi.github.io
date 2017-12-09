@@ -46,41 +46,44 @@
 <p><br />我们在这里额外设置一个pparent指针用来指向每个节点的父节点，这样做的好处是便于查找指定节点的双亲节点，也就是说，以下的操作会将树的双亲表示法和孩子表示法联立在一起，关于树的表示法甚至是图的表示法，这里不多做讨论，会在其它的章节中做一个总结。
 <br /></p>
 <p style="color:blue">详细代码如下：</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//构造节点类	
-class Node
-{
-public:
-    Node():data(0),pparent(NULL),lchild(NULL),rchild(NULL) {};
-    Node(int k):data(k),pparent(NULL),lchild(NULL),rchild(NULL) {};
-public:
-    int data;
-    Node* pparent;
-    Node* lchild;
-    Node* rchild;
-};//双亲孩子表示法，查找双亲和孩子都非常方便
-//构造二叉查找树
-class BSTree
-{
-public:
-    BSTree();
-    void insert(int k);
-    bool search(int k);//当查找到以后，我要求你返回整个查找树的路径
-    void preOrder();
-    void show_path();
-private:
-    void insert(Node* p, int k);
-    bool search(Node* p, int k);
-    void preOrder(Node *p);
-private:
-    Node* root;
-    stack&lt;int&gt; array;//用来存储树中遍历的路径
-    int size;
-    int search_count;//用来控制查找时树的遍历元素个数
-    bool flag = false;
-};
-	bool flag = false;
-}; ### 插入函数的核心思想  ### 对于查询二叉树而言，它的输入方式以层序的方式进行存入，但是为了满足查询二叉树的特点，我们需要在构建整颗树的过程中对树的状态不断进行调整（这一点的思想在AVL中尤其重要），使其始终满足节点key值大于左子树key值而小于右子树key值，了解了这个以后，我们便可以通过递归地方式对整棵树进行插入操作。
-</code></pre></div></div>
+
+<figure class="highlight"><pre><code class="language-rough" data-lang="rough">	//构造节点类	
+	class Node
+	{
+	public:
+	    Node():data(0),pparent(NULL),lchild(NULL),rchild(NULL) {};
+	    Node(int k):data(k),pparent(NULL),lchild(NULL),rchild(NULL) {};
+	public:
+	    int data;
+	    Node* pparent;
+	    Node* lchild;
+	    Node* rchild;
+	};//双亲孩子表示法，查找双亲和孩子都非常方便
+	//构造二叉查找树
+	class BSTree
+	{
+	public:
+	    BSTree();
+	    void insert(int k);
+	    bool search(int k);//当查找到以后，我要求你返回整个查找树的路径
+	    void preOrder();
+	    void show_path();
+	private:
+	    void insert(Node* p, int k);
+	    bool search(Node* p, int k);
+	    void preOrder(Node *p);
+	private:
+	    Node* root;
+	    stack&lt;int&gt; array;//用来存储树中遍历的路径
+	    int size;
+	    int search_count;//用来控制查找时树的遍历元素个数
+	    bool flag = false;
+	};
+		bool flag = false;
+	};</code></pre></figure>
+
+<h3 id="插入函数的核心思想">插入函数的核心思想</h3>
+<p>对于查询二叉树而言，它的输入方式以层序的方式进行存入，但是为了满足查询二叉树的特点，我们需要在构建整颗树的过程中对树的状态不断进行调整（这一点的思想在AVL中尤其重要），使其始终满足节点key值大于左子树key值而小于右子树key值，了解了这个以后，我们便可以通过递归地方式对整棵树进行插入操作。</p>
 <p style="color:blue">详细代码如下：</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void BSTree::insert(int k)
 {
