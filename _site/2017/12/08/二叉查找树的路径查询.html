@@ -128,7 +128,7 @@
 <p>对于查询二叉树而言，它的输入方式以层序的方式进行存入，但是为了满足查询二叉树的特点，我们需要在构建整颗树的过程中对树的状态不断进行调整（这一点的思想在AVL中尤其重要），使其始终满足节点key值大于左子树key值而小于右子树key值，了解了这个以后，我们便可以通过递归地方式对整棵树进行插入操作。</p>
 <p style="color:blue">详细代码如下：</p>
 
-<figure class="highlight"><pre><code class="language-bsh" data-lang="bsh"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -170,48 +170,48 @@
 40
 41
 42
-</pre></td><td class="code"><pre>	void BSTree::insert(int k)
-	{
-	    insert(root,k);
-	}
+</pre></td><td class="code"><pre>	void BSTree::insert<span class="o">(</span>int k<span class="o">)</span>
+	<span class="o">{</span>
+	    insert<span class="o">(</span>root,k<span class="o">)</span><span class="p">;</span>
+	<span class="o">}</span>
 	
-	void BSTree::insert(Node* p,int k)
-	{
-	    size++;
-	    Node *parent = p;
-	    if(root-&gt;data == NULL)
-	    {
-	        root-&gt;data = k;
-	        return;
-	    }
-	    else
-	    {
-	        if(k &lt; p-&gt;data)
-	        {
-	            if(p-&gt;lchild == NULL)
-	            {
-	                Node *newNode = new Node(k);
-	                newNode-&gt;pparent = p;
-	                p-&gt;lchild = newNode;
-	            }
-	            else
-	                insert(p-&gt;lchild, k);
-	        }
-	        else if(k &gt; p-&gt;data)
-	        {
-	            if(p-&gt;rchild == NULL)
-	            {
-	                Node *newNode = new Node(k);
-	                newNode-&gt;pparent = p;
-	                p-&gt;rchild = newNode;
-	            }
-	            else
-	                insert(p-&gt;rchild, k);
-        }
-        else
-            return;
-    }
-}</pre></td></tr></tbody></table></code></pre></figure>
+	void BSTree::insert<span class="o">(</span>Node<span class="k">*</span> p,int k<span class="o">)</span>
+	<span class="o">{</span>
+	    size++<span class="p">;</span>
+	    Node <span class="k">*</span>parent <span class="o">=</span> p<span class="p">;</span>
+	    <span class="k">if</span><span class="o">(</span>root-&gt;data <span class="o">==</span> NULL<span class="o">)</span>
+	    <span class="o">{</span>
+	        root-&gt;data <span class="o">=</span> k<span class="p">;</span>
+	        <span class="k">return</span><span class="p">;</span>
+	    <span class="o">}</span>
+	    <span class="k">else</span>
+	    <span class="o">{</span>
+	        <span class="k">if</span><span class="o">(</span>k &lt; p-&gt;data<span class="o">)</span>
+	        <span class="o">{</span>
+	            <span class="k">if</span><span class="o">(</span>p-&gt;lchild <span class="o">==</span> NULL<span class="o">)</span>
+	            <span class="o">{</span>
+	                Node <span class="k">*</span>newNode <span class="o">=</span> new Node<span class="o">(</span>k<span class="o">)</span><span class="p">;</span>
+	                newNode-&gt;pparent <span class="o">=</span> p<span class="p">;</span>
+	                p-&gt;lchild <span class="o">=</span> newNode<span class="p">;</span>
+	            <span class="o">}</span>
+	            <span class="k">else
+	                </span>insert<span class="o">(</span>p-&gt;lchild, k<span class="o">)</span><span class="p">;</span>
+	        <span class="o">}</span>
+	        <span class="k">else if</span><span class="o">(</span>k <span class="o">&gt;</span> p-&gt;data<span class="o">)</span>
+	        <span class="o">{</span>
+	            <span class="k">if</span><span class="o">(</span>p-&gt;rchild <span class="o">==</span> NULL<span class="o">)</span>
+	            <span class="o">{</span>
+	                Node <span class="k">*</span>newNode <span class="o">=</span> new Node<span class="o">(</span>k<span class="o">)</span><span class="p">;</span>
+	                newNode-&gt;pparent <span class="o">=</span> p<span class="p">;</span>
+	                p-&gt;rchild <span class="o">=</span> newNode<span class="p">;</span>
+	            <span class="o">}</span>
+	            <span class="k">else
+	                </span>insert<span class="o">(</span>p-&gt;rchild, k<span class="o">)</span><span class="p">;</span>
+        <span class="o">}</span>
+        <span class="k">else
+            return</span><span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <p>这样的话，我们已经完成了树的构建，并且完整的将所有的数据存入树中。</p>
 
@@ -291,7 +291,7 @@
 我在递归查询的过程中，假设我输入的元素在树中可以找到（如果不能找到的话就没有路径返回这一说了），那么我将查找到的元素压入栈中，在递归地过程中，查询完以后，它会向上层返回，这样的话，我只要立一个flag初始化为false,当查找到输入元素时，就让flag为true,然后在每次节点的递归中进行判断，如果说flag为true的话，我就将该节点的key值压入栈中，直到所有操作结束后，一次性返回输出就可以了。</p>
 <p style="color:blue">详细代码如下：</p>
 
-<figure class="highlight"><pre><code class="language-bahs" data-lang="bahs"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -304,19 +304,19 @@
 11
 12
 13
-</pre></td><td class="code"><pre>		void BSTree::show_path()
-		{
-		    while(!array.empty())
-		    {
-		        if(array.size() != 1)
-		        {
-		            cout&lt;&lt;array.top()&lt;&lt;"-&gt;";
+</pre></td><td class="code"><pre>		void BSTree::show_path<span class="o">()</span>
+		<span class="o">{</span>
+		    <span class="k">while</span><span class="o">(!</span>array.empty<span class="o">())</span>
+		    <span class="o">{</span>
+		        <span class="k">if</span><span class="o">(</span>array.size<span class="o">()</span> <span class="o">!=</span> 1<span class="o">)</span>
+		        <span class="o">{</span>
+		            cout<span class="o">&lt;&lt;</span><span class="no">array</span><span class="sh">.top()&lt;&lt;"-&gt;";
 		        }
 		        else
 		            cout&lt;&lt;array.top();
 		        array.pop();
 		    }
-	}</pre></td></tr></tbody></table></code></pre></figure>
+	}</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <p style="font-size:25px;font-weight:bold;color:orange">下面是整个程序的完整代码：</p>
 <p>#include <iostream></iostream></p>
@@ -494,7 +494,10 @@
 171
 172
 173
+174
+175
 </pre></td><td class="code"><pre>		<span class="c">#include &lt;stack&gt;</span>
+        <span class="c">#include &lt;iostream&gt;</span>
 		using namespace std<span class="p">;</span>
 		
 		class Node
@@ -605,7 +608,8 @@
 		    <span class="o">}</span>
 		    <span class="k">if</span><span class="o">(</span>search_count <span class="o">==</span> size<span class="o">)</span>
 		    <span class="o">{</span>
-		        cout&lt;&lt;<span class="s2">"您要查找的元素不存在于树中"</span><span class="o">&lt;&lt;</span><span class="no">endl</span><span class="sh">;
+		        cout&lt;&lt;<span class="s2">"您要查找的元素不存在于树中"</span><span class="p">;</span>
+                cout<span class="o">&lt;&lt;</span><span class="no">endl</span><span class="sh">;
 		        return false;
 		    }
 		}
