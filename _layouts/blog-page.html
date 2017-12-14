@@ -39,29 +39,24 @@
 </div>
 <div class="blog-content">
     <div class="Wrapper">
-        <div class="Header"></div>
-        <p style="padding-left:50px">
-            <time datetime="{{page.date | date: date_to_xmlschema}}" itemprop="datePublished" class="post-meta__date date">{{page.date | date: "%F"}}</time>
-            <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
-        </p>
+        <div class="Header">
+            <p class="h0">{{ page.title }}</p>
+                <time datetime="{{page.date | date: date_to_xmlschema}}" itemprop="datePublished" class="time_record">{{page.date | date: "%F"}}</time>
+        </div>
         <div class="Content">
             {{ content }}
+            <br>
+            {% include share.html %}
+            {% include dashang.html %}
+            {% include new-old.html %}
+            <br>
         </div>
         <div class="FooterPush"></div>
     </div>
 </div>
-<br>
-{% include share.html %}
-{% include dashang.html %}
-{% include new-old.html %}
-<br><br><br>
 <div align="right" style="color:red">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
     <!-- 访问统计 -->
-
-    你好，亲爱的陌生人！
-    您是我的第<span data-hk-page="current"> - </span> 个访客..
+    <script src="/js/traffic_access.js"></script>
 </div>
 <footer>
     <div id="footer-bottom" style="margin-left:200px"><ul><p>Copyright 2017 design by <a href="/">Zhang Xiaoyi</a></p></ul></div>

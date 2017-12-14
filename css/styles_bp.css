@@ -153,6 +153,8 @@ footer h2{ color:#FFF; font-size:14px; line-height:40px}
 .card a:hover{
 	color: #ffb500;
 }
-.h1{font-weight:bold;font-size:25px;color: #2d2d2d;}
-.h2{font-weight:bold;font-size:20px;color: #2d2d2d;}
-.h3{font-weight:bold;font-size:17px;color: #2d2d2d;}
+.h0{font-weight:bold;font-size:35px;color :#5e5e5e;padding-left:30px;padding-top:20px;padding-bottom:10px;display: inline-block;}
+.h1{font-weight:bold;font-size:25px;color: #5e5e5e;margin-top:30px;margin-bottom:15px;}
+.h2{font-weight:bold;font-size:20px;color: #5e5e5e;margin-top:20px;margin-bottom:15px;}
+.h3{font-weight:bold;font-size:17px;color: #5e5e5e;}
+.time_record{color:red;width:100%;text-align: right}

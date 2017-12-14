@@ -39,24 +39,22 @@
 </div>
 <div class="blog-content">
     <div class="Wrapper">
-        <div class="Header"></div>
-        <p style="padding-left:50px">
-            <time datetime="2017-12-08 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-12-08</time>
-            <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
-        </p>
+        <div class="Header">
+            <p class="h0">二叉查找树之路径查询</p>
+                <time datetime="2017-12-08 00:00:00 +0800" itemprop="datePublished" class="time_record">2017-12-08</time>
+        </div>
         <div class="Content">
             <p class="h1">一、什么是二叉查找树？</p>
 
 <p>二叉查找树(Binary Search Tree)，又称二叉排序树(Binary Sort Tree)，又叫做二叉搜索树。(详细的介绍自己百度，这里不过多阐述。)</p>
 
 <p class="h1"> 二、关于二叉查找树的定义!</p>
-<p><br />
-   二叉查找数是基于二叉树之上的一种数据存储结构，它独特的数据存储方式让数据的查询变得简单。
+<p>二叉查找数是基于二叉树之上的一种数据存储结构，它独特的数据存储方式让数据的查询变得简单。
    对于二叉查找树的每一个节点，都存在一个key值和两个指针域lchild(左孩子),rchild(右孩子)，对于每一个节点而言，它的key值比它的左子树上任意一个节点的key值都大，它的key值比之右子树任意一个节点的key值都要小。
    <img src="#" /></p>
 
 <p class="h1"> 三、对二叉查找树实现的核心思想</p>
-<p><br />我们在这里额外设置一个pparent指针用来指向每个节点的父节点，这样做的好处是便于查找指定节点的双亲节点，也就是说，以下的操作会将树的双亲表示法和孩子表示法联立在一起，关于树的表示法甚至是图的表示法，这里不多做讨论，会在其它的章节中做一个总结。
+<p>我们在这里额外设置一个pparent指针用来指向每个节点的父节点，这样做的好处是便于查找指定节点的双亲节点，也就是说，以下的操作会将树的双亲表示法和孩子表示法联立在一起，关于树的表示法甚至是图的表示法，这里不多做讨论，会在其它的章节中做一个总结。
 <br /></p>
 <p style="color:blue">详细代码如下：</p>
 
@@ -220,7 +218,7 @@
 
 <p>这样的话，我们已经完成了树的构建，并且完整的将所有的数据存入树中。</p>
 
-<p class="h1"> 四、二叉查找树的遍历</p>
+<p class="h1">四、二叉查找树的遍历</p>
 <p>树总共有三种遍历方式：前序、中序和后序。
 这里我们默认前序进行输出用以检查整个程序在对树的处理上是否出现了问题。
 对于二叉查找树的查询，我们构建一个函数并传入要查询的数值k，设置起始点为树的根节点root,从root开始遍历，设置当前节点为pnode，如果pnode-&gt;key小于我们的要查询的k，那么我们递归传入该节点的左子树(pnode-&gt;lchild)，反之，则传入该节点的右子树(pnode-&gt;rchild)，如果在树中找到了k，则返回true(这里我们构造查询函数的返回类型为bool类型),若遍历完整颗树都没有找到，则返回flase。</p>
@@ -678,17 +676,13 @@
 
 <p>(blog未曾建设完全，之后会将自己的代码全部托管到github网站上，敬请期待！Bingo~~)</p>
 
-        </div>
-        <div class="FooterPush"></div>
-    </div>
-</div>
-<br>
-<section>
+            <br>
+            <section>
   <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
 <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 </section>
 
-<!DOCTYPE html>
+            <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -765,7 +759,7 @@
 </body>
 </html>
 
-<section>
+            <section>
        <ul class="pager">
         
         <li class="previous">
@@ -782,14 +776,14 @@
     </ul>
 </section>
 
-<br><br><br>
+            <br>
+        </div>
+        <div class="FooterPush"></div>
+    </div>
+</div>
 <div align="right" style="color:red">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
     <!-- 访问统计 -->
-
-    你好，亲爱的陌生人！
-    您是我的第<span data-hk-page="current"> - </span> 个访客..
+    <script src="/js/traffic_access.js"></script>
 </div>
 <footer>
     <div id="footer-bottom" style="margin-left:200px"><ul><p>Copyright 2017 design by <a href="/">Zhang Xiaoyi</a></p></ul></div>
