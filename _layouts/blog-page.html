@@ -40,12 +40,21 @@
 <div class="blog-content">
     <div class="Wrapper">
         <div class="Header"></div>
+        <p style="padding-left:50px">
+            <time datetime="{{page.date | date: date_to_xmlschema}}" itemprop="datePublished" class="post-meta__date date">{{page.date | date: "%F"}}</time>
+            <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+        </p>
         <div class="Content">
             {{ content }}
         </div>
         <div class="FooterPush"></div>
     </div>
 </div>
+<br>
+{% include share.html %}
+{% include dashang.html %}
+{% include new-old.html %}
+<br><br><br>
 <div align="right" style="color:red">
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -89,3 +98,4 @@
 </script>
 </body>
 </html>
+
