@@ -119,6 +119,8 @@ form{
     border-radius:3px;
     border:1px #9bf8ff solid;
     font-size:21px;
+    transform: translate(0,0);
+    transition:all .3s ease-in 0s;
 }
 .Wrapper{
     min-height:100%;
