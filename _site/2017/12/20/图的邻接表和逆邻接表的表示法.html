@@ -40,130 +40,21 @@
 <div class="blog-content">
     <div class="Wrapper">
         <div class="Header">
-            <p class="h0">图的DFS和BFS</p>
-                <time datetime="2017-12-11 00:00:00 +0800" itemprop="datePublished" class="time_record">2017-12-11</time>
+            <p class="h0">图的邻接表和逆邻接表的表示法</p>
+                <time datetime="2017-12-20 00:00:00 +0800" itemprop="datePublished" class="time_record">2017-12-20</time>
         </div>
         <div class="Content">
-            <p class="h1">图的两种存储方式：</p>
-<p>①邻接表存储的图
-   <br />
-   ②邻接矩阵存储的图
+            <p>在图中，我们通常用到的表示法有<span style="color:red;font-size:20px;">邻接表</span>和<span style="color:red;font-size:20px">邻接矩阵</span>两种，但是在实际的应用中，邻接表和邻接矩阵不足以描述相应的问题解法，那么就衍生出多种其它的表示方法，比如<span style="color:orange;font-size:20px">逆邻接表、十字链表、邻接多重表、边集数组</span>等。</p>
+<p><br /></p>
+<p>这里着重讲解一下邻接表和逆邻接表的表示，并在数据结构部分其他文章中就邻接表和逆邻接表做一个十字链表的详解。</p>
+
+<p><img src="/assets/图的邻接表和逆邻接表0.jpg" />
 <br /></p>
-
-<p class="h1">两种存储方式源代码：</p>
-<p style="color:green">①邻接表：</p>
-<p><br /></p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-</pre></td><td class="code"><pre>/<span class="k">*</span> 邻接表存储的图 - DFS <span class="k">*</span>/
- 
-void Visit<span class="o">(</span> Vertex V <span class="o">)</span>
-<span class="o">{</span>
-    <span class="nb">printf</span><span class="o">(</span><span class="s2">"正在访问顶点%d</span><span class="se">\n</span><span class="s2">"</span>, V<span class="o">)</span><span class="p">;</span>
-<span class="o">}</span>
- 
-/<span class="k">*</span> Visited[]为全局变量，已经初始化为false <span class="k">*</span>/
-void DFS<span class="o">(</span> LGraph Graph, Vertex V, void <span class="o">(</span><span class="k">*</span>Visit<span class="o">)(</span>Vertex<span class="o">)</span> <span class="o">)</span>
-<span class="o">{</span>   /<span class="k">*</span> 以V为出发点对邻接表存储的图Graph进行DFS搜索 <span class="k">*</span>/
-    PtrToAdjVNode W<span class="p">;</span>
-     
-    Visit<span class="o">(</span> V <span class="o">)</span><span class="p">;</span> /<span class="k">*</span> 访问第V个顶点 <span class="k">*</span>/
-    Visited[V] <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> /<span class="k">*</span> 标记V已访问 <span class="k">*</span>/
- 
-    <span class="k">for</span><span class="o">(</span> <span class="nv">W</span><span class="o">=</span>Graph-&gt;G[V].FirstEdge<span class="p">;</span> W<span class="p">;</span> <span class="nv">W</span><span class="o">=</span>W-&gt;Next <span class="o">)</span> /<span class="k">*</span> 对V的每个邻接点W-&gt;AdjV <span class="k">*</span>/
-        <span class="k">if</span> <span class="o">(</span> <span class="o">!</span>Visited[W-&gt;AdjV] <span class="o">)</span>    /<span class="k">*</span> 若W-&gt;AdjV未被访问 <span class="k">*</span>/
-            DFS<span class="o">(</span> Graph, W-&gt;AdjV, Visit <span class="o">)</span><span class="p">;</span>    /<span class="k">*</span> 则递归访问之 <span class="k">*</span>/
-<span class="o">}</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<p><br /></p>
-<p style="color:green">②邻接矩阵:</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-</pre></td><td class="code"><pre>/<span class="k">*</span> 邻接矩阵存储的图 - BFS <span class="k">*</span>/
- 
-/<span class="k">*</span> IsEdge<span class="o">(</span>Graph, V, W<span class="o">)</span>检查&lt;V, W&gt;是否图Graph中的一条边，即W是否V的邻接点。  <span class="k">*</span>/
-/<span class="k">*</span> 此函数根据图的不同类型要做不同的实现，关键取决于对不存在的边的表示方法。<span class="k">*</span>/
-/<span class="k">*</span> 例如对有权图, 如果不存在的边被初始化为INFINITY, 则函数实现如下:         <span class="k">*</span>/
-bool IsEdge<span class="o">(</span> MGraph Graph, Vertex V, Vertex W <span class="o">)</span>
-<span class="o">{</span>
-    <span class="k">return </span>Graph-&gt;G[V][W]&lt;INFINITY ? <span class="nb">true</span> : <span class="nb">false</span><span class="p">;</span>
-<span class="o">}</span>
- 
-/<span class="k">*</span> Visited[]为全局变量，已经初始化为false <span class="k">*</span>/
-void BFS <span class="o">(</span> MGraph Graph, Vertex S, void <span class="o">(</span><span class="k">*</span>Visit<span class="o">)(</span>Vertex<span class="o">)</span> <span class="o">)</span>
-<span class="o">{</span>   /<span class="k">*</span> 以S为出发点对邻接矩阵存储的图Graph进行BFS搜索 <span class="k">*</span>/
-    Queue Q<span class="p">;</span>     
-    Vertex V, W<span class="p">;</span>
- 
-    Q <span class="o">=</span> CreateQueue<span class="o">(</span> MaxSize <span class="o">)</span><span class="p">;</span> /<span class="k">*</span> 创建空队列, MaxSize为外部定义的常数 <span class="k">*</span>/
-    /<span class="k">*</span> 访问顶点S：此处可根据具体访问需要改写 <span class="k">*</span>/
-    Visit<span class="o">(</span> S <span class="o">)</span><span class="p">;</span>
-    Visited[S] <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> /<span class="k">*</span> 标记S已访问 <span class="k">*</span>/
-    AddQ<span class="o">(</span>Q, S<span class="o">)</span><span class="p">;</span> /<span class="k">*</span> S入队列 <span class="k">*</span>/
-     
-    <span class="k">while</span> <span class="o">(</span> <span class="o">!</span>IsEmpty<span class="o">(</span>Q<span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
-        V <span class="o">=</span> DeleteQ<span class="o">(</span>Q<span class="o">)</span><span class="p">;</span>  /<span class="k">*</span> 弹出V <span class="k">*</span>/
-        <span class="k">for</span><span class="o">(</span> <span class="nv">W</span><span class="o">=</span>0<span class="p">;</span> W&lt;Graph-&gt;Nv<span class="p">;</span> W++ <span class="o">)</span> /<span class="k">*</span> 对图中的每个顶点W <span class="k">*</span>/
-            /<span class="k">*</span> 若W是V的邻接点并且未访问过 <span class="k">*</span>/
-            <span class="k">if</span> <span class="o">(</span> <span class="o">!</span>Visited[W] <span class="o">&amp;&amp;</span> IsEdge<span class="o">(</span>Graph, V, W<span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
-                /<span class="k">*</span> 访问顶点W <span class="k">*</span>/
-                Visit<span class="o">(</span> W <span class="o">)</span><span class="p">;</span>
-                Visited[W] <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> /<span class="k">*</span> 标记W已访问 <span class="k">*</span>/
-                AddQ<span class="o">(</span>Q, W<span class="o">)</span><span class="p">;</span> /<span class="k">*</span> W入队列 <span class="k">*</span>/
-            <span class="o">}</span>
-    <span class="o">}</span> /<span class="k">*</span> while结束<span class="k">*</span>/
-<span class="o">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<p>如图所示，下面将分别给出如上图的邻接表和逆邻接表的表示法：</p>
+<p class="h3">邻接表：</p>
+<p><img src="/assets/邻接表.jpg" /></p>
+<p class="h3">逆邻接表：</p>
+<p><img src="/assets/逆邻接表.jpg" /></p>
 
             <br>
             <section>
@@ -245,15 +136,10 @@ void BFS <span class="o">(</span> MGraph Graph, Vertex S, void <span class="o">(
        <ul class="pager">
         
         <li class="previous">
-            <a href="/2017/12/09/bsf%E6%96%87%E4%BB%B6%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F.html" data-toggle="tooltip" data-placement="top" title="bsf文件创建方式">上一篇：  <span>bsf文件创建方式</span>
+            <a href="/2017/12/18/C++%E4%B8%89%E7%A7%8D%E8%AE%BF%E9%97%AE%E5%85%B3%E9%94%AE%E8%AF%8D%E7%9A%84%E5%8C%BA%E5%88%AB.html" data-toggle="tooltip" data-placement="top" title="C++三种访问关键词的区别">上一篇：  <span>C++三种访问关键词的区别</span>
             </a>
         </li>
         
-        
-        <li class="next">
-            <a href="/2017/12/18/C++%E4%B8%89%E7%A7%8D%E8%AE%BF%E9%97%AE%E5%85%B3%E9%94%AE%E8%AF%8D%E7%9A%84%E5%8C%BA%E5%88%AB.html" data-toggle="tooltip" data-placement="top" title="C++三种访问关键词的区别">下一篇：  <span>C++三种访问关键词的区别</span>
-            </a>
-        </li>
         
     </ul>
 </section>
