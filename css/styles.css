@@ -118,7 +118,7 @@ footer h2{ color:#FFF; font-size:14px; line-height:40px}
 	font-family:"造字工房俊雅锐宋体验版常规体";
 }
 .tag_box_inline {
-	font-size: 25px;
+	padding-top:15px;
 	padding-left:30px;
 }
 .tag_box_inline a{
@@ -126,6 +126,7 @@ footer h2{ color:#FFF; font-size:14px; line-height:40px}
 }
 .tag_box_inline a:hover{
 	color: #ff641c;
+	font-size:30px;
 }
 .card{
 	margin-top:20px;
