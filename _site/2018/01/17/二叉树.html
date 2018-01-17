@@ -40,25 +40,53 @@
 <div class="blog-content">
     <div class="Wrapper">
         <div class="Header">
-            <p class="h0">process的应用场景</p>
-                <time datetime="2017-12-22 00:00:00 +0800" itemprop="datePublished" class="time_record">2017-12-22</time>
+            <p class="h0">二叉树</p>
+                <time datetime="2018-01-17 00:00:00 +0800" itemprop="datePublished" class="time_record">2018-01-17</time>
         </div>
         <div class="Content">
-            <p>刚开始学quartus，并不能来理解<span style="color:red">process</span>（进程）语句的用法，现在在这边做一个总结。</p>
+            <p class="h1">一、二叉树概述</p>
+<p>对于二叉树而言，它是树的一种，而它的特点就像其名，在受到树这个数据结构的约束的同时，它的每个节点最多有且只有两个子树，我们通常把这两颗子树依据空间上的排布划分为左子树和右子树。</p>
+
+<p class="h1">二、二叉树的表示方法</p>
+<p>一开始学树的时候，并没有表示方法这个概念，然后有一次吃了大亏才开始重视起来<span style="color:grey">（或许人就是这样的生物吧…）</span>所以在这里要重点提及。</p>
+
+<p class="h2">三种表示方法：</p>
+<ul>
+   <li>双亲表示法</li>
+   <li>孩子表示法</li>
+   <li>孩子兄弟表示法</li>
+</ul>
 <p><br /></p>
-<p><span style="color:red">process</span>是进程语句，<span style="color:red">process</span>平行间的语句关系是并行执行的（也就是说同时进行），而进程内部的语句则是顺序执行的，进程之间通过信号量来实现通信。而<span style="color:red">process</span>语句的执行则依靠敏感信号的变化来激发。</p>
-<p><br /></p>
-<p style="font-size:12px;color:grey">进程不一定会被执行，这取决于进程内的敏感信号表，只有敏感信号表中的敏感信号发生了变化，进程才会被执行，若有多个进程存在时，进程发生的先后顺序取决于谁的敏感信号先发生改变。</p>
-<p><br /></p>
-<p>一些语句必须在进程内执行，例如：if，case，when语句等。所以用<span style="color:red">process</span>语句。</p>
-<p><br /></p>
-<p class="h3">格式为:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[进程名称]PROCESS 语句 [敏感信号表];
-[说明语句;]
-BEGIN
-顺序语句；
-END PROCESS [进程名称]；
-</code></pre></div></div>
+<p class="h3">首先，先来介绍以下双亲表示法:</p>
+<p>对一颗完整的树，它的每个节点都有两个域构成，一个数据域，一个指针域，数据域用来存指定的数据，指针域用来指向父节点。</p>
+<p style="color:blue">该种方法寻找一个节点的双亲结点比较方便，但是对于寻找一个节点的孩子节点操作实现却不太方便。</p>
+
+<p class="h3">孩子表示法:</p>
+<p>每个树节点GNode的域变成了3个，其中有一个数据域和两个指针域，两个指针域分别存左子树和右子树的地址，如果左子树或右子树为空，就让根节点指针域指向NULL。</p>
+<p style="color:blue">该方法寻找一个节点的孩子节点操作比较方便，但是寻找一个结点的双亲结点就比较麻烦了。</p>
+
+<p class="h3">孩子兄弟表示法:</p>
+<p>每个树节点GNode的域还是3个，其中有一个数据域和两个指针域，两个指针域分别存左子树和兄弟节点的地址，如果左子树或兄弟节点为空，就让根节点指针域指向NULL。</p>
+<p style="color:blue">该存储结构其实就是把树转换为一个二叉树的形式去存储，实现比较方便</p>
+<p class="h2">三种遍历方法：</p>
+<ul>
+   <li>前序遍历</li>
+   <li>中序遍历</li>
+   <li>后序遍历</li>
+</ul>
+
+<p>对于三种遍历，我习惯用递归来实现，递归方便操作，也让代码更加简便，下面详细说一下三种遍历的理解：
+  
+对于前序遍历来说，它是先访问根节点（这里的访问我们通常用显示在屏幕上来表示，也就是说直接用cout输出），访问完根节点以后，开始访问左右子树，先访问其左子树，然后当左子树整个访问完毕后，由递归的特性会返回上一层的右子树，直到整颗树的遍历结束，然后这里需要注意的就是，对于每次递归访问的节点都被当作对应递归层中的根节点来处理。
+
+中序遍历的话，和前序遍历有点不同，它是先访问左子树，再输出根节点，然后访问右子树，这涉及到递归操作本身的特性，树中很多操作都要用到递归，虽然学数据结构的时候老师说不要去想递归是怎么进行操作的，但是我认为不去理解递归在编译器中的调用过程就无法详细理解递归操作的本质，会对所学到的东西理解有所偏差，所以对于递归调用的过程不能省略，一定要想，并且要想到明白为止。
+
+后序遍历的话，就是先访问左子树，再访问右子树，最后输出根节点。
+
+<p style="color:red;font-weight:bold">已知两种遍历方式求原始二叉树：</p>
+已知一种遍历方式（前中后序遍历）不能求出原始二叉树。
+但是，已知两种遍历方式，我们就可以得到原始二叉树，前提是这两种遍历方式中必须包括中序遍历。
+</p>
 
             <br>
             <section>
@@ -140,13 +168,13 @@ END PROCESS [进程名称]；
        <ul class="pager">
         
         <li class="previous">
-            <a href="/2017/12/20/%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E8%A1%A8%E5%92%8C%E9%80%86%E9%82%BB%E6%8E%A5%E8%A1%A8%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%B3%95.html" data-toggle="tooltip" data-placement="top" title="图的邻接表和逆邻接表的表示法">上一篇：  <span>图的邻接表和逆邻接表的表示法</span>
+            <a href="/2017/12/22/process%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF.html" data-toggle="tooltip" data-placement="top" title="process的应用场景">上一篇：  <span>process的应用场景</span>
             </a>
         </li>
         
         
         <li class="next">
-            <a href="/2018/01/17/%E4%BA%8C%E5%8F%89%E6%A0%91.html" data-toggle="tooltip" data-placement="top" title="二叉树">下一篇：  <span>二叉树</span>
+            <a href="/2018/01/17/%E6%A0%91.html" data-toggle="tooltip" data-placement="top" title="树">下一篇：  <span>树</span>
             </a>
         </li>
         
