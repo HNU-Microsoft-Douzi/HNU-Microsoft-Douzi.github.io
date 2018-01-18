@@ -40,17 +40,21 @@
 <div class="blog-content">
     <div class="Wrapper">
         <div class="Header">
-            <p class="h0">BST</p>
+            <p class="h0">huffman编码</p>
                 <time datetime="2018-01-18 00:00:00 +0800" itemprop="datePublished" class="time_record">2018-01-18</time>
         </div>
         <div class="Content">
-            <p class="h1">一、BST树概论</p>
-<p>BST树(Binary search tree)，又被称为二叉搜索树，二叉排序树，实际上是按照一定逻辑规则排布的特殊二叉树，规则的特点是，对于每一个节点，其左子树上的任意节点的值都小于根节点，且右子树上任意节点的值都大于根节点。</p>
-
-<p class="h1">二、BST树基本操作概述</p>
-<p class="h3">时间关系，这里之间简述BST中最基础的删除操作第三种情况</p>
-<p>对于单个删除节点，若该节点上即存在左子树又存在右子树，要对该节点进行删除，实际的操作是，删除该节点左子树的右子树上的叶子子节点，若被删除节点的左子树没有右子树，则直接删除该节点的左子树的根节点即可。
-节点删除完成后，要让实际被删除节点的key值赋给要求被删除的节点，这样就实现了BST树的节点删除操作。</p>
+            <p class="h1">一、huffman编码树概述</p>
+<p>huffman编码是一种可变长编码<span style="color:green">（VLC：variable length coding）</span>方式，于1952年由huffman提出。依据字符在需要编码文件中出现的概率提供对字符的唯一编码，并且保证了可变编码的平均编码最短，被称为最优二叉树，有时又称为最佳编码。</p>
+<p class="h1">二、如何构造一颗huffman编码树</p>
+<p><img href="/assets/huffman编码树构建图.png" /></p>
+<p class="h3">构造huffman树的哈夫曼算法如下：</p>
+<ul>
+<li>（1）n节点的权值｛w1、w2、·····，wn｝构成n棵二叉树集合F=｛T1，T2，···，Tn｝，每棵二叉树Ti只有一个带权为Wi的根节点，左右孩子均空。</li>
+<li>（2）在F中选取两棵根节点权值最小的作为树的左右孩子构造一棵新的二叉树，且置根节点的权值为左右孩子权值之和，在F中删除这两棵树，新二叉树之于F中</li>
+<li>（3）重复（2），直到F中只有一棵树为止，这棵树就是huffman树。
+  上面就是以abcd四个节点构造huffman树的过程。</li>
+</ul>
 
             <br>
             <section>
@@ -132,13 +136,13 @@
        <ul class="pager">
         
         <li class="previous">
-            <a href="/2018/01/17/%E9%98%9F%E5%88%97.html" data-toggle="tooltip" data-placement="top" title="队列">上一篇：  <span>队列</span>
+            <a href="/2018/01/18/BST.html" data-toggle="tooltip" data-placement="top" title="BST">上一篇：  <span>BST</span>
             </a>
         </li>
         
         
         <li class="next">
-            <a href="/2018/01/18/huffman%E7%BC%96%E7%A0%81.html" data-toggle="tooltip" data-placement="top" title="huffman编码">下一篇：  <span>huffman编码</span>
+            <a href="/2018/01/18/%E5%A0%86.html" data-toggle="tooltip" data-placement="top" title="堆">下一篇：  <span>堆</span>
             </a>
         </li>
         

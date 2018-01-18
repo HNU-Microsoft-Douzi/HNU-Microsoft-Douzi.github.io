@@ -40,17 +40,16 @@
 <div class="blog-content">
     <div class="Wrapper">
         <div class="Header">
-            <p class="h0">BST</p>
+            <p class="h0">堆</p>
                 <time datetime="2018-01-18 00:00:00 +0800" itemprop="datePublished" class="time_record">2018-01-18</time>
         </div>
         <div class="Content">
-            <p class="h1">一、BST树概论</p>
-<p>BST树(Binary search tree)，又被称为二叉搜索树，二叉排序树，实际上是按照一定逻辑规则排布的特殊二叉树，规则的特点是，对于每一个节点，其左子树上的任意节点的值都小于根节点，且右子树上任意节点的值都大于根节点。</p>
-
-<p class="h1">二、BST树基本操作概述</p>
-<p class="h3">时间关系，这里之间简述BST中最基础的删除操作第三种情况</p>
-<p>对于单个删除节点，若该节点上即存在左子树又存在右子树，要对该节点进行删除，实际的操作是，删除该节点左子树的右子树上的叶子子节点，若被删除节点的左子树没有右子树，则直接删除该节点的左子树的根节点即可。
-节点删除完成后，要让实际被删除节点的key值赋给要求被删除的节点，这样就实现了BST树的节点删除操作。</p>
+            <p class="h1">一、堆的特性</p>
+<p>堆（也叫优先队列），是一棵完全二叉树，它的特点是父节点的值大于（小于）两个子节点的值（分别称为大顶堆和小顶堆）。它常用于管理算法执行过程中的信息，应用场景包括堆排序，优先队列等。
+<br /></p>
+<p class="h1">二、堆的创建操作</p>
+<p>堆的创建，构建一个数组A，然后向数组中输入要存入的元素，从最后一个位置开始往前找父节点，找到一个父节点，就和它的左右子树比较大小，并进行位置的调整，不断重复这个操作的过程，直到整棵树由后到前所有的父节点遍历完毕，整个堆的调整就完成了。<br />
+<span style="color:blue">（在调整时候的具体操作：实际上是将需要调整的元素向下比较，找到满足条件的位置后，将满足条件的位置向上的元素依次赋值给其父节点，这样的话原来需要调整的元素key值等于了其原本子节点的值，而需要调整元素的真正位置已经被找到，只不过值和其父节点一样，所以此时之需氧将需要调整元素的key值赋给这个位置就完成了堆的调整。）</span></p>
 
             <br>
             <section>
@@ -132,15 +131,10 @@
        <ul class="pager">
         
         <li class="previous">
-            <a href="/2018/01/17/%E9%98%9F%E5%88%97.html" data-toggle="tooltip" data-placement="top" title="队列">上一篇：  <span>队列</span>
+            <a href="/2018/01/18/huffman%E7%BC%96%E7%A0%81.html" data-toggle="tooltip" data-placement="top" title="huffman编码">上一篇：  <span>huffman编码</span>
             </a>
         </li>
         
-        
-        <li class="next">
-            <a href="/2018/01/18/huffman%E7%BC%96%E7%A0%81.html" data-toggle="tooltip" data-placement="top" title="huffman编码">下一篇：  <span>huffman编码</span>
-            </a>
-        </li>
         
     </ul>
 </section>
