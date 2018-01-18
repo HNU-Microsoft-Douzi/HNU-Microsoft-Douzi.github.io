@@ -40,53 +40,17 @@
 <div class="blog-content">
     <div class="Wrapper">
         <div class="Header">
-            <p class="h0">队列</p>
-                <time datetime="2018-01-17 00:00:00 +0800" itemprop="datePublished" class="time_record">2018-01-17</time>
+            <p class="h0">BST</p>
+                <time datetime="2018-01-18 00:00:00 +0800" itemprop="datePublished" class="time_record">2018-01-18</time>
         </div>
         <div class="Content">
-            <p class="h1">一、什么是队列?</p>
-<p>在我看来，队列和栈一样，都属于线性表的一种，相对于链表的双向自由的不同，队列满足先进先出的原则，正是这个核心原则构成了整个队列的各种基本操作，它作为一种操作受限的线性表。进行插入操作的端称为队尾，进行删除从啊做的端称为队头。
+            <p class="h1">一、BST树概论</p>
+<p>BST树(Binary search tree)，又被称为二叉搜索树，二叉排序树，实际上是按照一定逻辑规则排布的特殊二叉树，规则的特点是，对于每一个节点，其左子树上的任意节点的值都小于根节点，且右子树上任意节点的值都大于根节点。</p>
 
-接下来的文章中，我会实例化的去描述这种数据类型：
-在我的头脑空间中，我想象出一个完全三维的世界，这个三维世界中有一个长方体的盒子，它有头和尾分别表示队头和队尾，然而这个世界有一个规则，就是如果我要将东西放进这个盒子的话，我只能从它的尾端放入，然后想要拿出来的话，只能从盒子头部将物体取出，若整个盒子中充满了许多的物体，我想从中取出一个位于盒子中间的物体，那么我需要将其前面的所有物体全部从头部取出以后，才能继续从头部取出这个物体，而不能直接从盒子的侧边将其拿出，因为这是不符合这个世界规则的。
-</p>
-
-<p class="h1">二、队列的ADT</p>
-
-<figure class="highlight"><pre><code class="language-linenos" data-lang="linenos">ADT Queue{
-
-数据对象：D ={ ai|ai∈ElemSet,  i=1, 2, …, n, n &gt;= 0 }
-
-
-数据关系：R = {&lt;ai-1, ai&gt; | ai-1, ai∈D,  i=2,3,…,n }
-
-       约定a1端为队首，an端为队尾。
-
-基本操作：
-
-Create()：创建一个空队列；
-
-EmptyQue()：若队列为空，则返回true ，否则返回flase ；
-
-FullQue();若队列为满，则返回true ，否则返回flase ；
-
-⋯⋯
-
-InsertQue(x) ：向队尾插入元素x；
-
-DeleteQue(x) ：删除队首元素x；
-
-} ADT Queue</code></pre></figure>
-
-<p class="h1">三、队列的基本操作。</p>
-<p>1.队列的创建
-  创建形式同链表一样，这里不再讨论。
-2.队列的插入
-  队列的插入操作中，需要先声明一个新的节点，并申请空间，由队列受到的拘束，这里的插入操作，只能实现在队尾。
-3.队列的删除
-  队列的删除操作需要先声明一个节点DelNode,相应的具体操作同链表一样，只是删除的位置受到队列的拘束只能进行在队列的头部。
-4.队列的销毁。
-  队列的销毁，只要通过一个while循环调用队列的删除操作就可以了，目的也是将队列申请到的空间全部释放。</p>
+<p class="h1">二、BST树基本操作概述</p>
+<p class="h3">时间关系，这里之间简述BST中最基础的删除操作第三种情况</p>
+<p>对于单个删除节点，若该节点上即存在左子树又存在右子树，要对该节点进行删除，实际的操作是，删除该节点左子树的右子树上的叶子子节点，若被删除节点的左子树没有右子树，则直接删除该节点的左子树的根节点即可。
+节点删除完成后，要让实际被删除节点的key值赋给要求被删除的节点，这样就实现了BST树的节点删除操作。</p>
 
             <br>
             <section>
@@ -168,15 +132,10 @@ DeleteQue(x) ：删除队首元素x；
        <ul class="pager">
         
         <li class="previous">
-            <a href="/2018/01/17/%E7%BA%BF%E6%80%A7%E8%A1%A8.html" data-toggle="tooltip" data-placement="top" title="线性表">上一篇：  <span>线性表</span>
+            <a href="/2018/01/17/%E9%98%9F%E5%88%97.html" data-toggle="tooltip" data-placement="top" title="队列">上一篇：  <span>队列</span>
             </a>
         </li>
         
-        
-        <li class="next">
-            <a href="/2018/01/18/BST.html" data-toggle="tooltip" data-placement="top" title="BST">下一篇：  <span>BST</span>
-            </a>
-        </li>
         
     </ul>
 </section>
