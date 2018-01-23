@@ -40,7 +40,7 @@ form{
     text-align: center;
 }
 .content-photo img{
-    height:95%
+    height:150%
 }
 .main-content h1{
     font-family:"Mael";
@@ -53,6 +53,7 @@ form{
     width:80%;
     border-bottom:2px solid #bcbcbc;
     border-radius:80px;
+    margin-left:10%;
 }
 .main-content p{
     font-size:12px;;

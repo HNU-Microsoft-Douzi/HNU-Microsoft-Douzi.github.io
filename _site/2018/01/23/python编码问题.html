@@ -40,21 +40,16 @@
 <div class="blog-content">
     <div class="Wrapper">
         <div class="Header">
-            <p class="h0">huffman编码</p>
-                <time datetime="2018-01-18 00:00:00 +0800" itemprop="datePublished" class="time_record">2018-01-18</time>
+            <p class="h0">python编码问题</p>
+                <time datetime="2018-01-23 00:00:00 +0800" itemprop="datePublished" class="time_record">2018-01-23</time>
         </div>
         <div class="Content">
-            <p class="h1">一、huffman编码树概述</p>
-<p>huffman编码是一种可变长编码<span style="color:green">（VLC：variable length coding）</span>方式，于1952年由huffman提出。依据字符在需要编码文件中出现的概率提供对字符的唯一编码，并且保证了可变编码的平均编码最短，被称为最优二叉树，有时又称为最佳编码。</p>
-<p class="h1">二、如何构造一颗huffman编码树</p>
-<p><img src="/assets/huffman编码树构建图.png" /></p>
-<p class="h3">构造huffman树的哈夫曼算法如下：</p>
-<ul>
-<li>（1）n节点的权值｛w1、w2、·····，wn｝构成n棵二叉树集合F=｛T1，T2，···，Tn｝，每棵二叉树Ti只有一个带权为Wi的根节点，左右孩子均空。</li>
-<li>（2）在F中选取两棵根节点权值最小的作为树的左右孩子构造一棵新的二叉树，且置根节点的权值为左右孩子权值之和，在F中删除这两棵树，新二叉树之于F中</li>
-<li>（3）重复（2），直到F中只有一棵树为止，这棵树就是huffman树。
-  上面就是以abcd四个节点构造huffman树的过程。</li>
-</ul>
+            <p>在python中，了解它内在的编码方式可以帮助更好的解决各种python使用过程中出现的问题，这两天使用python的时候出现了一些问题，因此在这里做一个记录，本来想要利用文件输入输出和简单的函数来写一个简单的统计文件字数的程序，可是在实际处理时，在文件的交互上出现了问题。
+<img src="/assets/python编码问题.png" />&lt;/img&gt;</p>
+<p>如上图，这样写出来输出的结果并不能正确输出中文，而是utf-8码，也就是你设置的脚本编译码。问题来了，为什么会导致这样的现象出现而不是直接出现中文呢？是python本身对中文不兼容吗？当然不是，是因为这里的格式进行以下转换就行了：</p>
+<p><img src="/assets/python编码问题1.png" />&lt;/img&gt;
+<br /></p>
+<p>然后想说的问题这里虽然没有提到，但还是要说以下，在python中，当你输入一个字符串的时候，当需要进行字符串的转换时，它首先进行的是decode,先将字符串的编码形式转换为它可以识别的Unicode编码，也许这边识别不是很准确，但是编码转换的目的编码的确是Unicode，然后在encode为其它的编码处理后才可以正确显示，这里不再做详细讨论，当遇到实际问题时会着重强调。</p>
 
             <br>
             <section>
@@ -136,15 +131,10 @@
        <ul class="pager">
         
         <li class="previous">
-            <a href="/2018/01/18/BST.html" data-toggle="tooltip" data-placement="top" title="BST">上一篇：  <span>BST</span>
+            <a href="/2018/01/23/python%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E8%84%B8%E5%92%8C%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F.html" data-toggle="tooltip" data-placement="top" title="python的局部变量和全局变量">上一篇：  <span>python的局部变量和全局变量</span>
             </a>
         </li>
         
-        
-        <li class="next">
-            <a href="/2018/01/18/%E5%9B%BE%E8%AE%BA%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98.html" data-toggle="tooltip" data-placement="top" title="图论最短路径问题">下一篇：  <span>图论最短路径问题</span>
-            </a>
-        </li>
         
     </ul>
 </section>

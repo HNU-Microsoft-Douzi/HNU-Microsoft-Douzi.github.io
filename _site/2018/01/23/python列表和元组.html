@@ -40,21 +40,81 @@
 <div class="blog-content">
     <div class="Wrapper">
         <div class="Header">
-            <p class="h0">huffman编码</p>
-                <time datetime="2018-01-18 00:00:00 +0800" itemprop="datePublished" class="time_record">2018-01-18</time>
+            <p class="h0">python中列表和元组</p>
+                <time datetime="2018-01-23 00:00:00 +0800" itemprop="datePublished" class="time_record">2018-01-23</time>
         </div>
         <div class="Content">
-            <p class="h1">一、huffman编码树概述</p>
-<p>huffman编码是一种可变长编码<span style="color:green">（VLC：variable length coding）</span>方式，于1952年由huffman提出。依据字符在需要编码文件中出现的概率提供对字符的唯一编码，并且保证了可变编码的平均编码最短，被称为最优二叉树，有时又称为最佳编码。</p>
-<p class="h1">二、如何构造一颗huffman编码树</p>
-<p><img src="/assets/huffman编码树构建图.png" /></p>
-<p class="h3">构造huffman树的哈夫曼算法如下：</p>
-<ul>
-<li>（1）n节点的权值｛w1、w2、·····，wn｝构成n棵二叉树集合F=｛T1，T2，···，Tn｝，每棵二叉树Ti只有一个带权为Wi的根节点，左右孩子均空。</li>
-<li>（2）在F中选取两棵根节点权值最小的作为树的左右孩子构造一棵新的二叉树，且置根节点的权值为左右孩子权值之和，在F中删除这两棵树，新二叉树之于F中</li>
-<li>（3）重复（2），直到F中只有一棵树为止，这棵树就是huffman树。
-  上面就是以abcd四个节点构造huffman树的过程。</li>
-</ul>
+            <p><span style="color:grey;font-size:12px;">(以下内容部分引用于”RUNOOB.COM”)</span></p>
+<p class="h1">列表List</p>
+<p>创建一个列表，只要把逗号分隔的不同的数据项使用方括号括起来即可。
+<span style="color:blue">（相对于其它的强类型语言来讲，弱类型语言的优势在于它们的数组型数据结构就像是python的列表，就像一个大砸缸，可以把所有的数据类型都充当元素存入其中，想一下是不是很强大呢？）</span>
+	<br />
+	list1 = [‘physics’, ‘chemistry’, 1997, 2000]
+	list2 = [1, 2, 3, 4, 5 ]
+	list3 = [“a”, “b”, “c”, “d”]</p>
+<p class="h2">一、列表中元素的访问</p>
+<p>使用下标索引来访问列表中的值，同样你也可以使用方括号的形式截取字符，如下所示：</p>
+
+<figure class="highlight"><pre><code class="language-linenos" data-lang="linenos">#!/usr/bin/python
+ 
+list1 = ['physics', 'chemistry', 1997, 2000]
+list2 = [1, 2, 3, 4, 5, 6, 7 ]
+ 
+print "list1[0]: ", list1[0]
+print "list2[1:5]: ", list2[1:5]</code></pre></figure>
+
+<p><span style="color:green">输出结果:</span></p>
+
+<figure class="highlight"><pre><code class="language-linenos" data-lang="linenos">list1[0]:  physics
+list2[1:5]:  [2, 3, 4, 5]</code></pre></figure>
+
+<p><span style="color:blue">(Tip:当使用截取符号的时候，可以加深下对于列表的理解，实际上列表就相当于是常用数据结构中的环状链表，首位相接，它的第一个元素对应下标为0，而最后一个元素的下标可以写成n-1却也可以写成-1)</span></p>
+<p class="h2">二、列表的基本操作<p>
+<p class="h3">更新列表</p>
+方法：利用append()方法来实现
+<p class="h3">删除列表元素</p>
+方法:del语句
+可以删除一整个列表，也可以删除单独的元素，取决于是否选定列表的某个元素
+<p class="h1">Python列表函数&amp;方法</p>
+<p class="h3">Python包含以下函数:</p>
+
+序号	函数<br />
+1	cmp(list1, list2)<br />
+比较两个列表的元素<br />
+2	len(list)<br />
+列表元素个数<br />
+3	max(list)<br />
+返回列表元素最大值<br />
+4	min(list)<br />
+返回列表元素最小值<br />
+5	list(seq)<br />
+将元组转换为列表<br />
+<br />
+<p class="h3">Python包含以下方法:</p>
+序号	方法
+<br />
+1	list.append(obj)<br />
+在列表末尾添加新的对象<br />
+2	list.count(obj)<br />
+统计某个元素在列表中出现的次数<br />
+3	list.extend(seq)<br />
+在列表末尾一次性追加另一个序列中的多个值（用新列表扩展原来的列表)<br />
+4	list.index(obj)<br />
+从列表中找出某个值第一个匹配项的索引位置<br />
+5	list.insert(index, obj)<br />
+将对象插入列表<br />
+6	list.pop(obj=list[-1])<br />
+移除列表中的一个元素（默认最后一个元素），并且返回该元素的值<br />
+7	list.remove(obj)<br />
+移除列表中某个值的第一个匹配项<br />
+8	list.reverse()<br />
+反向列表中元素<br />
+9	list.sort([func])<br />
+对原列表进行排序<br />
+
+<p class="h1">元组</p>
+元组的话，和列表差不多但是有点儿区别，元组的调用符号是(),并且列表中元素可以修改，而元组不可以修改，并且如果元组中仅有一个元素的话，则要在元素后加上逗号(",")。
+</p></p>
 
             <br>
             <section>
@@ -136,13 +196,13 @@
        <ul class="pager">
         
         <li class="previous">
-            <a href="/2018/01/18/BST.html" data-toggle="tooltip" data-placement="top" title="BST">上一篇：  <span>BST</span>
+            <a href="/2018/01/23/python3%E7%9A%84nonlocal%E5%A3%B0%E6%98%8E.html" data-toggle="tooltip" data-placement="top" title="Python3的nonlocal声明">上一篇：  <span>Python3的nonlocal声明</span>
             </a>
         </li>
         
         
         <li class="next">
-            <a href="/2018/01/18/%E5%9B%BE%E8%AE%BA%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98.html" data-toggle="tooltip" data-placement="top" title="图论最短路径问题">下一篇：  <span>图论最短路径问题</span>
+            <a href="/2018/01/23/python%E7%9A%84%E5%B1%80%E9%83%A8%E5%8F%98%E8%84%B8%E5%92%8C%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F.html" data-toggle="tooltip" data-placement="top" title="python的局部变量和全局变量">下一篇：  <span>python的局部变量和全局变量</span>
             </a>
         </li>
         
