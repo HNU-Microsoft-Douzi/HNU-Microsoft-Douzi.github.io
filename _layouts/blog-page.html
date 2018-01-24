@@ -51,7 +51,25 @@
             {% include new-old.html %}
             <br>
         </div>
-        {% if page.comments %} {% endif %}
+        <div id="gitmentContainer"></div>
+        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+        <script>
+            var gitment = new Gitment({
+                owner: 'HNU-Microsoft-Douzi',
+                repo: 'HNU-Microsoft-Douzi.github.io',
+                oauth: {
+                    client_id: 'cbc17f04d456d2bf3ee7',
+                    client_secret: '40bb972554b834834bdae4e70e3263f35630a42c',
+                },
+            });
+            gitment.render('gitmentContainer');
+        </script>
+
+        作者：JacobPan
+        链接：https://www.jianshu.com/p/2940e0eda89f
+        來源：简书
+        著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
         <div class="FooterPush"></div>
     </div>
 </div>
