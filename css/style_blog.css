@@ -21,6 +21,18 @@ html,body{
 form{
     height: 100%;
 }
+.links{
+    font-size:24px;
+    color: #3a3a3a;
+    font-weight:bold;
+    text-align: center;
+    display:inline;
+}
+.links a{
+    text-decoration: none;
+    color:white;
+    font-size:20px;
+}
 .navigation{
     width: 22%;
     background:url("/images/background4.jpg") no-repeat 100% 100%;
