@@ -52,6 +52,23 @@
 <li>2.若存在一条从顶点 A 到顶点 B 的路径，那么在序列中顶点 A 出现在顶点 B 的前面。</li>
 </ul>
 <p style="color:red">(通常来讲，一个有向无环图可以有一个或多个拓扑排序序列)</p>
+<p><br /></p>
+<p class="h1">拓扑排序流程图：</p>
+<p><img src="/assets/拓扑排序1.png" /></p>
+<p>①如图，第一步先找到没有前驱的节点，发现V5正好满足条件，于是有:<br />拓扑序列：V5</p>
+<p><br />
+<img src="/assets/拓扑排序2.png" /></p>
+<p>②，将与顶点V5相连的边全部删除，然后继续寻找第二个没有前驱的节点，发现V1满足条件，于是有:<br />拓扑序列：V5-&gt;V1</p>
+<p><br />
+<img src="/assets/拓扑排序3.png" /></p>
+<p>③重复步骤②<br />拓扑序列：V5-&gt;V1-&gt;V4</p>
+<p><br />
+<img src="/assets/拓扑排序4.png" /></p>
+<p>④重复步骤②<br />拓扑序列：V5-&gt;V1-&gt;V4-&gt;V2</p>
+<p><br />
+<img src="/assets/拓扑排序5.png" /></p>
+<p>⑤直到最后一步将剩下的一个节点取出加入到拓扑序列的后一位，有向五环图的拓扑排序算法便结束了。<br />拓扑序列：V5-&gt;V1-&gt;V4-&gt;V2-&gt;V3</p>
+<p><br /></p>
 
             <br>
             <section>
@@ -167,11 +184,12 @@
         </p>
 
         <div class="FooterPush"></div>
+        <div align="right" style="color:red">
+        <!-- 访问统计 -->
+        <script src="/js/traffic_access.js"></script>
+        </div>
     </div>
-</div>
-<div align="right" style="color:red">
-    <!-- 访问统计 -->
-    <script src="/js/traffic_access.js"></script>
+
 </div>
 <footer>
     <div id="footer-bottom" style="margin-left:200px"><ul><p>Copyright 2017 design by <a href="/">Zhang Xiaoyi</a></p></ul></div>
