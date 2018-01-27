@@ -21,10 +21,10 @@
 <div class="navigation">
     <div class="main-content">
         <div class="content-photo">
-            <img src="/images/tags_logo.png" alt="您要查找的图片不存在啦！">
+            <img src="/images/tags_logo.png" alt="图片不存在，请刷新重试！">
         </div>
         <h1>Zhang Xiaoyi</h1>
-        <hr class="line">
+        <hr align="center" width="50%" />
         <p>
             welcome come to my blog,my dear!
         </p>
@@ -32,7 +32,7 @@
             <li><a href="http://www.zxyblog.xyz">网站首页</a></li>
             <li><a href="/tags/tags.html" title="技术博文">技术博文</a>
             </li>
-            <li><a href="/">个人留言</a></li>
+            <li><a href="/message%20board.html">个人留言</a></li>
             <li><a href="/">友情链接</a></li>
         </ul>
     </div>
@@ -150,7 +150,24 @@
 
             <br>
         </div>
-        
+        <div id="gitmentContainer"></div>
+        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+        <script>
+            var gitment = new Gitment({
+                owner: 'HNU-Microsoft-Douzi',
+                repo: 'HNU-Microsoft-Douzi.github.io',
+                oauth: {
+                    client_id: 'cbc17f04d456d2bf3ee7',
+                    client_secret: '40bb972554b834834bdae4e70e3263f35630a42c',
+                },
+            });
+            gitment.render('gitmentContainer');
+        </script>
+        <p style="color:grey;font-size:10px">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作者：JacobPan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 链接：<a href="https://www.jianshu.com/p/2940e0eda89f">https://www.jianshu.com/p/2940e0eda89f</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;來源：简书
+        </p>
+
         <div class="FooterPush"></div>
     </div>
 </div>
