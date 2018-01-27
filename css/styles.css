@@ -1,7 +1,7 @@
 @charset "gb2312";
 /* CSS Document */
 *{ margin:0; padding:0}
-body{ font-family: Arial, Helvetica, sans-serif; color:#3F3E3C;  line-height: 1.5; font-size:12px;}
+body{ font-family: Arial, Helvetica, sans-serif; color:#3F3E3C;  line-height: 1.5; font-size:12px;background:url("/images/background.jpg") no-repeat fixed}
 img{ border:0}
 ul {list-style: none;}
 a {text-decoration:none;}	
