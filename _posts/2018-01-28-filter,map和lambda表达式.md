@@ -2,7 +2,7 @@
 layout: blog-page
 title: "python的filter表达式，map表达式和lambda表达式"
 data: 2018-01-28
-tag: python
+tags: python
 ---
 <img src="/assets/python的lambda.png"><br>
 <p>如上图所示，展示了python的filter表达式和map表达式，lambda表达式的用法</p>
