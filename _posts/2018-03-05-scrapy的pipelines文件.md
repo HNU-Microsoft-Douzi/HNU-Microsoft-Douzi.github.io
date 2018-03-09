@@ -33,3 +33,34 @@ def process_item(self, item, spider):
 {% endhighlight %}
 <br>
 <p><b>最后一个<span style="color:green">close_spider(self, spider)</span>在spider结束的时候执行，一般用来断开数据库链接或者做数据收尾工作。</b></p>
+
+<br><br><br>
+<p>一般而言，若要将数据储存在json文件中，有如下操作：</p>
+{% highlight linenos %}
+class MyPipeline(object):
+    def __init__(self):
+        #打开文件
+        self.file = open('data.json', 'w', encoding='utf-8')
+    #该方法用于处理数据
+    def process_item(self, item, spider):
+        #读取item中的数据
+        line = json.dumps(dict(item), ensure_ascii=False) + "\n"
+        #写入文件
+        self.file.write(line)
+        #返回item
+        return item
+    #该方法在spider被开启时被调用。
+    def open_spider(self, spider):
+        pass
+    #该方法在spider被关闭时被调用。
+    def close_spider(self, spider):
+        pass
+{% endhighlight %}
+
+<p style="color:red">注意：若要成功调用pipelines文件，则必须在settings构建pipelines的优先级信息：</p>
+{% highlight linenos %}
+ITEM_PIPELINES = {
+	'文件夹名.pipeline文件名.pipeline类名': 300
+}
+{% endhighlight %}
+<p>右侧的数据，表示pipelines文件的优先级，1~1000,越小越优先执行，一般写300就差不多。</p>
