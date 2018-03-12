@@ -1,7 +1,7 @@
 ---
 layout: blog-page
 data: 2018-02-08
-title: scrapy的pipelines文件"
+title: "scrapy的pipelines文件"
 tags: 爬虫
 ---
 <p class="h2">Scrapy的Pipelines</p>
