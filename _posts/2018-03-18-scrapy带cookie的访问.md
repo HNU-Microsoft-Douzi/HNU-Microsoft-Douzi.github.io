@@ -23,3 +23,19 @@ def start_requests(self):
 {% endhighlight %}
 <p>需要注意的是，在settings.py中进行配置：</p>
 <p style="color:red"><b>ROBOTSTXT_OBEY=False</b></p>
+<br>
+<p><b>但是有scrapy的官方文档进行查阅后可知：</b></p>
+<p>可以在scrapy的spider下面直接附加request_with_cookies参数，比如：</p>
+{% highlight linenos %}
+request_with_cookies  =  请求（url = “http://www.example.com” ，
+                               cookies = { 'currency' ： 'USD' ， 'country' ： 'UY' }）
+{% endhighlight %}
+or<br>
+{% highlight linenos %}
+request_with_cookies  =  Request （url = “http://www.example.com” ，
+                               cookies = [{ 'name' ： 'currency' ，
+                                        'value' ： 'USD' ，
+                                        'domain' ： 'example.com' ，
+                                        'path ' ： '/ currency' }]）
+{% endhighlight %}
+<p>后一种形式允许自定义domain和path Cookie的属性。这仅在cookie被保存用于以后的请求时才有用。</p>
