@@ -15,7 +15,7 @@ tags: 爬虫
 
 <p>运行代码的时候，发现系统会报出一个错误：</p><br>
 <p><b>代码：</b></p><br>
-{% highlight linenos %}
+{% highlight python %}
 import selenium
 from selenium import webdriver
 
@@ -33,7 +33,7 @@ selenium.common.exceptions.WebDriverException: Message: 'Application' executable
 <br>
 <p><b>经过检查，有下面两种解决方案：</b></p><br>
 <p>第一种：直接在webdriver方法中给出chromedriver的绝对路径，具体实现方法如下：</p>
-{% highlight linenos %}
+{% highlight python %}
 sel = selenium.webdriver.Chrome(r"C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe")
 {% endhighlight %}<br>
 <p>第二种方法：<span style="color:grey">（一劳永逸）</span></p>

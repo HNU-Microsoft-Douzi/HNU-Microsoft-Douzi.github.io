@@ -10,7 +10,7 @@ tags: 爬虫
 <P style="color:grey">test表示保存的json文件名</p>
 
 <p><b>将item写入JSON文件</b></p>
-{% highlight linenos %}
+{% highlight python %}
 import json
 class JsonWriterPipeline(object):
 	def __init__(self):

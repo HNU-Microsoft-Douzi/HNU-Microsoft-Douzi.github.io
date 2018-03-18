@@ -9,7 +9,7 @@ tags: 爬虫
 <br>
 
 <p><b>一般来说，把里面的内容分作三个部分：</b></p>
-{% highlight linenos %}
+{% highlight python %}
 def open_spider(self, spider):
 def process_item(self, item, spider):
 def close_spider(self, spider):

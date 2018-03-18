@@ -7,7 +7,7 @@ tags: 爬虫
 <p><b>最近涉及到了scrapy的框架，然后在练习的时候发现该框架用来下载图片很方便，但是一开始的时候因为用的Scrapy自带框架，所以出了很多问题，所以在这里记录以下。</b></p>
 <br>
 <p class="h2">一、定义items.py</p>
-{% highlight linenos %}
+{% highlight python %}
 import scrapy 
 class Item(scarpy.Item):
 	image_urls = scrapy.Field()
@@ -18,7 +18,7 @@ class Item(scarpy.Item):
 <br>
 
 <p class="h2">二、定义pipelines.py</p>
-{% highlight linenos %}
+{% highlight python %}
 class YourImagePipeline(ImagePipeline):
 {% endhighlight %}
 <p>*注意，这里定制你的Image Pipeline的管道文件，这个继承类尤其重要，它继承自ImagesPipeline这个类，然后因此可以在类的内部对两个函数进行重载:<br>
@@ -42,7 +42,7 @@ ps:这个地方很容易出错,因为你继承的Image pipeline实际上还是�
 如果你要下载的不单单是图片，还要设置其它的管道文件，那么你可以同时在ITEM_PIPELINE中加上另外的管道文件并设置优先级即可。
 </p>
 <p><b>在settings的文件中，你还可以设置图片压缩的选项。</b></p>
-{% highlight linenos %}
+{% highlight python %}
 IMAGES_THUMBS = {
 
 ’small’: (50, 50),
@@ -53,7 +53,7 @@ IMAGES_THUMBS = {
 {% endhighlight %}
 <p>(就像上面这样)</p>
 <p><b>同样，你同样可以过滤图片，方法如下：</b></p>
-{% highlight linenos %}
+{% highlight python %}
 IMAGES_MIN_HEIGHT = 110
 
 IMAGES_MIN_WIDTH = 110

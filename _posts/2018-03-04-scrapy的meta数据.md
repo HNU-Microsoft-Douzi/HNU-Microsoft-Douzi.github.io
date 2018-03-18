@@ -13,7 +13,7 @@ tags: 爬虫
 <br>
 
 <p>这些信息可以是任意类型的，比如值、字符串、列表、字典......的值，分析见如下语句（爬虫文件）:</p>
-{% highlight linenos %}
+{% highlight python %}
 作者：小伙
 链接：https://www.zhihu.com/question/54773510/answer/146971644
 来源：知乎
@@ -44,7 +44,7 @@ class example(scrapy.Spider):
            yield item
 {% endhighlight %}
 <p>items.py中语句如下:</p>
-{% highlight linenos %}
+{% highlight python %}
 class ExampleClass(scrapy.Item):
 	name = scrapy.Field()
 	htmlurl = scrapy.Field()

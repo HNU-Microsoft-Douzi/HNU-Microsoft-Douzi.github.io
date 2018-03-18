@@ -5,7 +5,7 @@ title: "scrapy的spider写法详细解析"
 tags: 爬虫
 ---
 <p class="h2">分布解析scrapy中spider的写法:</p>
-{% highlight linenos %}
+{% highlight python %}
 对于scrapy中的spider的写法：
 class Test(self.Spider):
 	name = ""#爬虫的名字，用来在命令行中用scrapy crawl name进行调用

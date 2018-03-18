@@ -16,14 +16,14 @@ map也有两个参数，但它表示的是映射的关系，它对于给定的�
 <p class="h1">lambda表达式</p>
 lambda表达式的存在极大程度的精简了py的语句，也一定程度上增强了可读性。<br>
 一般的函数构造方法:
-{% highlight linenos %}
+{% highlight python %}
 >>> def add(x, y)
 ...		return x + y
 >>> add(3,5)
 >   8
 {% endhighlight %}
 下面是lambda表达式的实现方法：
-{% highlight linenos %}
+{% highlight python %}
 >>>g = lambda x, y: x + y
 >>>g(3,5)
 >  8
