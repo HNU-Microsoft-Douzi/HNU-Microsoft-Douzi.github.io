@@ -17,7 +17,7 @@ def close_spider(self, spider):
 <br>
 <p><b>这三个函数构成了pipelines文件的大体框架，对于第一个函数<span style="color:red">open_spider(self, spider)</span>一般在spider开始的时候执行，这个函数中，一般会连接数据库，为数据存储做准备。<br>对于第二个函数<span style="color:blue">process_item(self, item, spider)</span>一般会在捕捉到item的时候执行，我们会在这里做数据过滤并把数据存入数据库。
 <span style="color:orange">(给出详细的方法：)在process_item中，我们通常会先将item中的子链接取出，并利用open函数创建文件，利用write写入，最后将文件关闭。)</span>详细代码如下：</b></p>
-{% highlight linenos %}
+{% highlight python %}
 def process_item(self, item, spider):
     sonUrls = item['sonUrls']
 
@@ -36,7 +36,7 @@ def process_item(self, item, spider):
 
 <br><br><br>
 <p>一般而言，若要将数据储存在json文件中，有如下操作：</p>
-{% highlight linenos %}
+{% highlight python %}
 class MyPipeline(object):
     def __init__(self):
         #打开文件
@@ -58,7 +58,7 @@ class MyPipeline(object):
 {% endhighlight %}
 
 <p style="color:red">注意：若要成功调用pipelines文件，则必须在settings构建pipelines的优先级信息：</p>
-{% highlight linenos %}
+{% highlight python %}
 ITEM_PIPELINES = {
 	'文件夹名.pipeline文件名.pipeline类名': 300
 }
