@@ -1,143 +1,42 @@
-<!doctype html>
-<html>
-<head>
-    <meta name="baidu-site-verification" content="feY247ksWg" />
-<meta charset="utf-8">
-<meta charset="GBK">
-<title>blog</title>
-<meta name="Keywords" content="" >
-<meta name="Description" content="" >
-<link href="css/styles.css" rel="stylesheet">
-<!--[if lt IE 9]>
-<script src="js/modernizr.js"></script>
-<![endif]-->
-<script src="js/jquery-1.4.4.min.js"></script>
-    <script async src="http://jerry-cdn.b0.upaiyun.com/hit-kounter/hit-kounter-0.1.1.js"></script>
-<script src="js/main.js"></script>
-    <link rel="icon" href="/images/blog.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="/images/blog.ico" type="image/x-icon"/>
-</head>
-<body>
-<audio src="/assets/woyuni.mp3" loop="loop" autoplay="autoplay"></audio>
-<header>
-<a href="/" id="logo"><img src="images/logo.png" alt=""/><h1>Blog Page</h1></a>
- <div id="wrap-menu">
-   <ul id="header-menu">
-     <li class="arrowdown"><a href="/">个人档案</a>
-        <ul class="second-lvl">
-           <li><a href="/">关于我</a></li>
-           <li><a href="/photos/index.html">我的相册</a></li>
-           <li><a href="/">我的作品</a></li>
-         </ul>
-      </li>
-      <li><a href="/tags/tags.html" title="技术博文">技术博文</a>
-        </li>
-        <li><a href="/message%20board.html">给我留言</a></li>
-        <li><a href="/link.html">友情链接</a></li>
-    </ul>
-</div>
-</header>
-<div id="container">
-   <div class="banner">
-     <img src="images/banner1.jpg">
-   </div>
-</div>
-<div class="motto">
- <p class = "fl">过去的就让它过去，珍重眼前，着手未来。原一路前行，无畏风雨，固守本心！</p>
-  <p class = "sl">
-      <span>愿这大学不是所谓的象牙塔，而是一个弹簧，让你拿到曾失去的东西的弹簧。</span>
-      <br>
-  </p>
-  <ul class="inbar">
-    <li><img src="images/01.jpeg"></li>
-    <li><img src="images/02.jpeg"></li>
-    <li><img src="images/03.jpeg"></li>
-  </ul>
-</div>
-<div id="container2">
- <ul class="template">
-    <section>
-     <h2>关于我</h2>
-     <img src="images/about%20me.jpg">
-     <p>
-         走走停停，不要走的太快，偶尔驻足看看身边的落叶，看看身后的脚印，是否如想象般的，稳健踏去。
-     </p>
+---
+layout: page
+description: "一生想做浪漫极客"
+---
 
-     <h4><a href="/"><b>click here</b><span>more>></span></a></h4>
-    </section>
-     <section>
-     <h2>学习交流</h2>
-     <img src="images/life.jpg">
-     <p>
-     ps,js,php,c++,数据结构,ctf,html5,css...
-     <br>
-     学习之中不断的交流讨论，是达到目的最快捷的途径。
-     </p>
-     <h4><a href="/"><b>click here</b><span>more>></span></a></h4>
-    </section>
-        <section>
-     <h2>爱好相关</h2>
-     <img src="images/star.jpeg">
-     <p>
-     I Love Marvel...<br>
-     超喜欢狼叔的威猛霸气<br>
-     甜品对我的诱惑无与伦比，人生就是该享受美食<br>
-     热爱健身，并且水煮鸡胸肉真的难吃...<br>
-     </p>
-    <h4><a href="/"><b>click here</b><span>more>></span></a></h4>
-    </section>
- </ul>
+{% for post in paginator.posts %}
+<div class="post-preview">
+    <a href="{{ post.url | prepend: site.baseurl }}">
+        <h2 class="post-title">
+            {{ post.title }}
+        </h2>
+        {% if post.subtitle %}
+        <h3 class="post-subtitle">
+            {{ post.subtitle }}
+        </h3>
+        {% endif %}
+        <div class="post-content-preview">
+            {{ post.content | strip_html | truncate:200 }}
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
+    </p>
 </div>
-<div class="idea">
- <p>
-     魔前叩首三千年，敢问苍天何处仙？
- </p>
-</div>
-<div align="right" style="color:white">
+<hr>
+{% endfor %}
 
-    <!-- 访问统计 -->
-    <script src="/js/traffic_access.js"></script>
-</div>
-<footer>
-<div id="footer-bottom"><ul><p>Copyright 2017 design by <a href="/">Zhang Xiaoyi</a>
-    <iframe
-        style="margin-left: 2px; margin-bottom:-5px;"
-        frameborder="0" scrolling="0" width="91px" height="20px"
-        src="https://ghbtns.com/github-btn.html?user=MengZheK&repo=kangblog.github.io&type=star&count=true" >
-</iframe>|
-    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261874359'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1261874359%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
-</p></ul></div>
-</footer>
-<!--博客鼠标点击显示文字JS特效代码 -->
-<script type="text/javascript">
-
-    var a_idx = 0;
-    jQuery(document).ready(function($) {
-        $("body").click(function(e) {
-            var a = new Array("不前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福...", "没有光明是不幸的吗？需要光明才是真正的不幸！", "我不知道别离的滋味是这样的凄凉，我不知道说声再见要这么坚强", "我不是天生的王者，但我骨子里流动着不让我低头的血液", "我手里拿着刀，没法保护你。我放下刀，没法拥抱你...", "温柔善良的人总是难以生存，因为这世界既不温柔，也不正确", "错的不是我，是这个世界..." ,"人一生会遇到越2920万人，你爱上我的概率是0.000049，所以你不爱我，我不怪你", "不相信自己的人，连努力的价值都没有", "这世界上所有的不公平都是因为当事人能力的不足导致的", "曾经发生过的事情不可能忘记，只不过是想不起", "只要有你想要保护的东西，那就拔剑好了");
-            var $i = $("<span/>").text(a[a_idx]);
-            a_idx = (a_idx + 1) % a.length;
-            var x = e.pageX,
-                    y = e.pageY;
-            $i.css({
-                "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
-                "top": y - 20,
-                "left": x,
-                "position": "absolute",
-                "font-weight": "bold",
-                "color": "#ff6651"
-            });
-            $("body").append($i);
-            $i.animate({
-                        "top": y - 180,
-                        "opacity": 0
-                    },
-                    1500,
-                    function() {
-                        $i.remove();
-                    });
-        });
-    });
-</script>
-</body>
-</html>
+<!-- Pager -->
+{% if paginator.total_pages > 1 %}
+<ul class="pager">
+    {% if paginator.previous_page %}
+    <li class="previous">
+        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+    </li>
+    {% endif %}
+    {% if paginator.next_page %}
+    <li class="next">
+        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}
