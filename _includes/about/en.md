@@ -1,35 +1,19 @@
 
 
-> Yet another man.
+>Say what I want to say, do what I want to do,
+>Life is like a dream, learning what I learned is for the dream.
 
 
-Hi, I am *@huxpro* (Huang, Xuan), a software engineer & a designer. I previously worked as Web Front-End Engineer at [Alibaba Trip](https://www.alitrip.com/); Web Front-End Infrastructure Team Lead at [Wepiao.com](https://www.crunchbase.com/organization/wepiao#/entity); And [Invited Consultant on PWA]((https://medium.com/elemefe/upgrading-ele-me-to-progressive-web-app-2a446832e509)) at [Ele.me](https://github.com/elemefe/).
+I am zhang xiaoyi, now a computer undergraduate student in hunan university, no special skills, skills are still in the excavation, the road is long, only half.
 
-I studied Digital Media Art and graduated from [Communication University of China](https://en.wikipedia.org/wiki/Communication_University_of_China) by 2016, and am studying Computer Science at [Rochester Institute of Technology](https://en.wikipedia.org/wiki/Rochester_Institute_of_Technology) from 2017.
+Early software engineering, later digital media, art and programming combination, I call it visual engineers, self-study web crawler, to various anti - crawler attack!(don't scratch me, I'm a good man!), python, Java, c + +, not profound, involving less than the kernel, in the sea of true programming, my master is fur, see road, I will search up and down is probably this meaning.
 
+## Talks
 
-##### Talks
+Said as an aside, the point under the special want to tell me about themselves, at the lake big two years, the school curriculum training, to tell the truth, and I imagine different, like a lot of people said, have the so-called preparatory course, is in preparation for after the course, said yes, but ready to do this, perhaps, and so much more than most people think.
 
-- [Upgrading to Progressive Web Apps][9] · [JSConf China Shanghai 2017](http://2017.jsconf.cn/)
-- Building Progressive Web Apps · [CSDI Guangzhou 2017](http://www.csdisummit.com/)
-- The State of Progressive Web App · GDG IO Redux Beijing 2017
-- PWA Rehashing · Baidu HQ Beijing 2017
-- [Service Worker 101][5] · GDG DevFest Beijing 2016
-- [Progressive Web Apps][4] · QCon Shanghai 2016
-- Progressive Web App in my POV · GDG IO Redux Beijing 2016
-- [CSS Still Sucks 2015][2] · 2015
-- [JavaScript Modularization Journey][1] · 2015
+A lot of people!I can't distinguish between the ideal and the reality, and I am always immersed in my own imagination, like me.Emmm!But I think I'm in your world is right, at least have their own ideas and follow their own continue to go on, about have said before, I still think a lot of time has become China's university education system of a satellite product, do you want to do, can't learn what you learn, it is not just a private sadness, is also at the university of sorrow.
 
+Was the nose at the same time, under the condition of passive feeling very sad or upset, can only be in the range of you can try to change the situation, but for the so-called life, is just a drop in the bucket.If I can't do my best, how can I be born?I like to fantasize, so I always think: if I am that great saint, will be the body of tens of thousands of people, will be the wrong person of the world, destroy him a fragmented.Let this heaven, I mean, let this earth, dare not reverse my line!
 
-
-[1]: //huangxuan.me/2015/07/09/js-module-7day/
-[2]: //huangxuan.me/2015/12/28/css-sucks-2015/
-[3]: //huangxuan.me/2016/06/05/pwa-in-my-pov/
-[4]: //huangxuan.me/2016/10/20/pwa-qcon2016/
-[5]: //huangxuan.me/2016/11/20/sw-101-gdgdf/
-[6]: https://yanshuo.io/assets/player/?deck=58ac8598b123db0067292f92 "PWA Rehashing"
-[7]: https://yanshuo.io/assets/player/?deck=593ad6fbfe88c2006a0a0d6d "The State of PWA"
-[8]: https://yanshuo.io/assets/player/?deck=594d673d570c357d0698a950 "Building PWA"
-[9]: //huangxuan.me/jsconfcn2017/
-
-
+<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522084659143&di=6eb2fe04321cbcddc68a79f42e71c836&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F9afca7da89f4c95dd9ab6c2b0abc1ebce8650f01.jpg"><br>

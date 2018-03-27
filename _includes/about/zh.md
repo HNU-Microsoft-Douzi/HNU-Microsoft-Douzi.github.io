@@ -1,31 +1,31 @@
-> 写写代码，做做设计，  
-> 离开世界之前，一切都是过程。
+> 说我想说的话，做我想做的事，
+> 人生如梦，学我所学，是为梦中花开。
 
-Hey，我是黄玄，病毒种，进化程度不明，多出没于[博客](https://huangxuan.me)、[微博](weibo.com/huxpro)、[知乎](https://www.zhihu.com/people/huxpro/pins/posts)、[Twitter](https://twitter.com/Huxpro/)、[Github](http://github.com/huxpro)、[Medium](https://medium.com/@Huxpro) 等地带，绝招尚在开发中。
+我是张晓翼，目前是湖南大学计算机本科的一名在读生，没有特长，技能尚在挖掘，前路漫漫，只走了一半。
 
-职业是软件工程师，[Web 工会](https://medium.com/ben-and-dion/team-web-3315aa447fb2#.359a9c6cl)活跃成员。曾被招募为淘宝网 · [阿里旅行](http://alitrip.com)前端工程师、微影时代 · [微票儿](http://www.wepiao.com/?r=movie)前端基础工程团队负责人、[饿了么](https://ele.me/) · 大前端团队 · [PWA 顾问](https://medium.com/elemefe/upgrading-ele-me-to-progressive-web-app-2a446832e509)。
-
-一些作品和开源软件项目，👉 戳 [Portfolio](/portfolio)、[Github](http://github.com/huxpro)、[演说.io](http://https://zhuanlan.zhihu.com/p/21280918)。 
+前期软件工程，后期数字媒体，艺术与编程的结合，我把它称之为视觉工程师，自主钻研网络爬虫，向各种反爬虫手段进攻！（嘀嘀嘀，别抓我，我是好人！），python,java,C++在读，谈不上精深，涉及不到内核，在真正的编程之海中，我掌握的只能算是皮毛，路漫漫其修远兮，吾将上下而求索说的大概就是这个意思。
 
 
-##### Talks
 
-- [Upgrading to Progressive Web Apps][9] · [JSConf CN 上海 2017](http://2017.jsconf.cn/)
-- Building Progressive Web Apps · [CSDI 广州 2017](http://www.csdisummit.com/)
-- The State of Progressive Web App · GDG IO Redux 北京 2017
-- 炒冷饭 · PWA 到底是个什么玩意？· Baidu HQ 北京 2017
-- [Service Worker 101][5] · GDG DevFest 北京 2016
-- [Progressive Web App，复兴序章][4] · [QCon 上海 2016](http://2016.qconshanghai.com/presentation/3111)
-- Progressive Web App 之我见 · GDG IO Redux 北京 2016
-- [CSS Still Sucks 2015][2] · 2015
-- [JavaScript 模块化七日谈][1] · 2015
+## Talks
+说点题外话，大概特别想讲下我自身，就读湖大的两年间，学校的课程培养，说实话，和我想象中不大一样，就像很多人说的，有所谓预备课程，都是在为之后的课程做准备，话虽没错，但这准备所做，或许，并没有大多数人想象的那么多。
 
-[1]: //huangxuan.me/2015/07/09/js-module-7day/
-[2]: //huangxuan.me/2015/12/28/css-sucks-2015/
-[3]: //huangxuan.me/2016/06/05/pwa-in-my-pov/
-[4]: //huangxuan.me/2016/10/20/pwa-qcon2016/
-[5]: //huangxuan.me/2016/11/20/sw-101-gdgdf/
-[6]: https://yanshuo.io/assets/player/?deck=58ac8598b123db0067292f92 "PWA Rehashing"
-[7]: https://yanshuo.io/assets/player/?deck=593ad6fbfe88c2006a0a0d6d "The State of PWA"
-[8]: https://yanshuo.io/assets/player/?deck=594d673d570c357d0698a950 "Building PWA"
-[9]: //huangxuan.me/jsconfcn2017/
+很多人呢！分不清所谓理想和现实，总是沉浸在自己的想象中，就比如我。emmm!但我觉得我在自己的世界中是没错的，至少有着自己的想法并遵循自己的本心不断前行，关于之前所说的，我还是觉得很多时候成为了中国大学教育体系的一种附庸产物，不能做你想做，不能学你所学，这不单单是个人的悲哀，也是大学的悲哀。
+
+被学校牵着鼻子走的同时，被动的情况下感觉非常难受或者说不爽，只能在自己力所能及的范围内尽力的改变这种局势，但是对于所谓的整个生活来讲，也不过是杯水车薪。我若不能全力以赴，这苍天生我，又为何？我喜欢幻想，所以我总是会想：若我是那大圣，必身化数万，将这天地间不如意者，灭他个支离破碎。让这苍天，顺我意，让这大地，不敢逆我行！
+<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522084659143&di=6eb2fe04321cbcddc68a79f42e71c836&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F9afca7da89f4c95dd9ab6c2b0abc1ebce8650f01.jpg"><br>
+哈哈，大圣在此，还不来拜？
+
+### 来点古文
+大道仓惶，众人侃侃而谈也！吾界既吾心，我愿我念，与佛何干？与仙何干？与众生何干？君住长江头，我住长江尾，江水常漫漫，两思不得时。
+
+续前夕，前路有定，步履清晰，山河虽远，飘渺仙姿，终有见时。愿来人明自我，清本心，莫口若悬河，若欲以声动天地，利迷雾，见郝月，得一步！
+
+>放上我最喜欢的一句话，源自悟空传，此生虽不是大圣，可愿来世山中踏上修仙录。
+
+我要这天，再遮不住我眼，<br> 
+要这地，再埋不了我心， <br>
+要这众生，都明白我意， <br>
+要那诸佛，都烟消云散!<br>
+
+以此文，证吾道，愿来者，证吾本心。

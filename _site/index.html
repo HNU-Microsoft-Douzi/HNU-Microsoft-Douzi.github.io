@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="关于前端与设计、黑客与画家 | 黄玄，Web & Mobile Lover，Software Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。">
-    <meta name="keywords"  content="黄玄, Hux黄玄, Hux, 鬼栈, huxpro, @huxpro, 黄玄的博客, Hux Blog, 博客, 个人网站, 互联网, Web, JavaScript, 前端, 设计">
+    <meta name="description" content="爬虫、反爬、python设计、JAVA设计、C++ | 张晓翼，programmer | 这里是 @张晓翼 的个人博客，此生只做红尘客。">
+    <meta name="keywords"  content="张晓翼, Hnu张晓翼, Hnu, hnupro, @zxypro, 张晓翼的博客, Zxy Blog, 博客, 个人网站, C++, JAVA, Python, 爬虫, 数据结构">
     <meta name="theme-color" content="#000000">
+	<link media="all" rel="stylesheet" type="text/css" href="/css/rouge.css" />
     
-    <title>黄玄的博客 | Hux Blog</title>
+    <title>张晓翼的博客 | Zxy Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -69,7 +70,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Hux Blog</a>
+            <a class="navbar-brand" href="/">Zxy Blog</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -159,9 +160,9 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
                 <div class="site-heading">
-                    <h1>Hux Blog</h1>
+                    <h1>Zxy Blog</h1>
                     <!--<hr class="small">-->
-                    <span class="subheading">一生想做浪漫极客</span>
+                    <span class="subheading">一生只做红尘客</span>
                 </div>
             </div>
         </div>
@@ -207,292 +208,277 @@ ERROR 1364 (HY000): Field 'ssl_ciphe...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Hux Blog on March 23, 2018
+        Posted by Zxy Blog on March 23, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2017/07/12/upgrading-eleme-to-pwa/">
+    <a href="/2018/01/23/python3's-nonlocal-statement/">
         <h2 class="post-title">
-            饿了么的 PWA 升级实践
+            python3的nonlocal声明
         </h2>
         
         <h3 class="post-subtitle">
-            Upgrading Ele.me to Progressive Web App
+            Bring you to go the world of python!
         </h3>
         
         <div class="post-content-preview">
-            
+            今天要说的是关于nonlocal的声明的：
 
-    
-    
+举个例子：
 
-  很荣幸在今年 2 月到 5 月的时间里，以顾问的身份加入饿了么，参与 PWA 的相关工作。这篇文章其实最初是在以英文写作发表在 medium 上的：Upgrading Ele.me to Progressive Web Apps，获得了一定的关注。所以也决定改写为中文版本再次分享出来，希望能对你有所帮助 ;) 
-本文首发于 CSDN 与《程序员》2017 年 7...
+def Fun1():
+x=5
+def Fun2():
+nonlocal x
+x *=  x
+return x
+return Fun2()
+
+Fun1()
+
+结果:
+
+25
+
+显示的结果表示出在python3中，通过nonlocal对变量的声明，可以使在闭包中直接改变外部局部范围的变量值。
+
         </div>
     </a>
     <p class="post-meta">
-        Posted by Hux on July 12, 2017
+        Posted by Zxy on January 23, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2017/06/24/you-are-slaves/">
+    <a href="/2018/01/18/topological-sort/">
         <h2 class="post-title">
-            他是狗，你们便是苟奴隶
+            拓扑排序
         </h2>
         
         <h3 class="post-subtitle">
-            
+            The topological sort
         </h3>
         
         <div class="post-content-preview">
-            
-  在知乎被删帖，我理解知乎。
-你说你们做不了什么，我也理解你们。
+            拓扑排序概述
+需要注意的是，拓扑排序只适用于有向无环图（DAG），而非DAG图则没有拓扑排序这一说。
 
-只是，总要有人，还敢说点反对的声音吧？  
-只是，不想让这一切，看起来都变得如此理所应当吧？
-
-你说，你们也抗争了
-那就站出来，让我们相信，你们还在吧？
+拓扑排序有以下两个条件:
 
 
-我甚至都不需要写出 LGL 三个顶天立地的大字，你们便知道我今天要说什么了。
-骂狗官、骂体制、骂 D，骂的人已经够多了。我故是可以再骂，却也深知自己甚至连让他们听到...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Hux on June 24, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/02/09/nextgen-web-pwa/">
-        <h2 class="post-title">
-            下一代 Web 应用模型 —— Progressive Web App
-        </h2>
-        
-        <h3 class="post-subtitle">
-            The Next Generation Application Model For The Web - Progressive Web App
-        </h3>
-        
-        <div class="post-content-preview">
-            
-  今年 9 月份的时候，《程序员》杂志社就邀请我写一篇关于 PWA 的文章。后来花式拖稿，拖过了 10 月的 QCon，11 月的 GDG DevFest，终于在 12 月把这篇长文熬了出来。几次分享的不成熟，这次的结构算是比较满意了。「 可能是目前中文世界里对 PWA 最全面详细的长文了」，希望你能喜欢。
-本文首发于 CSDN 与《程序员》2017 年 2 月刊，同步发布于 Hux B...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Hux on February 9, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2016/11/20/sw-101-gdgdf/">
-        <h2 class="post-title">
-            Service Worker 101「GDG DevFest 2016 北京」
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Slides: Service Worker 101, Working Offline and Instant Loading (GDG DevFest 2016 Beijing)
-        </h3>
-        
-        <div class="post-content-preview">
-            
-  下滑这里查看更多内容
-
-
-TLDR; It covers lots of cool stuff about Service Worker!
-
-Watching Fullscreen → 
-
-
+  每个顶点出现且只出现一次。
+  若存在一条从顶点 A 到顶点 B 的路径，那么在序列中顶点 A 出现在顶点 B 的前面。
     
-    Scanning on mobile
-
-
-Demo Code → 
-
-
-  Hello World of Service Worker
-  Make your own Offli...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Hux on November 20, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2016/10/20/pwa-qcon2016/">
-        <h2 class="post-title">
-            Progressive Web Apps，复兴序章「QCon 上海 2016」
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Slides: Progressive Web Apps, Make Web Great Again. (QCon Shanghai 2016)
-        </h3>
-        
-        <div class="post-content-preview">
-            
-  下滑这里查看更多内容
-
-
-Watching Fullscreen →
-
-Watching Video →
-
-
-    
-    Scanning on mobile
-
-
-Catalog
-
-
-  The State Of Web
-  Rethinking Hybridzation
-  PWA 101
-    
-      Definition
-      Add To HomeScree...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Hux on October 20, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2016/06/05/pwa-in-my-pov/">
-        <h2 class="post-title">
-            Progressive Web App 之我见
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Slides: Progressive Web App, in my points of view
-        </h3>
-        
-        <div class="post-content-preview">
-            
-  下滑这里查看更多内容
-
-
-Watching Fullscreen →
-
-
-    
-    Scanning on mobile
-
-
-Catalog
-
-
-  WHAT is Progressive Web App?
-  1 - Installability
-  2 - App Shell
-  3 - Offline
-    
-      SERVICE WORKER!
+      (通常来讲，一个有向无环图可以有一个或多个拓扑排序序列)
     
   
-...
+
+
+拓扑排序流程图：
+
+
+①如图，第一...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Hux on June 5, 2016
+        Posted by Zxy on January 18, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2016/02/01/React-vs-Angular2/">
+    <a href="/2018/01/18/huffman-encode/">
         <h2 class="post-title">
-            React vs Angular 2：冰与火之歌「译」
+            huffman编码
         </h2>
         
         <h3 class="post-subtitle">
-            React versus Angular 2: There Will Be Blood
+            Huffman encoding tree!
         </h3>
         
         <div class="post-content-preview">
-            
-  这篇文章转载自我在知乎专栏「前端外刊评论」上发表的文章。
+            一、huffman编码树概述
+huffman编码是一种可变长编码（VLC：variable length coding）方式，于1952年由huffman提出。依据字符在需要编码文件中出现的概率提供对字符的唯一编码，并且保证了可变编码的平均编码最短，被称为最优二叉树，有时又称为最佳编码。
 
+二、如何构造一颗huffman编码树
+构造huffman树的哈夫曼算法如下：
 
-Angular 2 已经发布 Beta 版，而且似乎很有信心在 2016 年成为热门框架。是时候进行一场巅峰对决了，我们来看看它如何与 React 这个 2015 年的新宠抗衡。
-
-免责声明：我之前很喜欢使用 Angular 1，不过在 2015 年转到了 React。最近我也在 Pluralsight 上发布了一门关于 R...
+  （1）n节点的权值...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Hux on February 1, 2016
+        Posted by Zxy on January 18, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2015/12/28/css-sucks-2015/">
+    <a href="/2018/01/18/heap/">
         <h2 class="post-title">
-            都 2015 年了，CSS 怎么还是这么糟糕
+            堆
         </h2>
         
         <h3 class="post-subtitle">
-            Slides: CSS Still Sucks 2015
+            What's the heap?And how to create it?
         </h3>
         
         <div class="post-content-preview">
-            
-  下滑这里查看更多内容
+            一、堆的特性
 
+堆（也叫优先队列），是一棵完全二叉树，它的特点是父节点的值大于（小于）两个子节点的值（分别称为大顶堆和小顶堆）。它常用于管理算法执行过程中的信息，应用场景包括堆排序，优先队列等。
 
-Watching Fullscreen →
-
-
-
-你也可以通过扫描二维码在手机上观看
-
-
-这个 Web Slides 开源在我的 Github 上，欢迎你帮助我完善这个展示文稿，你可以给我提 issue，可以 fork &amp; pull request。如果它能帮助到你了，希望你还能不吝啬 star 一下这个项目
-
-Catalog
-
-
-  Document...
+二、堆的创建操作
+堆的创建，构建一个数组A，然后向数组中输入要存入的元素，从最后一个位置开始往前找父节点，找到一个父节点，就和它的左右子树比较大小，并进行位置的调整，不断重复这个操作的过程，直到整...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Hux on December 28, 2015
+        Posted by Zxy on January 18, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2015/12/15/ios9-safari-web/">
+    <a href="/2018/01/18/The-shortest-path-problem-of-graph-theory/">
         <h2 class="post-title">
-            iOS 9，为前端世界都带来了些什么？「译」
+            图论最短路径问题
         </h2>
         
         <h3 class="post-subtitle">
-            iOS 9, Safari and the Web: 3D Touch, new Responsive Web Design, Native integration and HTML5 APIs
+            Talk something about how to solve the shortest path problem of graph theory
         </h3>
         
         <div class="post-content-preview">
-            2015 年 9 月，Apple 重磅发布了全新的 iPhone 6s/6s Plus、iPad Pro 与全新的操作系统 watchOS 2 与 tvOS 9（是的，这货居然是第 9 版），加上已经发布的 iOS 9，它们都为前端世界带来了哪些变化呢？作为一个 web 开发者，是时候站在我们的角度来说一说了！
+            一、最短路径问题概述
+用于计算一个节点到其他所有节点的最短路径。主要特点是以起始点为中心向外层层扩展，直到扩展到终点为止。
+
+二、实现最短路径问题的几种算法
+首先，先来看实现最短路径问题有哪些算法？
 
 
-  注！ 该译文存在大量英文术语，笔者将默认读者知晓 ES6、viewpor...
+  Dijkstra算法：单源最短路径
+  Floyed算法:多源最短路径
+  Prim算法:最小支撑树
+  Kruskal算法:最小支撑树
+
+
+Dijkstra算法图解:
+
+
+Dijkst...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Hux on December 15, 2015
+        Posted by Zxy on January 18, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/01/18/BST/">
+        <h2 class="post-title">
+            BST
+        </h2>
+        
+        <h3 class="post-subtitle">
+            What's BST and how to create a BST?
+        </h3>
+        
+        <div class="post-content-preview">
+            一、BST树概论
+
+BST树(Binary search tree)，又被称为二叉搜索树，二叉排序树，实际上是按照一定逻辑规则排布的特殊二叉树，规则的特点是，对于每一个节点，其左子树上的任意节点的值都小于根节点，且右子树上任意节点的值都大于根节点。
+
+
+
+二、BST树基本操作概述
+时间关系，这里之间简述BST中最基础的删除操作第三种情况
+
+对于单个删除节点，若该节点上即存在左子树又存在右子树...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on January 18, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/01/17/queue/">
+        <h2 class="post-title">
+            队列
+        </h2>
+        
+        <h3 class="post-subtitle">
+            queue
+        </h3>
+        
+        <div class="post-content-preview">
+            一、什么是队列?
+
+在我看来，队列和栈一样，都属于线性表的一种，相对于链表的双向自由的不同，队列满足先进先出的原则，正是这个核心原则构成了整个队列的各种基本操作，它作为一种操作受限的线性表。进行插入操作的端称为队尾，进行删除从啊做的端称为队头。
+
+接下来的文章中，我会实例化的去描述这种数据类型：
+在我的头脑空间中，我想象出一个完全三维的世界，这个三维世界中有一个长方体的盒子，它有头和尾分别表...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on January 17, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/01/17/Tree/">
+        <h2 class="post-title">
+            树
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Do you know how to make a tree by C++?
+        </h3>
+        
+        <div class="post-content-preview">
+            一、什么是树?
+树作为与链式结构完全不同的一种数据结构，它在空间上的存储方式正如其名一般——树，不过我倒是认为这里引用树根的话，会更加形象许多，因为树的结构就正象是一颗大树的树根，有一根主干向下延伸出很多的分支，就像江河湖海，有了源头，在源头之下，万千支流，正是树的各个子树。
+
+
+
+我们通常把前面提到的源头作为树的根节点，然后将树下的各个分支称作树的子树。
+
+树的数据结构也是由节点构成的，所...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on January 17, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/01/17/The-linear-table/">
+        <h2 class="post-title">
+            线性表
+        </h2>
+        
+        <h3 class="post-subtitle">
+            I'll introduce the linear table to you!
+        </h3>
+        
+        <div class="post-content-preview">
+            一、什么是线性表?
+
+线性表是由称为元素(element)的数据项组成的一种有限且有序的序列。
+
+它细分为顺序表和链表，这里主要以链式结构作为重点讨论。
+
+线性表中不包含任何元素时，称之为空表，(empty list)。当前存储的元素数目成为线性表的长度（length)。线性表的开始节点称为表头(head)，结尾节点称为表尾(tail)。表中元素的值与它的位置可以有联系，也可以没有联系。比如...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on January 17, 2018
     </p>
 </div>
 <hr>
@@ -527,110 +513,14 @@ Catalog
                     <div class="tags">
                         
                             
-                                <a href="/tags/#知乎" title="知乎" rel="7">
-                                    知乎
+                                <a href="/tags/#数据结构" title="数据结构" rel="12">
+                                    数据结构
                                 </a>
                             
                         
                             
-                        
-                            
-                                <a href="/tags/#Android" title="Android" rel="2">
-                                    Android
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#交互设计" title="交互设计" rel="4">
-                                    交互设计
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#阿里巴巴" title="阿里巴巴" rel="3">
-                                    阿里巴巴
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#前端开发" title="前端开发" rel="13">
-                                    前端开发
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#职业病" title="职业病" rel="3">
-                                    职业病
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#生活" title="生活" rel="2">
-                                    生活
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#hUX 随想录" title="hUX 随想录" rel="2">
-                                    hUX 随想录
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#UX Design" title="UX Design" rel="3">
-                                    UX Design
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#OS" title="OS" rel="2">
-                                    OS
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#JavaScript" title="JavaScript" rel="10">
-                                    JavaScript
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#译文" title="译文" rel="2">
-                                    译文
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#PWA" title="PWA" rel="5">
-                                    PWA
+                                <a href="/tags/#C++" title="C++" rel="14">
+                                    C++
                                 </a>
                             
                         
@@ -647,17 +537,17 @@ Catalog
                     <hr><h5><a href="/about/">ABOUT ME</a></h5>
                     <div class="short-about">
                         
-                            <img src="/img/avatar-hux.jpg" />
+                            <img src="/img/avatar-zxy.jpg" />
                         
                         
-                            <p>写写代码，做做设计，<br>离开世界之前，一切都是过程</p>
+                            <p>Read all kinds of documents or codes，<br>One day, watching all the world with the beginning dream!</p>
                         
                         <!-- SNS Link -->
                         <ul class="list-inline">
                             
                             
                             <li>
-                                <a href="https://twitter.com/huxpro">
+                                <a href="https://twitter.com/zxypro">
                                     <span class="fa-stack fa-lg">
                                         <i class="fa fa-circle fa-stack-2x"></i>
                                         <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -667,7 +557,7 @@ Catalog
                             
                             
                             <li>
-                                <a target="_blank" href="https://www.zhihu.com/people/huxpro">
+                                <a target="_blank" href="https://www.zhihu.com/people/zxypro">
                                     <span class="fa-stack fa-lg">
                                         <i class="fa fa-circle fa-stack-2x"></i>
                                         <i class="fa  fa-stack-1x fa-inverse">知</i>
@@ -677,7 +567,7 @@ Catalog
                             
                             
                             <li>
-                                <a target="_blank" href="http://weibo.com/huxpro">
+                                <a target="_blank" href="http://weibo.com/zxypro">
                                     <span class="fa-stack fa-lg">
                                         <i class="fa fa-circle fa-stack-2x"></i>
                                         <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
@@ -688,7 +578,7 @@ Catalog
                             
                             
                             <li>
-                                <a target="_blank" href="https://github.com/huxpro">
+                                <a target="_blank" href="https://github.com/zxypro">
                                     <span class="fa-stack fa-lg">
                                         <i class="fa fa-circle fa-stack-2x"></i>
                                         <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -706,25 +596,21 @@ Catalog
                 <h5>FRIENDS</h5>
                 <ul class="list-inline">
                     
-                        <li><a href="http://mida.re/">乱序</a></li>
+                        <li><a href="https://github.com">GitHub官方网站</a></li>
                     
-                        <li><a href="http://qianduan.guru/">前端外刊评论</a></li>
+                        <li><a href="http://jekyllthemes.org">Jekyll主题</a></li>
                     
-                        <li><a href="http://lingyu.wang/">天镶的博客</a></li>
+                        <li><a href="http://blog.csdn.net/witnessai1/article/details/52551362">Markdown语法手册</a></li>
                     
-                        <li><a href="http://hmqk1995.github.io">Luke 的自留地</a></li>
+                        <li><a href="http://blog.csdn.net/soonfly/article/details/51131141">C++指针详解</a></li>
                     
-                        <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
+                        <li><a href="https://www.pexels.com">最棒的图片素材网站</a></li>
                     
-                        <li><a href="http://blog.smdcn.net">SmdCn's Blog</a></li>
+                        <li><a href="https://www.cnblogs.com/dmh365/archive/2011/08/15/2138967.html">SQL详解</a></li>
                     
-                        <li><a href="https://www.ruoyaowu.com/">David's Game</a></li>
+                        <li><a href="http://poj.org">北大oj系统</a></li>
                     
-                        <li><a href="http://dhong.co">DHong Say</a></li>
-                    
-                        <li><a href="http://ingf.github.io/">尹峰以为</a></li>
-                    
-                        <li><a href="http://xieminis.me/">解旻的博客</a></li>
+                        <li><a href="http://docs.python-requests.org/en/latest/user/quickstart.html">requests的官方指南文档</a></li>
                     
                 </ul>
                 
@@ -743,7 +629,7 @@ Catalog
                     
                     
                     <li>
-                        <a href="https://twitter.com/huxpro">
+                        <a href="https://twitter.com/zxypro">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -755,7 +641,7 @@ Catalog
                     <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
                     
                     <li>
-                        <a target="_blank" href="https://www.zhihu.com/people/huxpro">
+                        <a target="_blank" href="https://www.zhihu.com/people/zxypro">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa  fa-stack-1x fa-inverse">知</i>
@@ -765,7 +651,7 @@ Catalog
                     
                     
                     <li>
-                        <a target="_blank" href="http://weibo.com/huxpro">
+                        <a target="_blank" href="http://weibo.com/zxypro">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
@@ -778,7 +664,7 @@ Catalog
                     
                     
                     <li>
-                        <a target="_blank" href="https://github.com/huxpro">
+                        <a target="_blank" href="https://github.com/zxypro">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -789,9 +675,9 @@ Catalog
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Hux Blog 2018
+                    Copyright &copy; Zxy Blog 2018
                     <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> |
+                    Theme by <a href="http://www.zxyblog.xyz">Zxy</a> |
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="100px" height="20px"

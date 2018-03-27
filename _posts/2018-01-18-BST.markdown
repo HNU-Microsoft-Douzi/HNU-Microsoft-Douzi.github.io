@@ -1,0 +1,293 @@
+---
+layout: post
+title: "BST"
+subtitle: "What's BST and how to create a BST?"
+data: 2018-01-18
+author: "Zxy"
+tags:
+    - C++
+    - 数据结构
+---
+
+## 一、BST树概论
+
+BST树<span style="color:green">(`Binary search tree`)</span>，又被称为二叉搜索树，二叉排序树，实际上是按照一定逻辑规则排布的特殊二叉树，规则的特点是，对于每一个节点，其左子树上的任意节点的值都小于根节点，且右子树上任意节点的值都大于根节点。
+
+<img src="/assets/队列.png" alt="路径错误，请重新选择！">
+
+
+## 二、BST树基本操作概述
+#### 时间关系，这里之间简述BST中最基础的删除操作第三种情况
+
+对于单个删除节点，若该节点上即存在左子树又存在右子树，要对该节点进行删除，实际的操作是，删除该节点左子树的右子树上的叶子子节点，若被删除节点的左子树没有右子树，则直接删除该节点的左子树的根节点即可。
+
+节点删除完成后，要让实际被删除节点的key值赋给要求被删除的节点，这样就实现了BST树的节点删除操作。
+
+> （写树的时候需要注意的一点是内外部接口一定要明确，外部接口就是给用户展现的接口，对树的操作需要交互的完整性。）
+
+下面将给出各个基本操作的实现代码：
+
+### BST的创建
+{% highlight c++ %}
+#include <iostream>
+using namespace std;
+
+template <class T>
+class BSNode
+{
+public:
+    BSNode():value(NULL),lchild(NULL),rchild(NULL) {};
+    BSNode(T t):value(t),lchild(NULL),rchild(NULL) {};
+
+public:
+    T value;
+    BSNode<T>* lchild;
+    BSNode<T>* rchild;
+    BSNode<T>* parent;
+};
+
+template <class T>
+class BSTree
+{
+public:
+    BSTree():root(NULL){};
+    ~BSTree();
+
+    void preOrder();//前序遍历二叉树
+    void inOrder();//中序遍历二叉树
+    void postOrder();//后序遍历二叉树
+    //void layerOrder();;//层次遍历二叉树
+
+    BSNode<T>* search_recursion(T key);//通过外部接口递归地进行查找
+    BSNode<T>* search_Iterator(T key);//通过外部接口迭代地进行查找
+
+    T search_minimun();//查找最小元素
+    T search_maximum();//查找最大元素
+
+    BSNode<T>* successor(BSNode<T>* x);//查找指定节点的后继节点
+    BSNode<T>* predecessor(BSNode<T>* x);//查找指定节点的前驱节点
+
+    void insert(T key);//插入指定值节点
+    void remove(T key);//删除指定值节点
+    void destroy();//销毁二叉树
+    void print();//打印二叉树
+private:
+    BSNode<T>* root;//根节点
+private:
+    BSNode<T>* search(BSNode<T>* &p, T key);
+    void remove(BSNode<T>* p, T key);
+    void preOrder(BSNode<T>* p);
+    void inOrder(BSNode<T>* p);
+    void postOrder(BSNode<T>* p);
+    T search_minimun(BSNode<T>* p);
+    T search_maximum(BSNode<T>* p);
+    void destroy(BSNode<T>* &p);
+};
+{% endhighlight %}
+
+### BST的遍历
+
+树的遍历有三种遍历方式，前中后，具体的遍历形式在其它文章中有详细介绍，所以这里不再详述，直接给出解释。
+
+{% highlight c++ %}
+template <class T>
+void BSTree<T>::preOrder(BSNode<T>* p)
+{
+    if(p != NULL)
+    {
+        cout<<p->value<<endl;
+        preOrder(p->lchild);
+        preOrder(p->rchild);
+    }
+}
+
+/*中序遍历算法*/
+template <class T>
+void BSTree<T>::inOrder()
+{
+    inOrder(root);
+}
+template <class T>
+void BSTree<T>::inOrder(BSNode<T>* p)
+{
+    if(p != NULL)
+    {
+        inOrder(p->lchild);
+        cout<<p->value<<endl;
+        inOrder(p->rchild);
+    }
+}
+
+/*后序遍历算法*/
+template <class T>
+void BSTree<T>::postOrder()
+{
+    postOrder(root);
+}
+
+template <class T>
+void BSTree<T>::postOrder(BSNode<T>* p)
+{
+    if(p != NULL)
+    {
+        postOrder(p->lchild);
+        postOrder(p->rchild);
+        cout<<p->value<<endl;
+    }
+}
+{% endhighlight %}
+
+### BST的查找
+
+{% highlight c++ %}
+/*查找指定元素的节点(递归)*/
+template <class T>
+BSNode<T>* BSTree<T>::search_recursion(T key)
+{
+    return search(root,key);
+}
+
+/*private : search()*/
+template <class T>
+BSNode<T>* BSTree<T>::search(BSNode<T>* &pnode, T key)
+{
+    if(pnode == NULL)
+        return NULL;
+    if(pnode->value == key)
+        return pnode;
+    //cout<<"-->"<<pnode->value<<endl;//可以输出查找路径
+    if(key >pnode->value)
+        return search(pnode->rchild, key);
+    else
+        return search(pnode->lchild, key);
+}
+{% endhighlight %}
+
+### BST的插入
+{% highlight c++ %}
+template <class T>
+void BSTree<T>::insert(T key)
+{
+    BSNode<T>* pparent = NULL;
+    BSNode<T>* pnode = root;
+    while(pnode != NULL)     //寻找合适的插入位置
+    {
+        pparent = pnode;
+        if(key > pnode->value)
+        {
+            pnode = pnode->rchild;
+        }
+        else if (key < pnode->value)
+        {
+            pnode = pnode->rchild;
+        }
+        else
+            break;
+    }
+    pnode = new BSNode<T>(key);
+    if(pparent == NULL)//如果是空树
+    {
+        root = pnode;   //则新节点为根
+    }
+    else
+    {
+        if(key > pparent->value)
+        {
+            pparent->rchild = pnode;//否则新节点为其父节点的右孩
+        }
+        else
+            pparent->lchild = pnode;//或左孩
+    }
+    pnode->parent = pparent; //指明新节点的父节点
+};
+{% endhighlight %}
+
+### BST的删除
+{% highlight c++ %}
+/*删除指定节点*/
+/*内部使用函数*/
+template <class T>
+void BSTree<T>::remove(BSNode<T>* pnode, T key)
+{
+    if(pnode != NULL)
+    {
+        if(pnode->value == key)
+        {
+            BSNode<T>* pdel = NULL;
+
+            if(pnode->lchild == NULL || pnode->rchild == NULL)
+                pdel = pnode;             //情况二三：被删节点只有左子树或右子树，没有孩子
+            else
+                pdel = predecessor(pnode);//情况一:被删节点同时有左右子树，则删除该节点的前驱。
+
+            //此时，被删节点只有一个孩子（或者没有孩子），保存该孩子指针
+            BSNode<T>* pchild = NULL;
+            if(pdel -> lchild != NULL)
+            {
+                pchild = pdel->lchild;
+            }
+            else
+                pchild = pdel->rchild;
+
+            //让孩子指向被删除节点的父节点
+            if(pchild != NULL)
+                pchild->parent = pdel->parent;
+
+            //如果要删除的节点是头结点，注意更改root的值
+            if(pdel->parent == NULL)
+                root = pchild;
+
+            //如果要删除的节点不是头结点，要注意更改它的双亲节点指向新的孩子节点
+            else if(pdel->parent == NULL)
+            {
+                pdel->parent->lchild = pchild;
+            }
+            else
+            {
+                pdel->parent->rchild = pchild;
+            }
+            if(pnode->value != pdel->value)
+                pnode->value = pdel->value;
+            delete pdel;
+        }
+        //进行递归删除
+        else if(key > pnode->value)
+        {
+            remove(pnode->rchild,key);
+        }
+        else
+            remove (pnode->lchild,key);
+    }
+}
+{% endhighlight %}
+### BST的销毁
+{% highlight c++ %}
+/*析构函数*/
+template <class T>
+BSTree<T>::~BSTree()
+{
+    destroy(root);
+}
+
+/*销毁二叉树*/
+template <class T>
+void BSTree<T>::destroy()
+{
+    destroy(root);
+}
+
+template <class T>
+void BSTree<T>::destroy(BSNode<T>* &p)
+{
+    if(p != NULL)
+    {
+        if(p->lchild != NULL)
+            destroy(p->lchild);
+        if(p->rchild != NULL)
+            destroy(p->rchild);
+        delete p;
+        p = NULL;
+    }
+}
+
+{% endhighlight %}
