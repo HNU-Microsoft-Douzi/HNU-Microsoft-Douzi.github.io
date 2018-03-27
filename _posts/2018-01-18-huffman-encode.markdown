@@ -21,7 +21,8 @@ huffman编码是一种可变长编码<span style="color:green">（`VLC：variabl
 
 下面给出示例图：
 
-<img src="/assets/huffman编码树构建图.png">
+<img src="/assets/huffman-encode.png" alt="`呀~出错了`">
 
 如果要得到相应的huffman编码只需要在每个节点的左右子树上分别标0和1就可以了。
+
 > （如果还有不明白的，请自行去面壁~）

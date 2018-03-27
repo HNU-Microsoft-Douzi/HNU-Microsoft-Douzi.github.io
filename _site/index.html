@@ -214,6 +214,234 @@ ERROR 1364 (HY000): Field 'ssl_ciphe...
 <hr>
 
 <div class="post-preview">
+    <a href="/2018/02/07/python-method-of-dividing-by-0/">
+        <h2 class="post-title">
+            python整数相除得0保留小数的方法
+        </h2>
+        
+        <div class="post-content-preview">
+            python整数相除得0保留小数的方法
+
+如上图所示，假若给定一个值a = 1, b = 1000，进行了格式化保留三位小数的操作后，得出的结果仍然为0.000。与实际不符，是什么原因导致的呢？
+
+经过详细的思考，导致这种问题出现的关键原因在于事先给定a,b的时候都是一个整数，在做运算的时候是将其作为整数进行了除法运算，因而得出的结果为0，再对0进行格式化，得到的结果就变成了0.000
+
+正...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy Blog on February 7, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/02/06/Unicode-encode-question/">
+        <h2 class="post-title">
+            python 字符编码问题
+        </h2>
+        
+        <h3 class="post-subtitle">
+            How to solve python character encode question
+        </h3>
+        
+        <div class="post-content-preview">
+            python对unicode编码的字符串的处理
+
+#!usr/bin/env python
+# _*_coding: UTF-8 _*_
+
+import requests
+from lxml import html
+url = "http://www.4399.com"
+page = requests.session().get(url)
+tree = html.fromstring(pag...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on February 6, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/02/03/GET-POST-way/">
+        <h2 class="post-title">
+            GET方法和POST方法
+        </h2>
+        
+        <h3 class="post-subtitle">
+            GET way and POST way
+        </h3>
+        
+        <div class="post-content-preview">
+            什么是HTTP?
+超文本传输协议（HTTP）的设计目的是保证客户机与服务器之间的通信。
+
+HTTP的工作方式是客户机与服务器之间的请求-应答协议。
+
+web浏览器可能是客户端，而计算机上的网络应用程序也可能作为服务器端。
+
+举例：
+
+
+  
+    客户端（浏览器）向服务器提交 HTTP 请求:
+  
+  
+    服务器向客户端返回响应。响应包含关于请求的状态信息以及可能被请求的内容。
+ ...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on February 3, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/02/02/python-OS-module/">
+        <h2 class="post-title">
+            python OS模块总结
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Let'me introduce python's OS'module
+        </h3>
+        
+        <div class="post-content-preview">
+            
+#OS模块
+
+#os模块就是对操作系统进行操作，使用该模块必须先导入模块：
+import os
+
+#getcwd() 获取当前工作目录(当前工作目录默认都是当前文件所在的文件夹)
+result = os.getcwd()
+print(result)
+
+#chdir()改变当前工作目录
+os.chdir('/home/sy')
+result = os.getcwd()
+print(resul...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on February 2, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/02/01/python-continue-input/">
+        <h2 class="post-title">
+            python连续输入
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Python's continues input way
+        </h3>
+        
+        <div class="post-content-preview">
+            python如何实现连续输入?
+
+方法：利用input()
+
+a,b,c = raw_input().split(" ")
+print a,b,c
+
+
+实际上’raw_input’是读取一行并作为字符串存入缓存的函数，通过raw_input读取一行字符串（注意，此时字符串是包含空格的），所以我们再利用分块函数以空格为分隔符作为划分将整个字符串划分后返回一个列表。
+
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on February 1, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/01/31/python-decimal-point-precision/">
+        <h2 class="post-title">
+            python小数点精度问题
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Solve the question of decimal point precision
+        </h3>
+        
+        <div class="post-content-preview">
+            这里只给出最佳解法:
+
+'%.nf' % a
+
+这里n代表小数点后保留的数字位数，a表示要保留小数的那个对象。
+
+下面给出实例图:
+&lt;img src=”/assets/python_decimal_precision.png&gt;
+
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on January 31, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/01/31/python-authentication-file-format/">
+        <h2 class="post-title">
+            python中鉴别文件编码格式的方法
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Using python to authenticate file-format 
+        </h3>
+        
+        <div class="post-content-preview">
+            利用python的chardet闭包实现文件编码格式的读取。
+当遇到一些有关于python的编码问题时（比如说中文输出乱码），就可以在充分理解python编码核心的情况下来查看出现问题的编码格式。
+
+情况可如图所示：
+
+
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on January 31, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/01/28/filter-map-and-lambda-expression/">
+        <h2 class="post-title">
+            python的filter表达式，map表达式和lambda表达式
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Distinguish the function of filter,map and lambda
+        </h3>
+        
+        <div class="post-content-preview">
+            
+
+如上图所示，展示了python的filter表达式和map表达式，lambda表达式的用法。
+
+filter函数
+filter(function or None, iterator)
+
+filter有两个参数，第一个参数可以为方法可以为空，第二个参数给了一个迭代器，可以给出一个范围。当第一个参数为None时，filter的作用就是返回一个iterator中全true的对象，然后用list...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on January 28, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2018/01/23/python3's-nonlocal-statement/">
         <h2 class="post-title">
             python3的nonlocal声明
@@ -248,237 +476,6 @@ Fun1()
     </a>
     <p class="post-meta">
         Posted by Zxy on January 23, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/01/18/topological-sort/">
-        <h2 class="post-title">
-            拓扑排序
-        </h2>
-        
-        <h3 class="post-subtitle">
-            The topological sort
-        </h3>
-        
-        <div class="post-content-preview">
-            拓扑排序概述
-需要注意的是，拓扑排序只适用于有向无环图（DAG），而非DAG图则没有拓扑排序这一说。
-
-拓扑排序有以下两个条件:
-
-
-  每个顶点出现且只出现一次。
-  若存在一条从顶点 A 到顶点 B 的路径，那么在序列中顶点 A 出现在顶点 B 的前面。
-    
-      (通常来讲，一个有向无环图可以有一个或多个拓扑排序序列)
-    
-  
-
-
-拓扑排序流程图：
-
-
-①如图，第一...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on January 18, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/01/18/huffman-encode/">
-        <h2 class="post-title">
-            huffman编码
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Huffman encoding tree!
-        </h3>
-        
-        <div class="post-content-preview">
-            一、huffman编码树概述
-huffman编码是一种可变长编码（VLC：variable length coding）方式，于1952年由huffman提出。依据字符在需要编码文件中出现的概率提供对字符的唯一编码，并且保证了可变编码的平均编码最短，被称为最优二叉树，有时又称为最佳编码。
-
-二、如何构造一颗huffman编码树
-构造huffman树的哈夫曼算法如下：
-
-  （1）n节点的权值...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on January 18, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/01/18/heap/">
-        <h2 class="post-title">
-            堆
-        </h2>
-        
-        <h3 class="post-subtitle">
-            What's the heap?And how to create it?
-        </h3>
-        
-        <div class="post-content-preview">
-            一、堆的特性
-
-堆（也叫优先队列），是一棵完全二叉树，它的特点是父节点的值大于（小于）两个子节点的值（分别称为大顶堆和小顶堆）。它常用于管理算法执行过程中的信息，应用场景包括堆排序，优先队列等。
-
-二、堆的创建操作
-堆的创建，构建一个数组A，然后向数组中输入要存入的元素，从最后一个位置开始往前找父节点，找到一个父节点，就和它的左右子树比较大小，并进行位置的调整，不断重复这个操作的过程，直到整...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on January 18, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/01/18/The-shortest-path-problem-of-graph-theory/">
-        <h2 class="post-title">
-            图论最短路径问题
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Talk something about how to solve the shortest path problem of graph theory
-        </h3>
-        
-        <div class="post-content-preview">
-            一、最短路径问题概述
-用于计算一个节点到其他所有节点的最短路径。主要特点是以起始点为中心向外层层扩展，直到扩展到终点为止。
-
-二、实现最短路径问题的几种算法
-首先，先来看实现最短路径问题有哪些算法？
-
-
-  Dijkstra算法：单源最短路径
-  Floyed算法:多源最短路径
-  Prim算法:最小支撑树
-  Kruskal算法:最小支撑树
-
-
-Dijkstra算法图解:
-
-
-Dijkst...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on January 18, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/01/18/BST/">
-        <h2 class="post-title">
-            BST
-        </h2>
-        
-        <h3 class="post-subtitle">
-            What's BST and how to create a BST?
-        </h3>
-        
-        <div class="post-content-preview">
-            一、BST树概论
-
-BST树(Binary search tree)，又被称为二叉搜索树，二叉排序树，实际上是按照一定逻辑规则排布的特殊二叉树，规则的特点是，对于每一个节点，其左子树上的任意节点的值都小于根节点，且右子树上任意节点的值都大于根节点。
-
-
-
-二、BST树基本操作概述
-时间关系，这里之间简述BST中最基础的删除操作第三种情况
-
-对于单个删除节点，若该节点上即存在左子树又存在右子树...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on January 18, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/01/17/queue/">
-        <h2 class="post-title">
-            队列
-        </h2>
-        
-        <h3 class="post-subtitle">
-            queue
-        </h3>
-        
-        <div class="post-content-preview">
-            一、什么是队列?
-
-在我看来，队列和栈一样，都属于线性表的一种，相对于链表的双向自由的不同，队列满足先进先出的原则，正是这个核心原则构成了整个队列的各种基本操作，它作为一种操作受限的线性表。进行插入操作的端称为队尾，进行删除从啊做的端称为队头。
-
-接下来的文章中，我会实例化的去描述这种数据类型：
-在我的头脑空间中，我想象出一个完全三维的世界，这个三维世界中有一个长方体的盒子，它有头和尾分别表...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on January 17, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/01/17/Tree/">
-        <h2 class="post-title">
-            树
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Do you know how to make a tree by C++?
-        </h3>
-        
-        <div class="post-content-preview">
-            一、什么是树?
-树作为与链式结构完全不同的一种数据结构，它在空间上的存储方式正如其名一般——树，不过我倒是认为这里引用树根的话，会更加形象许多，因为树的结构就正象是一颗大树的树根，有一根主干向下延伸出很多的分支，就像江河湖海，有了源头，在源头之下，万千支流，正是树的各个子树。
-
-
-
-我们通常把前面提到的源头作为树的根节点，然后将树下的各个分支称作树的子树。
-
-树的数据结构也是由节点构成的，所...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on January 17, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/01/17/The-linear-table/">
-        <h2 class="post-title">
-            线性表
-        </h2>
-        
-        <h3 class="post-subtitle">
-            I'll introduce the linear table to you!
-        </h3>
-        
-        <div class="post-content-preview">
-            一、什么是线性表?
-
-线性表是由称为元素(element)的数据项组成的一种有限且有序的序列。
-
-它细分为顺序表和链表，这里主要以链式结构作为重点讨论。
-
-线性表中不包含任何元素时，称之为空表，(empty list)。当前存储的元素数目成为线性表的长度（length)。线性表的开始节点称为表头(head)，结尾节点称为表尾(tail)。表中元素的值与它的位置可以有联系，也可以没有联系。比如...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on January 17, 2018
     </p>
 </div>
 <hr>
@@ -521,6 +518,12 @@ BST树(Binary search tree)，又被称为二叉搜索树，二叉排序树，实
                             
                                 <a href="/tags/#C++" title="C++" rel="14">
                                     C++
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#python" title="python" rel="11">
+                                    python
                                 </a>
                             
                         
