@@ -185,6 +185,100 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2018/03/27/Java_input_way/">
+        <h2 class="post-title">
+            java的输入
+        </h2>
+        
+        <h3 class="post-subtitle">
+            How to input like c++/python in java?
+        </h3>
+        
+        <div class="post-content-preview">
+            在java中，我们并不能找到一个直接的函数实现我们的输入操作，这一点比起c++、python来都不是很方便，想了一下，大概是因为java始终秉持对象的思想，所以它的输入模式也以对象的方式呈现。
+
+总共有三种方式，我个人认为没有必要都掌握，熟记一种就好了，然后，自我感觉这种比较简单，就简单说下这种模式的输入。
+
+下面先给出一个实例程序,写了一个学生成绩类:
+
+import java.util....
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on March 27, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/03/25/Unix-common-command-record/">
+        <h2 class="post-title">
+            Unix操作系统常用命令记录
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Unix common command record!
+        </h3>
+        
+        <div class="post-content-preview">
+            常用命令
+mesg n
+用来屏蔽他人wall出的消息。
+
+pwd
+用来查看当前目录
+
+ls -ld /home/sxxxxx
+用来查看当前目录有多长，一般是一个数字。
+
+ls -l
+列出目录下的文件的详细信息。
+
+ls -d
+列出某个目录文件的信息，而不是该目录下的文件。
+
+touch file
+利用touch创建一个名为file的文件
+
+ls -l mydir
+用来显示mydir的内容和文...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on March 25, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/03/24/Regular-expression/">
+        <h2 class="post-title">
+            正则表达式
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Regular expression
+        </h3>
+        
+        <div class="post-content-preview">
+            JAVA正则表达式
+
+正则表达式定义了字符串的模式。
+正则表达式可以用来搜索、编辑或处理文本。
+正则表达式并不仅限于某一种语言，但是在每种语言中有席位的差别。
+正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个"规则字符串"，这个"规则字符串"用来表达对字符串的一种过滤逻辑。
+实例
+this is text
+匹配字符串"this is te...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on March 24, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2018/03/23/MySQL-'s-Basic-application/">
         <h2 class="post-title">
             MySQL的基本用法
@@ -209,6 +303,66 @@ ERROR 1364 (HY000): Field 'ssl_ciphe...
     </a>
     <p class="post-meta">
         Posted by Zxy Blog on March 23, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/03/20/scrapy-set-randow-User-Agent/">
+        <h2 class="post-title">
+            scrapy设置随机User-Agent
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Using random user-agent in scrapy!
+        </h3>
+        
+        <div class="post-content-preview">
+            设置随机User-Agent
+
+首先需要准备一个代理池：
+
+MY_USER_AGENT = [
+    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
+    "Mozilla/4.0 (compatible; MSIE...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on March 20, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/03/19/Java-basis-updating/">
+        <h2 class="post-title">
+            Java 基础语法（持续更新）
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Java basis
+        </h3>
+        
+        <div class="post-content-preview">
+            Java学习中的语法记录:
+
+Java常量
+在 Java 中使用 final 关键字来修饰常量，声明方式和变量类似：
+
+final double PI = 3.1415927;
+
+当使用常量的时候，前缀 0 表示 8 进制，而前缀 0x 代表 16 进制, 例如：
+
+int decimal = 100;
+int octal = 0144;
+int hexa =  0x64;
+
+自动类型转换
+...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on March 19, 2018
     </p>
 </div>
 <hr>
@@ -323,141 +477,6 @@ int find_Peak1(vector&lt;int&gt; A) {
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2018/03/12/Webdriver-basic-application-updating/">
-        <h2 class="post-title">
-            Selenium的基础应用（随时更新）
-        </h2>
-        
-        <h3 class="post-subtitle">
-            How to use selenium basic application easily?
-        </h3>
-        
-        <div class="post-content-preview">
-            在使用python的selenium包的时候，要用到游览器的驱动器webdriver组件，这边会更新一些关于selenium包的一些用法。
-
-文本框的定位和传值：
-
-driver = selenium.webdriver.Chrome("chromedriver路径")
-driver.find_element_by_xpath('/html/body/div[3]/div/div[1]/di...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on March 12, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/03/09/iterative-crawl-filtered-offsite-request-erroe/">
-        <h2 class="post-title">
-            迭代爬取时Filtered offsite request错误
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Iterative crawl filtered offsite request error!
-        </h3>
-        
-        <div class="post-content-preview">
-            在最近一次的爬取任务中，迭代爬取页面数据，报出错误“Filtered offsite request”，经过查找，给出如下结论及解决方案。
-
-报错原因：
-spider程序中的allowed_domins属性将后序的跟进url进行了过滤，因为allowed_domins的作用是用来过滤不包含其内属性的urls，所以后序页面实际上不是没有被查找到，而是查找到并且被过滤了。
-
-解决方案：去掉all...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on March 9, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/03/06/scrapy-spider-write-way/">
-        <h2 class="post-title">
-            scrapy的spider写法详细解析
-        </h2>
-        
-        <h3 class="post-subtitle">
-            I'll introduce the way of making scrapy's spider!
-        </h3>
-        
-        <div class="post-content-preview">
-            分布解析scrapy中spider的写法:
-
-对于scrapy中的spider的写法：
-class Test(self.Spider):
-	name = ""#爬虫的名字，用来在命令行中用scrapy crawl name进行调用
-	allowed_domains = [""]#用来过滤urls，详情在爬虫栏其它目录中有详细解释
-	start_urls = [""]#爬虫的开始爬取的第一个页...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on March 6, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/03/05/scrapy-pipelines-file/">
-        <h2 class="post-title">
-            Scrapy的pipelines文件
-        </h2>
-        
-        <h3 class="post-subtitle">
-            How to understand pipelines of scrapy?
-        </h3>
-        
-        <div class="post-content-preview">
-            Scrapy的Pipelines
-一般来说，当我们使用scrapy框架的时候，首先利用scrapy startproject “文件夹名”来生成一个scrapy文件夹，里面会自动带有一个名为pipelines的文件，今天就来说一下这个文件内容的写法。
-
-一般来说，把里面的内容分作三个部分：
-
-def open_spider(self, spider):
-def process_item(se...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on March 5, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/03/05/scrapy-bring-data-to-json/">
-        <h2 class="post-title">
-            scrapy将数据导入到json中
-        </h2>
-        
-        <h3 class="post-subtitle">
-            How to use scrapy input the data to json?
-        </h3>
-        
-        <div class="post-content-preview">
-            利用命令将抓来的数据导入到json文件中：
-
-scrapy crawl test -o test.json -t json
-
-
-  test表示保存的json文件名
-
-
-将item写入JSON文件
-
-import json
-class JsonWriterPipeline(object):
-	def __init__(self):
-		line = json.dumps(dict(item)...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on March 5, 2018
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -500,7 +519,7 @@ class JsonWriterPipeline(object):
                             
                         
                             
-                                <a href="/tags/#python" title="python" rel="33">
+                                <a href="/tags/#python" title="python" rel="34">
                                     python
                                 </a>
                             
@@ -508,15 +527,27 @@ class JsonWriterPipeline(object):
                             
                         
                             
-                                <a href="/tags/#爬虫" title="爬虫" rel="19">
+                                <a href="/tags/#爬虫" title="爬虫" rel="20">
                                     爬虫
                                 </a>
                             
                         
                             
-                                <a href="/tags/#scrapy" title="scrapy" rel="6">
+                                <a href="/tags/#scrapy" title="scrapy" rel="7">
                                     scrapy
                                 </a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                                <a href="/tags/#Java" title="Java" rel="2">
+                                    Java
+                                </a>
+                            
+                        
                             
                         
                             

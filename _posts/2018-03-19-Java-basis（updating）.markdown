@@ -69,7 +69,8 @@ public class Test{
 
 声明 final 方法的主要目的是防止该方法的内容被修改。<br>
 
-如下所示，使用 final 修饰符声明方法。</p>
+如下所示，使用 final 修饰符声明方法。
+
 {% highlight java %}
 public class Test{
     public final void changeName(){
@@ -335,7 +336,7 @@ public class CommandLine {
 
 结果：
 
-{% highlight %}
+{% highlight java %}
 $ javac CommandLine.java 
 $ java CommandLine this is a command line 200 -100
 args[0]: this
