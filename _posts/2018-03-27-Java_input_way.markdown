@@ -5,7 +5,7 @@ title: "java的输入"
 subtitle: "How to input like c++/python in java?"
 author: "Zxy"
 tags:
-    - java
+    - Java
 ---
 
 在`java`中，我们并不能找到一个直接的函数实现我们的输入操作，这一点比起`c++、python`来都不是很方便，想了一下，大概是因为`java`始终秉持对象的思想，所以它的输入模式也以对象的方式呈现。
