@@ -1,9 +1,11 @@
 ---
 layout: post
-data: 2018-03-23
+data: 2018-03-25
 title: "MySQL的基本用法"
-subtitle:   "How to grasp MySQL's basic application?"
-tags: MySQL
+subtitle: "How to grasp MySQL's basic application?"
+author: "Zxy"
+tags:
+    - MySQL
 ---
 ### MySQL连接
 使用mysql二进制方式连接：
