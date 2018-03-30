@@ -185,6 +185,75 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2018/03/30/gdb-registers-content/">
+        <h2 class="post-title">
+            gdb编译查看寄存器内容
+        </h2>
+        
+        <h3 class="post-subtitle">
+            How to use gdb know the register's content!
+        </h3>
+        
+        <div class="post-content-preview">
+            查看寄存器的值
+
+gdb支持查看被调试进程当前常用寄存器的值，命令如下：
+
+(gdb)info registers[REGISTER]
+
+如果不加任何参数，则显示所有寄存器的值。如果只想看某个寄存器的值，则可以在参数中指定。
+
+例如：
+
+(gdb)info registers#查看当前所有寄存器当前的值
+(gdb)info registers pc#只查看PC寄存器当前的值
+
+前面的命令只会...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on March 30, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/03/30/View-and-modification-database/">
+        <h2 class="post-title">
+            MySQL中数据库/表编码格式的查看和修改
+        </h2>
+        
+        <h3 class="post-subtitle">
+            View and modification of database / table encoding format in MySQL
+        </h3>
+        
+        <div class="post-content-preview">
+            对MySQL数据库中表或库编码格式的修改
+
+
+  
+    查看数据库编码格式
+
+    mysql&gt; show variables like ‘character set database’;
+  
+  
+    查看数据表的编码格式
+
+    mysql&gt; show create table ;
+  
+  
+    创建数据库时指定数据库的字符集
+
+    mysql&gt;...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on March 30, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2018/03/28/python-join-merge-list-element/">
         <h2 class="post-title">
             利用join将列表转换为字符串
@@ -437,66 +506,6 @@ MY_USER_AGENT = [
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2018/03/19/Java-basis-updating/">
-        <h2 class="post-title">
-            Java 基础语法（持续更新）
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Java basis
-        </h3>
-        
-        <div class="post-content-preview">
-            Java学习中的语法记录:
-
-Java常量
-在 Java 中使用 final 关键字来修饰常量，声明方式和变量类似：
-
-final double PI = 3.1415927;
-
-当使用常量的时候，前缀 0 表示 8 进制，而前缀 0x 代表 16 进制, 例如：
-
-int decimal = 100;
-int octal = 0144;
-int hexa =  0x64;
-
-自动类型转换
-...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on March 19, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/03/18/scrapy-use-the-form-to-simulate-login">
-        <h2 class="post-title">
-            scrapy使用表单模拟登录
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Using form to simulate login all kinds of websites
-        </h3>
-        
-        <div class="post-content-preview">
-            使用FormRequest.from_response()方法模拟用户登录
-
-通常网站通过  实现对某些表单字段（如数据或是登录界面中的认证令牌等）的预填充。 使用Scrapy抓取网页时，如果想要预填充或重写像用户名、用户密码这些表单字段， 可以使用 FormRequest.from_response() 方法实现。下面是使用这种方法的爬虫例子:
-
-import scrapy
-
-class ...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on March 18, 2018
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -573,11 +582,19 @@ class ...
                             
                         
                             
-                        
+                                <a href="/tags/#MySQL" title="MySQL" rel="2">
+                                    MySQL
+                                </a>
                             
                         
                             
                         
+                            
+                        
+                            
+                                <a href="/tags/#Linux" title="Linux" rel="2">
+                                    Linux
+                                </a>
                             
                         
                     </div>

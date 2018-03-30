@@ -330,7 +330,7 @@ drop table student;
 {% highlight sql %}
 UPDATE table_name SET field1=new-value1, field2=new-value2
 [WHERE Clause]
-{% ednhighlight %}
+{% endhighlight %}
 
 - 你可以同时更新一个或多个字段。
 - 你可以在WHERE子句中指定任何条件。
@@ -394,8 +394,9 @@ SQL LIKE子句中使用百分号`%`字符来表示任意字符，类似于UNIX�
 - LIKE通常与 % 一同使用，类似于一个元字符的搜索。
 - 你可以使用AND或者OR制定一个或多个条件。
 - 你可以在DELETE或UPDATE命令中使用WHERE...LIKE子句来指定条件。
-- 
+
 **语法**
+
 {% highlight sql %}
 SELECT field1, field2, ..., fieldN
 FROM table_name
@@ -555,6 +556,102 @@ mysql> SELECT coalesce(name, '总数'), SUM(singin) as singin_count FROM  employ
 | 总数                   |           16 |
 +--------------------------+--------------+
 4 rows in set (0.01 sec)
+{% endhighlight %}
+
+### MySQL连接的使用
+
+从多个数据表中读取数据。
+
+JOIN 按照功能大致分为如下三类：
+
+- **INNER JOIN（内连接，或等值链接）**:获取两个表中字段匹配关系的记录。
+- **LEFT JOIN(左连接)**：获取左表所有记录，即使右表没有对应匹配的记录。
+- **RIGHT JOIN（右连接）**：与LEFT JOIN相反，获取右表所有记录。 
+
+实例见[这里](http://www.runoob.com/mysql/mysql-join.html)
+
+个人理解：INNER JOIN就是将多个表连接起来，从两个表中找出共同的信息并展示成一个新的表。
+
+LEFT JOIN会以左边的表为参照，结果会列出左边表单的所有数据，如果右边表单中没有与之对应的，则列出NULL。
+
+Right JOIN的理解与上面的LEFT JOIN相反。
+
+### MySQL NULL 值处理
+MySQL中若是要查找值为NULL的数据，单纯的`==NULL`和`!=NULL`是没有效果的，这样查询的话，返回的结果一定是空，由于这个原因，MySQL提供了两个函数和一个比较符作为解决办法。
+
+- **IS NULL**: 当列的值是 NULL,此运算符返回 true。
+- **IS NOT NULL**: 当列的值不为 NULL, 运算符返回 true。
+- **<=>**: 比较操作符（不同于=运算符），当比较的的两个值为 NULL 时返回 true。
+
+### MySQL事务处理的两种办法：
+1、用BEGIN,ROLLBACK,COMMIT来实现。
+
+- **BEGIN**开始一个事务
+- **ROLLBACK**事务回滚
+- **COMMIT**事务确认
+
+2、直接用SET来改变MySEL的自动提交模式
+
+- **SET AUTOCOMMIT=0**禁止自动提交
+- **SET AUTOCOMMIT=1**开启自动提交
+
+### MySQL ALTER命令
+
+当我们需要修改数据表名或者修改数据表字段时，就需要使用到MySQL ALTER命令。
+
+**删除，添加或修改表字段**
+
+如下命令使用了 ALTER 命令及 DROP 子句来删除以上创建表的 i 字段：
+
+{% highlight sql %}
+mysql> ALTER TABLE testalter_tbl  DROP i;
+{% endhighlight %}
+
+> 如果数据表中只剩余一个字段则无法使用DROP来删除字段
+
+i 字段会自动添加到数据表字段的末尾。
+
+{% highlight sql %}
+mysql> ALTER TABLE testalter_tbl ADD i INT;
+{% endhighlight %}
+
+**查看当前表的信息**
+
+{% highlight sql %}
+sql> SHOW COLUMNS FROM testalter_tbl;
+{% endhighlight %}
+
+#### 修改字段类型及名称
+
+如果需要修改字段类型及名称，你可以在ALTER命令中使用MODIFY或CHANGE子句。
+
+例如，把字段c的类型从CHAR(1）改为CHAR(10)，可以执行以下命令：
+
+{% highlight sql %}
+mysql> ALTER TABLE testalter_tbl MODFY c CHAR(10);
+{% endhighlight %}
+
+**CHANGE**的语法与**MODIFY**有所不同，如下:
+
+{% highlight sql %}
+mysql> ALTER TABLE testalter_tbl CHANGE i j BIGINT;
+{% endhighlight %}
+
+指定字段 j 为 NOT NULL 且默认值为100。
+
+{% highlight sql %}
+mysql> ALTER TABLE testalter_tbl 
+    -> MODIFY j BIGINT NOT NULL DEFAULT 100;
+{% endhighlight %}
+
+### 修改表名
+
+如果需要修改数据表的名称，可以在 ALTER TABLE 语句中使用 RENAME 子句来实现。
+
+尝试以下实例将数据表 testalter_tbl 重命名为 alter_tbl：
+
+{% highlight sql %}
+mysql> ALTER TABLE testalter_tbl RENAME TO alter_tbl;
 {% endhighlight %}
 
 ## 数值类型
