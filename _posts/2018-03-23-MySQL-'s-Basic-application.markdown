@@ -654,6 +654,168 @@ mysql> ALTER TABLE testalter_tbl
 mysql> ALTER TABLE testalter_tbl RENAME TO alter_tbl;
 {% endhighlight %}
 
+### MySQL复制表
+
+命令：**INSERT　INTO...SELECT**
+
+MYSQL复制表的两种方式：
+
+**一、只复制表结构到新表**
+{% highlight sql %}
+create table 新表 select * from 旧表 where 1=2
+
+或者
+
+create table 新表 like 旧表 
+{% endhighlight %}
+
+
+**二、复制表结构及数据到新表**
+
+{% highlight sql %}
+create table新表 select * from 旧表 
+{% endhighlight %}
+
+### MySQL元数据
+有时我们会需要直到MySQL的以下三种信息：
+- 查询结果信息：SELECT，UPDATE 或 DELETE语句影响的记录数。
+- 数据库和数据表的信息：包含了数据库及数据表的结构信息。
+- MySQL服务器信息：包含了数据库服务器的当前状态，版本号等。
+
+**语句**
+
+SELECT VERSION()   服务器版本信息。
+SELECT DATABASE()  当前数据库名(或者返回空)
+SELECT USER()	   当前用户名
+SHOW STATUS 	   服务器状态
+SHOW VARIABLES     服务器配置变量
+
+
+### MySQL序列使用
+
+MySQL的序列是一组递增的序列，通常我们设置时，它可以实现从0开始的自动递增，然而通过AUTO_INCREMENT方法，我们可以改变序列的值使其初始位置不再从0开始。
+
+**设置序列的开始值**
+
+{% highlighe sql %}
+mysql> CREATE TABLE insect
+    -> (
+    -> id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    -> PRIMARY KEY (id),
+    -> name VARCHAR(30) NOT NULL, 
+    -> date DATE NOT NULL,
+    -> origin VARCHAR(30) NOT NULL
+)engine=innodb auto_increment=100 charset=utf8;
+{% endhighlight %}
+
+或者：
+
+{% highlighe sql %}
+mysql> ALTER TABLE t AUTO_INCREMENT = 100;
+{% endhighlight %}
+
+### 如何利用MySQL处理重复的数据
+
+**防止表中出现重复数据**
+
+方法：**PRIMARY KEY(主键，且主键可以有多个)** 或者 **UNIQUE(唯一)**
+
+不加以设置的话，默认允许表中出现重复数据。
+
+如果我们设置了`UNIQUE`索引的话，当我们插入同样的数据，SQL语句将停止执行，并抛出一个错误。
+
+INSERT IGNORE INTO与INSERT INTO的区别就是INSERT IGNORE会忽略数据库中已经存在的数据，如果数据库没有数据，就插入新的数据，如果有数据的话就跳过这条数据。这样就可以保留数据库中已经存在数据，达到在间隙中插入数据的目的。
+
+以下实例使用了INSERT IGNORE INTO，执行后不会出错，也不会向数据表中插入重复数据：
+
+{% highlight sql %}
+mysql> INSERT IGNORE INTO person_tbl (last_name, first_name)
+    -> VALUES( 'Jay', 'Thomas');
+Query OK, 1 row affected (0.00 sec)
+mysql> INSERT IGNORE INTO person_tbl (last_name, first_name)
+    -> VALUES( 'Jay', 'Thomas');
+Query OK, 0 rows affected (0.00 sec)
+{% endhighlight %}
+
+更多关于**统计重复数据**、**过滤重复数据**、**删除重复数据**详情见[这里](http://www.runoob.com/mysql/mysql-handling-duplicates.html)
+
+### MySQL导出数据
+**使用 SELECT ... INTO OUTFILE 语句导出数据**
+
+实例：
+
+{% highlight sql %}
+mysql> SELECT * FROM runoob_tbl 
+    -> INTO OUTFILE '/tmp/tutorials.txt';
+{% endhighlight %}
+
+在下面的例子中，生成一个文件，各值用逗号隔开。这种格式可以被许多程序使用。
+
+{% highlight sql %}
+SELECT a,b,a+b INTO OUTFILE '/tmp/result.text'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+FROM test_table;
+{% endhighlight %}
+
+SELECT ... INTO OUTFILE 语句有以下属性:
+
+- LOAD DATA INFILE是SELECT ... INTO OUTFILE的逆操作，SELECT句法。为了将一个数据库的数据写入一个文件，使用SELECT ... INTO OUTFILE，为了将文件读回数据库，使用LOAD DATA INFILE。
+- SELECT...INTO OUTFILE 'file_name'形式的SELECT可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。
+- 输出不能是一个已经存在的文件，防止文件被篡改。
+- 你需要有一个登录服务器的帐号来检索文件。否则SELECT...INTO OUTFILE 不会起任何作用。
+- 在UNIX中，该文件被创建后是可读的，权限由MySQL服务器所拥有。这意味着，虽然你可以读取该文件，但可能无法将其删除。
+
+#### 导出SQL格式的数据
+**导出SQL格式的数据到指定文件**
+
+{% highlight sql %}
+$ mysqldump -u root -p RUNOOB runoob_tbl > dump.txt;
+{% endhighlight %}
+**
+**导出整个数据库的数据**
+
+{% highlight sql %}
+$ mysqldump -u root -p RUNOOB > database_dump.txt
+{% endhighlight %}
+
+**备份所有数据库**
+
+{% highlight sql %}
+$ mysqldump -u root -p --all-databases > database_dump.txt
+{% endhighlight %}
+
+
+### 将数据表及数据库拷贝至其他主机
+**将备份的数据库导入到MySQL服务器中**
+
+{% highlight sql %}
+$ mysql -u root -p database_name < dump.txt
+{% endhighlight %}
+
+**将导出的数据直接导入到远程的服务器上，但要确保两个服务器相通**
+
+{% highlight sql %}
+$ mysqldump -u root -p database_name | mysql -h other-host.com database_name
+{% endhighlight %}
+
+> 利用了管道将导出的数据导入到指定的远程主机上。
+
+**将指定主机的数据库拷贝到本地**
+{% highlight sql %}
+mysqldump -h other-host.com -p port -u root -p database_name > dump.txt
+{% endhighlight %}
+
+### MySQL导入数据
+
+**使用LOAD DATA导入数据**
+
+以下实例中将从当前目录中读取文件 dump.txt ，将该文件中的数据插入到当前数据库的 mytbl 表中。
+
+{% highlight sql %}
+mysql > LOAD DATA LOCAL INFILE 'dump.txt' INTO TABLE mytbl;
+{% endhighlight %}
+
 ## 数值类型
 
 TINYINT小整数值
