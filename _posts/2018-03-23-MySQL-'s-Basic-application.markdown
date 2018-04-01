@@ -697,7 +697,7 @@ MySQL的序列是一组递增的序列，通常我们设置时，它可以实现
 
 **设置序列的开始值**
 
-{% highlighe sql %}
+{% highlight sql %}
 mysql> CREATE TABLE insect
     -> (
     -> id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -710,7 +710,7 @@ mysql> CREATE TABLE insect
 
 或者：
 
-{% highlighe sql %}
+{% highlight sql %}
 mysql> ALTER TABLE t AUTO_INCREMENT = 100;
 {% endhighlight %}
 
