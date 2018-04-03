@@ -185,6 +185,68 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2018/04/03/Type-conversion-of-Java/">
+        <h2 class="post-title">
+            Java的String和Int类型的相互转换
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Type conversion of Java
+        </h3>
+        
+        <div class="post-content-preview">
+            String转换为int
+
+你需要知道，不是什么字符串都可以转换为整形的。
+
+java不允许你随意转换任意的字符串为整形，你可以转换的只有全部由字符’0’-‘9’构成的字符串，其余的若是要进行转换，那么必须抛出一个异常。
+
+
+String i;
+number = Integer.parseInt(i);
+
+
+
+所以你在使用上述代码将字符串装箱Integer中并转成int时，会报错，因为你没有...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on April 3, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/04/03/Java-read-data-from-outside-file/">
+        <h2 class="post-title">
+            Java从文本读取数据
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Java read data from outside file!
+        </h3>
+        
+        <div class="post-content-preview">
+            利用文本流从文本中读取数据
+
+题目描述如下：
+
+在文件in.dat中有200个正整数，且每个数均在1000至9999之间。函数ReadDat()读取这200个数存放到数组aa中。
+
+代码如下:
+
+public class question_5 {
+	public static void main(String[] args) throws IOException{
+		File f = ne...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Zxy on April 3, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2018/03/30/gdb-registers-content/">
         <h2 class="post-title">
             gdb编译查看寄存器内容
@@ -446,66 +508,6 @@ this is text
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2018/03/23/MySQL-'s-Basic-application/">
-        <h2 class="post-title">
-            MySQL的基本用法
-        </h2>
-        
-        <h3 class="post-subtitle">
-            How to grasp MySQL's basic application?
-        </h3>
-        
-        <div class="post-content-preview">
-            MySQL连接
-使用mysql二进制方式连接：
-
-mysql -u root -p#利用root帐号连接mysql服务器
-
-退出mysql命令窗口：
-
-mysql&gt;exit
-
-使用mysqladmin创建数据库
-使用普通用户，你可能需要特定的权限来创建或者删除MySQL数据库。
-
-所以这里使用root来登录，拥有所有权限。
-
-mysqladmin -u root -p create R...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on March 23, 2018
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2018/03/20/scrapy-set-randow-User-Agent/">
-        <h2 class="post-title">
-            scrapy设置随机User-Agent
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Using random user-agent in scrapy!
-        </h3>
-        
-        <div class="post-content-preview">
-            设置随机User-Agent
-
-首先需要准备一个代理池：
-
-MY_USER_AGENT = [
-    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
-    "Mozilla/4.0 (compatible; MSIE...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Zxy on March 20, 2018
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -576,7 +578,7 @@ MY_USER_AGENT = [
                             
                         
                             
-                                <a href="/tags/#Java" title="Java" rel="3">
+                                <a href="/tags/#Java" title="Java" rel="5">
                                     Java
                                 </a>
                             

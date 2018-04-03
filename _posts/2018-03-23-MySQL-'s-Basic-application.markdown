@@ -11,7 +11,7 @@ tags:
 使用mysql二进制方式连接：
 
 {% highlight sql %}
-mysql -u root -p#利用root帐号连接mysql服务器
+mysql -u root -p#利用root帐号，连接mysql服务器
 {% endhighlight %}
 
 退出mysql命令窗口：
@@ -160,7 +160,7 @@ select * from runoob_tbl;
 grant select on testdb.* to database@localhost with grant option;
 {% endhighlight %}
 
-**注：实际中，数据库全新啊最好由DBA来统一管理。**
+**注：实际中，数据库最好由DBA来统一管理。**
 
 **创建完成后需要执行`FLUSH PRIVILEGES`语句。**
 
@@ -175,12 +175,22 @@ FROM table_name
 [WHERE Clause]
 [LIMIT N][ OFFSET M]
 {% endhighlight %}
-
+<br>
 - 查询语句中你可以使用一个或者多个表，表之间使用逗号(,)分割，并使用WHERE语句来设定查询条件。
+
+
 - SELECT 命令可以读取一条或者多条记录。
+
+
 - 你可以使用星号（*）来代替其他字段，SELECT语句会返回表的所有字段数据。
+
+
 - 你可以使用 WHERE 语句来包含任何条件。
+
+
 - 你可以使用 LIMIT 属性来设定返回的记录数。
+
+
 - 你可以通过OFFSET指定SELECT语句开始查询的数据偏移量。默认情况下偏移量为0。
 
 ### MySQL WHERE子句
@@ -205,7 +215,8 @@ SELECT field1, field2,...fieldN FROM table_name1, table_name2...
 **实例**
 
 {% highlight sql %}
-SELECT * from runoob_tbl WHERE runoob_author = "菜鸟教程";xl   {% endhighlight %}
+SELECT * from runoob_tbl WHERE BINARY runoob_author = "AbCDe";
+{% endhighlight %}
 
 ### 创建数据表
 创建MySQL数据表需要以下信息：
@@ -440,14 +451,6 @@ mysql> SELECT * from runoob_tbl  WHERE runoob_author LIKE '%COM';
 **如果没有百分号`%`，LIKE子句与等号`=`的效果是一样的。**
 
 **在实际操作中，runoob_title不可以被分开选择，否则会查找不到，runoob_author可以被切割，submission_date是纯粹的日期而不是字符串，判断的时候可以直接用`>`或`<`进行日期的比对进行选择。**
-
-### MySQL DELETE语句
-应用DELETE FROM命令来删除MySQL数据表中的记录。
-
-**语法**
-{% highlight sql %}
-DELETE from runoob_tbl where condition;
-{% endhighlight %}
 <br>
 ### MySQL UNION操作符
 
@@ -502,7 +505,7 @@ ORDER BY field1, [field2...] [ASC [DESC]]
 - 你可以设定多个字段来排序。
 
 
-- 你可以使用ASC或ＤＥＳＣ关键字来设置查询结果是按升序或降序排列。默认为升序排列。
+- 你可以使用ASC或DESC关键字来设置查询结果是按升序或降序排列。默认为升序排列。
 
 
 - 你可以添加WHERE...LIKE子句来设置条件。
@@ -557,7 +560,7 @@ GROUP BY column_name;
     +--------+----------+
     3 rows in set (0.01 sec)
 {% endhighlight %}
-
+<br>
 **使用 WITH ROLLUP**
 
 WITH ROLLUP 可以实现在分组统计数据基础上再进行相同的统计（SUM,AVG,COUNT…）。
