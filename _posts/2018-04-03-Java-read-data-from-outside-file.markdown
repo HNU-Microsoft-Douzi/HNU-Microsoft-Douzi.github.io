@@ -1,0 +1,71 @@
+---
+layout: post
+title: "Java从文本读取数据"
+subtitle: "Java read data from outside file!"
+data: 2018-04-03
+author: "Zxy"
+tags:
+    - Java
+---
+### 利用文本流从文本中读取数据
+
+题目描述如下：
+
+在文件in.dat中有200个正整数，且每个数均在1000至9999之间。函数ReadDat()读取这200个数存放到数组aa中。
+
+代码如下:
+
+{% highlight java %}
+public class question_5 {
+	public static void main(String[] args) throws IOException{
+		File f = new File("C:/Users/Administrator/Desktop/question_5.txt");
+		FileInputStream fin = new FileInputStream(f);
+		byte[] bs = new byte[256];
+		
+		int count = 0;
+		while((count=fin.read(bs))>0){
+			String str = new String(bs,0,count);//反复定义新变量，接收新读取的数据
+			String[] ary = str.split("\\ ");
+			for(String i : ary){
+				System.out.println(i);
+			}
+		}
+	fin.close();
+	}
+}
+{% endhighlight %}
+<br>
+
+这边没有把函数体保存为ReadDat()函数（主要还是因为我懒）。
+
+直接讲一下这个代码的流程。
+
+- 首先我们需要创建一个File的对象用来存储我们读取文件的路径。
+
+
+- 然后通过FileInputStream的对象作为数据流的存储对象。
+
+
+- 需要注意的是，这个FileInputStream本来有一个int read(int r)的方法，里面的r是读取的字节数，但是我在实际使用的过程中，发现这个方法不可以被利用，可能是之后的版本做了修改。这样的话，我们就用public int read(byte[] r) throws IOException{}这个方法，这时，传入的参数为一个字节数组。
+
+
+- 这样的话我们就需要定义一个字节数组`byte[] bs = new byte[256]`
+
+
+- 我们定义一个计数变量count,用来标记当前FileInputStream的对象返回值，它的默认属性是当把所有数据读取完成时，会返回-1。
+
+
+- 所以在while的循环中，我们将此作为循环终止的条件，比in个利用字符串数组存取每次读取的数据切割后的数组。
+
+
+- 之后我直接进行了输出（因为是测试），如果要满足实际题目的要求，那么应该将得到的数据强制类型转换为Integer类型后赋给整型数组。
+
+结果如下：
+
+原始数据:
+
+[img](/assets/question_5.png)
+
+输出数据:
+
+[img](/assets/question_5_1.png)
