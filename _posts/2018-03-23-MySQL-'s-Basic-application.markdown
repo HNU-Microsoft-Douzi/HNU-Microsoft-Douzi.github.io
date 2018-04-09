@@ -5,7 +5,7 @@ subtitle: "How to grasp MySQL's basic application?"
 data: 2018-03-25
 author: "Zxy"
 tags:
-    - MySQL
+    - 数据库
 ---
 ### MySQL连接
 使用mysql二进制方式连接：

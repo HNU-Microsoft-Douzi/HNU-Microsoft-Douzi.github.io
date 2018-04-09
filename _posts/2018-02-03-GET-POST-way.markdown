@@ -1,5 +1,5 @@
 ---
-layout: blog-page
+layout: post
 title: "GET方法和POST方法"
 subtitle: "GET way and POST way"
 data: 2018-02-03

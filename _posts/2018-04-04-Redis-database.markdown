@@ -5,11 +5,11 @@ subtitle: "How to grasp Redis's basic application?"
 data: 2018-04-04
 author: "Zxy"
 tags:
-    - Redis
+    - 数据库
 ---
 
 > 本章节部分内容转自[菜鸟教程](http://www.runoob.com/redis/),记录在这里主要是为了方便学习的时候查阅使用，侵权即删。
-
+redis的string可以包含任何数据，甚至于jpg图片或者一个序列化对
 **特性**
 
 谈谈我的理解，Redis是一款开源免费的非关系型数据库，它不像MySQL那样是以表之间的形式来表示，因为表内的内容有很强的关联性，Redis是一款高性能的key-value数据库，它有下面几个特点：
@@ -44,6 +44,7 @@ Redis支持五种数据类型：`string`(字符串)，`hash`(字符串)，`list`
 #### String
 
 redis的string可以包含任何数据，甚至于jpg图片或者一个序列化对象。
+
 **实例**
 <br>
 {% highlight redis %}
