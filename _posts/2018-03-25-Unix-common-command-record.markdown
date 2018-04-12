@@ -173,6 +173,64 @@ network
 
 取得最后的文件名。
 
+**chsh**
+
+切换login SHELL
+
+**echo $SHELL**
+
+SEHLL区分大小写，查看当前login SHELL
+
+**echo ***
+
+显示当前目录下的所有文件名
+
+**ls ***
+
+显示当前目录下所有的文件名及目录文件下的子文件名
+
+**`**
+
+反引号
+
+**文件描述符**
+
+<img src="/assets/unix_0.png">
+
+**重定向**
+
+<img src="/assets/unix_1.png">
+
+**错误重定向**
+
+<img src="/assets/unix_2.png">
+
+`/dev/null` 用来丢弃输出
+
+**管道其他应用举例**
+
+<img src="/assets/unix_3.png">
+
+**过滤器**
+
+<img src="/assets/unix_4.png">
+
+<img src="/assets/unix_5.png">
+
+**变量分类**
+
+变量在不同的shell中是隔离的，互相独立的。
+
+<img src="/assets/unix_6.png">
+
+**变量的作用域**
+
+<img src="/assets/unix_7.png">
+
+**SHELL的变量示例**
+
+<img src="/assets/unix_8.png">
+
 ### 改变文件属性与权限的命令
 **chgrp**
 
