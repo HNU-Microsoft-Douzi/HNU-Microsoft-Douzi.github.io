@@ -10,7 +10,7 @@ tags:
 
 ### scrapy-redis流程图
 
-<img src="/assets/scrapy-redis.png">
+<img src="/assets/scrapy_redis.png">
 
 ### scrapy-redis各个组件
 

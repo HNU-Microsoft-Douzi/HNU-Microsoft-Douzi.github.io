@@ -110,4 +110,7 @@ friends: [
     },{
         title: "requests的官方指南文档",
         href: "http://docs.python-requests.org/en/latest/user/quickstart.html"
+    },,{
+        title: "最棒的pdf转换工具（完全免费）",
+        href: "https://www.addpdf.cn/pdf-to-word"
     }]
