@@ -6,7 +6,7 @@ data: 2018-04-12
 author: "Zxy"
 tags:
     - java
-    - 算法
+    - algorithm
 ---
 
 **题目描述**
