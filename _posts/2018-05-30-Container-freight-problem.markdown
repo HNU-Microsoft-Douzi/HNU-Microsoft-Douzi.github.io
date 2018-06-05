@@ -6,7 +6,7 @@ data: 2018-05-30
 author: "Zxy"
 tags:
     - python
-    - algorihtm
+    - algorithm
 ---
 
 **任务概述**

@@ -5,7 +5,7 @@ title: "Dijkstra算法找最短路径"
 subtitle: "Use Dijkstra-algorithm to find the shortest path!"
 author: "Zxy"
 tags:
-    - Python
+    - python
     - algorithm
 ---
 

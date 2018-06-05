@@ -5,7 +5,7 @@ title: "gdb反汇编调试"
 subtitle: "Debugging with GDB disas!"
 author: "Zxy"
 tags:
-    - gdb
+    - Linux
 ---
 
 **在利用gdb调试的时候，我们发现，有时可以通过查看它的汇编代码进行汇编级别的调试，并通过观察寄存器内值的变化来推测机器内部层次的操作，更好的理解程序在机器内部的运行，这里就给出gdb上查看汇编代码的手段。**

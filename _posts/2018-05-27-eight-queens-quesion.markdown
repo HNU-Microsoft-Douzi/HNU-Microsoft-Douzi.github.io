@@ -5,7 +5,7 @@ title: "八皇后问题（经典回溯算法）"
 subtitle: "The eight queens problem is solved by backtracking algorithm"
 author: "Zxy"
 tags:
-    - Python
+    - python
     - algorithm
 ---
 
