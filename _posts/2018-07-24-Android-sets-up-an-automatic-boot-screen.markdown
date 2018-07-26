@@ -2,6 +2,7 @@
 title: "Android之设置一个自动开机界面"
 subtitle: "Android sets up an automatic boot screen"
 layout: post
+data: 2018-07-24
 author: "Zxy"
 tags:
     - android
