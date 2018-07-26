@@ -143,8 +143,8 @@ public class Comment {
 {% highlight java %}
 public class Comment {  
       
-    private int id;  
-      
+    private int id;
+
     private String content;  
       
     private Date publishDate;  //多了一个表示发布时间的属性
