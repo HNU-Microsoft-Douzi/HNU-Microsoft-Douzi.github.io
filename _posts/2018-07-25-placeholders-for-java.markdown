@@ -1,0 +1,72 @@
+---
+layout: post
+title: "Java 泛型的占位符的使用"
+subtitle: "The use of placeholders for Java generics"
+data: 2018-07-25
+author: "Zxy"
+tags:
+    - Java
+---
+
+关于Java的泛型，有两种写法，一种是泛型类，另一种就是泛型函数。
+
+泛型类的<E>注意写在类的后面。
+
+但是泛型函数的<E>应该写在函数返回类型的前面。
+
+这里最需要注意的是一个占位符的使用。
+
+比如说我有A,B两个类，我在我的main()函数中要调用一个函数print,要满足两个条件，就是既要可以打印出来A的对象，又要可以打印出来B的对象，有什么样的方式呢？
+
+**答案就是限定位**
+
+public void print(ArrayList<?> a){}//这里为了方面就用ArrayList这个集合框架来表示了。
+
+然后再这个函数的具体实现中，就用?来代表原本的类型就可以了。
+
+但是这里有一种特殊的情况要进行说明一下：
+
+{% highlight java %}
+import java.util.*;
+
+public class Test {
+	
+	public static void main(String []args) {
+			ArrayList<Person> al = new ArrayList<Person>();
+			al.add(new Person("abc1"));
+			al.add(new Person("abc2"));
+			al.add(new Person("abc3"));
+			
+//			printColl(al);
+			
+			ArrayList<Student> al1 = new ArrayList<Student>();
+			al1.add(new Student("abc1"));
+			al1.add(new Student("abc2"));
+			al1.add(new Student("abc3"));
+			printColl(al1);
+	}
+	
+	public static void printColl(ArrayList<? extends Person> al) {
+		Iterator<? extends Person> it = al.iterator();
+		while(it.hasNext()) {
+			System.out.println(it.next().getName());
+		}
+	}
+}
+{% endhighlight %}
+
+附上一个教学视频里的demo，说一下这个特殊情况，就是当一个类是另一个类的子类的时候，就像上面的这种情况，Student显然是Person类的子类，但是这个时候如果你直接用限定位的话就会报错，编译都过不了，可能是不符合语法结构。
+
+那么就有了这种特殊的写法:
+
+{% highlight java %}
+	public static void printColl(ArrayList<? extends Person> al)
+{% endhighlight %}
+
+#### 总结一下：
+
+? extends E:可以接受E类型或者E的子类型。*上限*
+
+? super E:可以接受E类型或者E的夫类型。*下限*
+
+泛型限定就是泛型扩展用的。
