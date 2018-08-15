@@ -40,7 +40,7 @@ private static class MyHandler extends Handler{
             }
         }
     }
-{%　endhighlight %}
+{% endhighlight %}
 
 这样写就解决了之前的问题，但是会导致新的问题，你会发现无法调用原本Activity中的对象了，因为在你的static类中使用对象必须是静态的，但是Activity中的组件对象却不能为静态，依旧会导致内存溢出的问题，这不成了一个死锁问题了吗？
 
@@ -68,6 +68,6 @@ private static class MyHandler extends Handler{
             }
         }
     }
-{%　endhighlight %}
+{% endhighlight %}
 
 只要对你的Activity增加一个弱引用就好，然后直接通过这个弱引用对象来调用其内部的各个对象。
