@@ -1,0 +1,73 @@
+---
+title: "Handler机制导致的内存溢出警告解决方法"
+subtitle: "The memory overflow warning solution caused by the Handler mechanism"
+layout: post
+data: 2018-08-06
+author: "Zxy"
+tags:
+    - android
+---
+
+关于Android的Handler机制，我们通常用来处理耗时操作对UI界面的修改操作，通常的写法如下:
+
+{% highlight java %}
+private Handler handle = new Handler(){
+	public void handleMessage(android.os.Message.msg){
+	//处理消息
+	switch(msg.what){
+		case 0x01:
+			...
+			break;
+	}
+}
+{% endhighlight %}
+
+但是这样写的话，会有一片黄色渲染，一方面不好看，一方面由于Handler类内部持有Activity的隐式引用，可能在处理线程的途中，你关闭了你的Activity,Activity的资源就没有被GC释放，所以有可能会造成OOM问题。
+
+解决的办法是:
+
+**声明一个继承于Handler类的内部类**
+
+{% highlight java %}
+private static class MyHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg){
+            MainActivity activity = mActivity.get();
+            switch(msg.what){
+                case 0x01:
+                    ... ...
+                    break;
+            }
+        }
+    }
+{% endhighlight %}
+
+这样写就解决了之前的问题，但是会导致新的问题，你会发现无法调用原本Activity中的对象了，因为在你的static类中使用对象必须是静态的，但是Activity中的组件对象却不能为静态，依旧会导致内存溢出的问题，这不成了一个死锁问题了吗？
+
+别着急，解决方法如下：
+
+{% highlight java %}
+private static class MyHandler extends Handler{
+        private final WeakReference<MainActivity> mActivity;
+        private MyHandler(MainActivity activity){
+            mActivity = new WeakReference<MainActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg){
+            MainActivity activity = mActivity.get();
+            switch(msg.what){
+                case 0x01:
+                    //这里设置用户的信息
+                    activity.name.setText("张三");
+                    activity.race.setText("中国");
+
+                    //这里设置用户字体的颜色
+                    //name.setTextColor(Color.parseColor("#FF0000"));
+                    break;
+            }
+        }
+    }
+{% endhighlight %}
+
+只要对你的Activity增加一个弱引用就好，然后直接通过这个弱引用对象来调用其内部的各个对象。
