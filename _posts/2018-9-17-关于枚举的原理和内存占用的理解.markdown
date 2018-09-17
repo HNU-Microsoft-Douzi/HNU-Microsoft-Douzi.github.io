@@ -1,0 +1,126 @@
+---
+layout: post
+title: "关于枚举的原理和内存占用的理解"
+subtitle: "Understanding of enumeration principles and memory footprint"
+data: 2018-09-17
+author: "Zxy"
+tags:
+    - Java
+---
+
+## 枚举类型的原理
+
+简单的枚举类:
+
+{% highlight java %}
+public enum Operator{
+	Add,SUBTRACT,MULTIPLY,DIVIDE
+}
+{% endhighlight %}
+
+这几行代码说明什么呢？有一个枚举类`Operator`，它内部有四个枚举的实例。
+
+那么一个关键点，为什么要使用java的枚举呢？
+
+1.枚举类不但更加直观，而且使用类型会更加安全
+2.enum(枚举)和class(类)、interface(接口)都是同一层次的关键词
+3.enum默认继承了java.lang.Enum包，而一个枚举类可以实现一个或多个接口。
+4.使用enum定义、非抽象的枚举类默认使用final修饰，不可以被继承
+5.枚举类的构造器只能是私有的
+
+枚举类也可以定义自己的属性和方法，可以是静态和非静态的。
+
+{% highlight java %}
+public enum Operator{
+    ADD {
+        @Override
+        public int calculate(int a, int b) {
+            return a + b;
+        }
+    },
+    SUBTRACT {
+        @Override
+        public int calculate(int a, int b) {
+            return a - b;
+        }
+    },
+    MULTIPLY {
+        @Override
+        public int calculate(int a, int b) {
+            return a * b;
+        }
+    },
+    DIVIDE {
+        @Override
+        public int calculate(int a, int b) {
+            if (b == 0) {
+                throw new IllegalArgumentException("divisor must not be 0");
+            }
+            return a / b;
+        }
+    };
+ 
+    public abstract int calculate(int a, int b);
+{% endhighlight %}
+
+> 代码节选自博客[https://blog.csdn.net/mhmyqn/article/details/48087247](https://blog.csdn.net/mhmyqn/article/details/48087247)
+
+{% highlight java %}
+ADD ("+") {
+        @Override
+        public int calculate(int a, int b) {
+            return a + b;
+        }
+    },
+    SUBTRACT ("-") {
+        @Override
+        public int calculate(int a, int b) {
+            return a - b;
+        }
+    },
+    MULTIPLY  ("*") {
+        @Override
+        public int calculate(int a, int b) {
+            return a * b;
+        }
+    },
+    DIVIDE ("/") {
+        @Override
+        public int calculate(int a, int b) {
+            if (b == 0) {
+                throw new IllegalArgumentException("divisor must not be 0");
+            }
+            return a / b;
+        }
+    };
+ 
+    Operator (String operator) {
+        this.operator = operator;
+    }
+ 
+    private String operator;
+ 
+    public abstract int calculate(int a, int b);
+ 
+    public String getOperator() {
+        return operator;
+    }
+
+{% endhighlight %}
+
+然后要通过javap Operator.class查看当前的编译代码:
+{% highlight java %}
+public final class Operator extends java.lang.Enum<Operator> {
+  public static final Operator ADD;
+  public static final Operator SUBTRACT;
+  public static final Operator MULTIPLY;
+  public static final Operator DIVIDE;
+  public static Operator[] values();
+  public static Operator valueOf(java.lang.String);
+  static {};
+}
+{% endhighlight %}
+
+我们可以从中看到编译器是怎样对enum进行的处理，这已经接近本质了，也就是说，enum实质上是一个继承了java.lang.Enum的类来构成的，并且四个实例会构成四个成员变量，还有本身的两个函数：values、valuesOf。
+
+这也就是为什么使用枚举更加消耗内存的原因，因为它生成了比四个int变量多得多的东西，占用的内存自然就更多了。
