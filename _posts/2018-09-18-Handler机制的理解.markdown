@@ -1,0 +1,93 @@
+---
+layout: post
+title: "Handler机制的理解"
+subtitle: "Understanding the Handler mechanism"
+data: 2018-09-18
+author: "Zxy"
+tags:
+    - Java
+    - android
+---
+
+关于Handler，一直都不明不白的，今天看了很多资料，打算从脱离源码的基础上来把整个Handler的流程走一遍，源码的部分之后详细深入后会新开一章进行补足。
+
+那么先说说我们为什么要引入Handler？
+
+## 为什么需要引入Handler呢？
+
+学过操作系统的同学都知道，当多个线程同时请求同一资源的时候，很有可能会导致死锁的产生，这时我们说这种资源调度的方式是不安全的。
+
+为了避免多个线程同时对UI线程进行操作，Google规定：只允许在UI线程中修改Activity的UI组件，问题是从一开始讲我们新开一个线程，只能在这个线程中操纵UI界面，Google出台了这样的规定，是不是就把我们操作UI界面的方式给断掉了？
+
+那么不能操作UI界面肯定是不行的，那么该怎么办呢？为了让新启动的线程可以周期性地修改UI组件的属性值，Google提供了Hanlder类的存在。
+
+这就是为什么Handler会出现的缘由。
+
+![](/assets/handler.jpg)
+
+
+为了方便期间，我直接盗用一张网图来进行说明
+
+当新线程要开始进行服务的时候，我们需要从新线程中向Handler的对象发送一个消息，Handler接收到消息以后，它将消息传递到Message Queue(消息队列)中，当消息队列接收到消息时候，由Looper来将消息队列中的消息不断循环并且弹出最先进入消息队列的Message传递给Handler由Handler进行处理，这就是Handler机制的大体流程了。
+
+需要注意的一点是，当我们开始使用Handler构建对象的时候，并不需要声明一个Looper的对象来帮助Handler的Message Queue来实现消息的循环传递，但是我们都知道Handler类的实现必须要有一个Looper对象，不然的话，编译器就会报错，那么这是为什么呢？
+
+## 为什么我们new Handler的时候不需要通过调用Looper.prepare()和Looper.start()来手动的开启Looper呢？
+
+这是因为，我们的activity在UI线程中自动的对Looper和CurrentThread进行了绑定，也就是说，这一系列本该我们手写的代码，编译器已经帮助我们完成了，有机会的同学可以看看Looper的源码，可以帮助理解整个Handler的机制。
+
+**现在，我们已经对Handler的基本作用有了基本的了解，然后我们就可以通过官网的手册去看看Handler还有哪些其它的作用呢？**
+
+## Handler的主要用途
+
+从官网的手册上，我们可以了解到，Handler主要由两个用途:
+1.安排Message和runnables在将来的某个时刻执行
+2.将要在不同于自己的线程上执行的动作排入队列。
+
+第一个就是通过调用Handler自身的一些API可以进行实现：
+
+{% highlight java %}
+post(Runnable)，
+postAtTime(Runnable, long)， 
+postDelayed(Runnable, Object, long)，
+sendEmptyMessage(int)， 
+sendMessage(Message)，
+sendMessageAtTime(Message, long)，
+sendMessageDelayed(Message, long)
+{% endhighlight %}
+
+调用API的方法官网上有，就不再多说，第二个也很简单，我们new的一个线程向Handler发送消息，Handler接收到消息开始对Message做相应的处理操作。
+
+发布或发送到处理程序时，您可以在消息队列准备好后立即允许处理该项目，或者在处理之前指定延迟或处理它的绝对时间。后两者允许您实现超时，滴答和其他基于时间的行为。(翻译一下官方的话)
+
+## Handler的两种使用方法
+
+- 写在主线程中
+- 写在子线程中
+
+写在主线程中没什么需要注意的，看下面的实例就行了:
+
+{% highlight java %}
+final Handler mHandler = new Handler(){
+	@Override
+	//重写handleMessage方法，根据msg中what的值判断是否执行后续的操作
+	public void handleMessage(Message msg){
+		if(msg.what == 0x123){
+		//TODO SOMETHING YOU WANT TO DO
+		}	
+	}
+}
+{% endhighlight %}
+
+记得你需要在你的线程中使用sendMessage(Message)/sendEmptyMessage(int)的方法来向Handler的对象传递Message。
+{% highlight java %}
+new Thread(new Runnable(){
+	@Override
+	public void run(){
+		Thread.sleep(1000);
+		handler.sendMessage(0x01);
+	}
+}).start();
+{% endhighlight %}
+
+Handler写在子线程中的方法我就不写了，因为和上面其实相差不是很大，就是把Handler的方法都卸载了子线程中，但是要注意的地方只有一个点，就是把Handler写在子线程中的时候，activity不会自动地帮助你去构建handler和Looper的绑定了，所有这些东西需要你自己去构建，构建的方法也很简单，前面都有提到过，就是通过Looper.prepare()把当前线程构建成为一个Handler，然后在消息处理的末尾，使用Looper.start()来开启MessageQueue的循环传递Message的机制。
