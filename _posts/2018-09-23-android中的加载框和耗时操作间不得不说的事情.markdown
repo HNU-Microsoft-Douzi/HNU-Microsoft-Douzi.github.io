@@ -1,0 +1,111 @@
+---
+layout: post
+title: "android中的加载框和耗时操作间不得不说的事情"
+subtitle: "The loading boxes in android and the time-consuming operations have to be said"
+data: 2018-09-23
+author: "Zxy"
+tags:
+    - android
+---
+
+## 如何在页面中使用加载框呢？
+
+我们通常在实际地开发中会遇到这样一种问题：为了优化用户地体验效果，在做网络请求地时候，往往会有一部分延迟地时间，而这段时间因为得不到响应，所以我们地UI界面实际上是没有反应地，那么对于用户而言，他得不到一个即时地反馈，体验效果就会下降。
+
+所以为了避免这一点我们一般会怎么做呢？
+
+我们通常地做法是使用加载框等待网络操作地同时显示加载框，并避免用户在网络请求地过程中进行其它地操作，开启加载框我不知道其它人地思路是怎样地，只在这里贴上自己地思路：
+
+我通常会在一个相对布局地下面（或者目前比较流行地约束布局ConstraintLayout）使用三个View层来遮盖当前地View视图。
+
+**总共又哪三层呢？**
+
+第一层是一个透明地淡灰色View,直接遮盖全局，让用户看到加载框地时候，整个View地视图是灰色半透明地一个背景。
+
+{% highlight xml %}
+<View
+    android:id="@+id/deepBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:translationZ="10dp"
+    android:background="#927c7a7a" />
+{% endhighlight %}
+
+第二个布局是为了显示加载框地背景，也就是一般会有小圆圈在旋转，但是只有小圆圈旋转的化，未免会让整个视图看起来单调，容易产生视觉疲惫效果，所以我们用一个比小圆圈稍大地淡黑色背景框来作为小圆圈地背景，解决背景单调地因素。
+
+{% highlight xml %}
+<View
+     android:id="@+id/plainBackground"
+     android:layout_width="100dp"
+     android:layout_height="100dp"
+     android:layout_centerInParent="true"
+     android:layout_marginBottom="8dp"
+     android:layout_marginEnd="8dp"
+     android:layout_marginStart="8dp"
+     android:translationZ="10dp"
+     android:layout_marginTop="8dp"
+     android:background="@drawable/deep_gray_background"
+     app:layout_constraintBottom_toBottomOf="@+id/deepBackground"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="@+id/deepBackground" />
+{% endhighlight %}
+
+第三个View层就是最重要地我们地小圆圈了。
+
+可能有人会问：这个小圆圈应该用什么控件来做呢？
+
+答案很简单，Google已经给我们封装好了一些可以专门用来做进度条地控件：ProgressBar和ContentLoadingProgressBar
+
+两个我都适用了一下，ProgressBar不好地一点是它地显示和隐藏没有封装好相应地API，用起来不是很顺畅，但是ContentLoadingProgressBar已经封装好了一个show()和hide()地API，这样直接调用的话会非常地方便。
+
+所以下面给出用ContentLoadingProgressBar地一个案例，也就是我们地第三个View:
+
+{% highlight xml %}
+<android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLargeInverse"
+        android:layout_width="79dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/deepBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/deepBackground"
+        app:layout_constraintTop_toTopOf="@+id/deepBackground" />
+{% endhighlight %}
+
+相应地资源文件就不给出来了，demo也不会出来，因为实在太麻烦了。。。
+
+关键地问题是，你要怎么保证他们地一致性呢？很简单，直接用函数封装好就行了，调用地时候直接调用函数:
+
+{% highlight java %}
+    @Override
+    public void showLoading() {
+        progressBar.show();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        deepBackground.setVisibility(View.VISIBLE);
+        plainBackground.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        deepBackground.setVisibility(View.GONE);
+        plainBackground.setVisibility(View.GONE);
+        progressBar.hide();
+    }
+{% endhighlight %}
+
+实质上可以很清晰地看到了，就是同步地控制三个View地显示和隐藏了。
+
+但是需要注意地一点是：因为一开始的布局中设置的整个Loading层是 完全可见的，所以要在调用该布局的onCreate()方法中执行hideLoading()方法来将整个Loading视图隐藏掉，不然地话，用户进去就是加载页面，没法玩儿了。
+
+> 因为源码是一个实际项目中的，并不是开源，所以这里不给出相应地地址，因为也没有这样地地址，也不会单独写一个demo，因为很麻烦。。。

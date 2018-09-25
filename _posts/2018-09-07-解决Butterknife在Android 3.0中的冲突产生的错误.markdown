@@ -6,6 +6,7 @@ data: 2018-09-07
 author: "Zxy"
 tags:
     - Java
+    - android
 ---
 
 我们通常为了使用Butterknife的注解功能，会使用到一个叫做`Android Butterknife Zelezny`的插件，这个插件需要在配置了Butterknife的条件下就可以帮助我们方便快捷的进行findViewById()之类的标签注解，大大节省了写代码时候的时间开销。
