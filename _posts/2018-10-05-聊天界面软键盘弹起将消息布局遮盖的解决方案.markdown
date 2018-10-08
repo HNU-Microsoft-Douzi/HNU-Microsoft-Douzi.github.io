@@ -1,0 +1,237 @@
+---
+layout: post
+title: "聊天界面软键盘弹起将消息布局遮盖的解决方案"
+subtitle: "Chat interface soft keyboard flicker to cover the message layout solution"
+data: 2018-10-05
+author: "Zxy"
+tags:
+    - android
+    - java
+---
+
+在写聊天界面的时候，我们很容易遇到一种情况，通过RecyclerView处理的消息界面被EditText获取焦点时弹起的软键盘所遮盖，然而依照网上的方法，解决根本不完善，也许有合理的，但是我没找到，没有现有的，就自己想一个思路，然后把它实现就好了。
+
+先来看一下效果：
+
+![](https://i.imgur.com/k9Vzy0M.gif)
+
+那么直接来说下解决方案是什么：
+
+## 布局
+
+首先来看布局，我用ScrollView来包裹RecyclerView目的是为了利用ScrollView的下滑来实现消息的自动下滑，使得消息要自动在最下方的位置。
+
+然后用约束布局来嵌套ScrollView，目的是为了在软键盘弹起的时候，将整个View布局全部顶起，响应的ScrollView的大小也会发生改变，这个时候只要通过让ScrollView滑动到最下方显示最新的消息就可以了。
+
+给出布局的代码：
+{% highlight xml %}
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/four_main_page_background"
+    android:paddingTop="10dp">
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/black_back_key_round"
+        android:contentDescription="@string/click_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintLeft_toRightOf="@+id/back"
+        app:layout_constraintRight_toLeftOf="@+id/person_info"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/greenDot"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:src="@color/LightGreen"
+            app:layout_constraintStart_toEndOf="@+id/back"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="Allision"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/person_info"
+            app:layout_constraintLeft_toRightOf="@+id/greenDot"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/person_info"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/person_button"
+        android:contentDescription="@string/click_into_personal_info"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="MARCH, 5, 2015"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="10dp" />
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/message_bar"
+        app:layout_constraintTop_toBottomOf="@+id/time">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/message_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#614b2c81"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/moreFunctions"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/custom_icon0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/message_bar" />
+
+        <EditText
+            android:id="@+id/inputMessage"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:hint="your response..."
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="#70ffffff"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@+id/moreFunctions" />
+
+        <Button
+            android:id="@+id/sendMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#00ffffff"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
+{% endhighlight %}
+
+布局很简单，这样写就可以了。
+
+## java代码
+
+activity代码我不会全部给出来，有点思维的自己都知道要怎么写，但是我要针对最主要的几个点来重点说。
+
+第一个点就是关于EditText焦点获取的问题，要通过下面这个函数来实现:
+
+{% highlight java %}
+private void getFocusPopUpSoftKeyboard(){
+        inputMessage.requestFocus();
+    }
+{% endhighlight %}
+
+然后，为了找到ScrollView下滑的时机，我们需要知道什么时候软键盘才会弹起，那么我们就对软键盘进行监听。
+
+{% highlight java %}
+private void getFocusPopUpSoftKeyboard(){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        root.addOnLayoutChangeListener(this);
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        // old是改变前的左上右下坐标点值，没有old的是改变后的左上右下坐标点值
+        // 现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
+        if (oldBottom != 0 && bottom != 0
+                && (oldBottom - bottom > keyHeight)) {
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN);//向下滑动
+        } else if (oldBottom != 0 && bottom != 0
+                && (bottom - oldBottom > keyHeight)) {
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN);//向下滑动
+        }
+    }
+{% endhighlight %}
+
+至于监听的调用，需要用到根布局的对象root,然后再onResume()中对布局的变化进行监听。
+
+设置ScrollView滑动到最底部也很简单:
+
+`scrollView.fullScroll(ScrollView.FOCUS_DOWN);`
+
+最后，最重要的一点是，如果你这样进行了设计，但是发现键盘的弹起和隐藏时RecyclerView的变化时没有问题了，但是当我们点击发送按钮的时候，发现ScrollView并没有如同预想般的向下滑动，这是为什么呢？又该怎样处理呢？别急，接着看。
+
+## Button对于ScrollView下滑的处理
+
+实际上上述所说的内容并不是因为Button和ScrollView本身的冲突所导致的，而是因为onClick方法的执行顺序是异步的（我没找到相关的资料，只能说它里面每条语句执行耗费的时间不同所以可以当作异步来理解），所以我们不能将ScrollView的下滑和消息的发送同时写在onClick中，因为它有可能先将还没发送消息的recyclerView列表拉到最下面（本来就是最下面了），然后再发送的消息，如此以来，你发现发送的消息只有点击第二次button的时候才会出现，知道了原因以后，解决措施就非常简单了。
+
+**异步的话，我给它一个强制的顺序不就可以了吗？我只要通过setOnTouchListener对案件的下压和上弹分别进行检测，就可以做到我想要的要求了，因为是我给它赋予了顺序。**
+
+{% highlight java %}
+sendMessage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        sendMessageToMoonFriend();
+                        break;
+                    case MotionEvent.ACTION_UP://软键盘弹起的时候滑到最底部
+                        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                        getFocusPopUpSoftKeyboard();
+                        break;
+                }
+                return true;
+            }
+        });
+{% endhighlight %}

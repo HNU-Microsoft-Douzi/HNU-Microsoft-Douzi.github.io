@@ -1,0 +1,93 @@
+---
+layout: post
+title: "android的回调机制(解决实时通信的问题)"
+subtitle: "Android's callback mechanism (solving the problem of real-time communication)"
+data: 2018-10-08
+author: "Zxy"
+tags:
+    - android
+    - java
+---
+
+## 背景提要
+
+我们往往会遇到这样一种固定的情景：当我们的Activity A发生变化的时候，我们的Activity B需要实时监听到A的变化，当A发生该变化的时候,Activity B就做出相应的改变。
+
+简单来说，让Activity B监听Activity A。
+
+实质上，这里地实时通信不单单是Activity间地，甚至是Service和Activity或者Activity和其Frament间也可以用相应地方式。
+
+想做到这一点，我们有什么样的方法呢？
+
+## 预想措施
+
+- 线程请求地方式
+
+首先想到的方式就是在B中设立一个线程，线程中不断地对A中地一个数值进行请求，我们把这个数值称为A中数据完成地标志位，我们可以把标志位地初始值设为false，当B中地线程监听到A中地标志位为true地时候，B就开始把数据从A中拿了过来，这个时候地数据就是A中操作完成地数据。
+
+但是，我不是很确定，因为B中申请了一个新的线程一直在持续地运行，运行地时间可能是整个B Activity地生命周期，我不知道这是不是对程序地资源会由一定程度上地损耗，所以为了避免这种可能情况上地损耗，我找到了第二种解决措施。
+
+- 广播
+
+请注意，广播并不是我上面说的第二种解决措施，之所以放在这边是因为广播也可以实现相应的功能，但是广播本身的注册监听解绑松绑非常麻烦，并且它自身有各种各样的局限性，所以除了广播的必要性之外，我不愿意在这个地方使用广播。
+
+----------
+
+## 真正的解决措施
+
+- 回调机制
+
+我不知道该怎样去用语言阐述回调机制的真正意义，但我想也许可以很简单的用一句话表述清楚：A向B发送一个监听请求，B接收到请求，在B的方法中对A的请求做了一个回应，回应的方式通过A中重写接口的回调函数来实现。
+
+这里看到别人的例子有一个启发：
+
+这里想要用一个两人（我和你）解决问题的例子来说明一下：
+
+**所谓的回调机制就是我向你问问题，但是你不知道问题的答案，于是你打算查一下书再告诉我，然而你查书的时候我不能等着你查书，因为那样太费时间了，所以我必须去做别的事情，等你查完书了给我打电话，告诉我这个问题你解决了，我知道你解决了，所以得到你的答案**
+
+那么问题是，我让你帮我查书以后，你该怎样才能反过来找到我的联系方式呢？找不到我的联系方式又怎样才能把答案给我呢？
+
+方法就是注册一个接口函数
+
+{% highlight java %}
+public interface CallBackListener{//实际上CallBack相当于我的电话号码，你调用里面的方法相当于给我打了电话，让我记录下来答案
+	//这个就是你要给我打电话告诉我解决问题的方法
+	public void giveMeAnswer(String result);
+}
+
+{% endhighlight %}
+
+你联系我的方式已经有了呢！
+
+那我怎样联系你呢？很简单啊，我只要有你的对象不就好了嘛！
+
+{% highlight java %}
+public Me implements CallBackListener{
+	private You you; // 获得了你的一个对象
+	private String result;//你反馈给我的结果
+	public Me(You you){
+		this.you = you;//我必须持有你的电话号码才能给你打电话
+	}
+	
+	public void askQuestion(String question){
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				//调用你手中的方法，再这里注册回调接口，相当于我要求你帮我查找问题的答案
+				you.executeMessage(new CallBackListener(), question){
+					//你知道答案以后，通过这个方法来告诉我答案是什么。
+					//也就是说，你回调我的方法的时候，就是你完成了所有的作业给我打电话的时候！！！
+					@Override
+					public void giveMeAnswer(int result){
+						this.result = result;
+						Log.d("TAG","结果就是" + result);
+					}
+				};
+			}
+		}).start();
+		doOtherthings();//我向你问完问题，我就要去做我自己的事情了，等待你查完消息的电话。
+	}
+}
+{% endhighlight %}
+
+那你这边要做的事情就很清楚了，就两件：帮我查完书，给我打电话，告诉我书查完了，我就会在复写的回调函数中知道你已经帮我查完了书。
