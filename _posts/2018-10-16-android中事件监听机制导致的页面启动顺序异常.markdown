@@ -1,0 +1,108 @@
+---
+layout: post
+title: "android中事件监听机制导致的页面启动顺序异常"
+subtitle: "An exception to the page startup order caused by the event listening mechanism in android"
+data: 2018-10-16
+author: "Zxy"
+tags:
+    - android
+    - java
+---
+> 版权声明：本文出自张晓翼的博客，转载必须注明出处。
+
+转载请注明出处：
+
+## 事件监听机制
+
+还记得事件监听是怎么做的吗？
+
+对，就是我们平常使用最多的，就像button的setOnClick()方法，我们通过对Button来设置View的setOnClick()方法来监听点击事件，这里面还涉及到一个回调机制，关于onClick,onTouch,onTouchEvent的调用顺序以及返回值造成的回调结果，这里就不再多说。
+
+当我们对button进行点击的时候，监听机制监听到了我们的操作，并把结果反馈给监听器，让监听器执行setOnClick中我们重写的方法。
+
+对于回调不明白的同学可以看我的前一篇[2018-10-08-android的回调机制(解决实时通信的问题)](https://www.zxyblog.xyz/2018/10/08/android的回调机制(解决实时通信的问题)/)
+
+看完里面的一个实例，你就会明白回调机制是怎么一回事了。
+
+然后这里主要是说事件监听机制可能产生的一种行为，而这种行为是我们大多数人都没有注意到的:
+
+比如我们在MainActivity中创建了一个新的Activity:ActivityB
+
+而我们如果不在ActivityB中加入一个全局的事件监听的话，那么当我们运行MainActivity的时候，ActivityB是不会启动的!
+
+不信？你可以自己在ActivityB的OnCreate()中加入一个Log方法打印看看ActivityB有没有生成。
+
+**结果是没有生成**
+
+当我们在MainActivity中只要不主动的进入ActvityB，那么ActivityB就不会产生实例。
+
+### 当我们在B中加入一个事件监听的话，结果又会怎样呢？
+
+为了方便起见，我这里直接把项目中的环信消息接收函数拿过来用了:
+
+{% highlight java %}
+    //通过EM获取好友的消息队列
+    private EMMessageListener msgListener = new EMMessageListener() {
+
+        @Override
+        public void onMessageReceived(List<EMMessage> messages) {
+            Log.d(TAG,"接收到了消息:");
+            emMessages = messages;
+            for(EMMessage message: emMessages){
+//                Log.d(TAG,"message来源:    " + message.getFrom().substring(8, message.getFrom().length()));
+                String[] msg = MoonStepHelper.getInstance().getMessageTypeWithBody(message.getBody().toString().trim());
+                switch (MoonStepHelper.getInstance().transformMessageType(msg[0])){
+                    case TEXT://处理文本消息
+                        Log.e("Message","来自于ChattingActivity" + msg[1]);
+                        break;
+                    case IMAGE://处理图片消息
+                        break;
+                    case VIDEO://处理视频消息
+                        break;
+                    case LOCATION://处理位置消息
+                        break;
+                    case VOICE://处理声音消息
+                        break;
+                }
+            }
+        }
+
+        @Override
+        public void onCmdMessageReceived(List<EMMessage> messages) {
+            //收到透传消息
+            Log.d(TAG, "收到透传消息");
+        }
+
+        @Override
+        public void onMessageRead(List<EMMessage> messages) {
+            //收到已读回执
+            Log.d(TAG, "收到已读回执");
+        }
+
+        @Override
+        public void onMessageDelivered(List<EMMessage> message) {
+            //收到已送达回执
+            Log.d(TAG, "收到已送达回执");
+        }
+
+        @Override
+        public void onMessageChanged(EMMessage message, Object change) {
+            //消息状态变动
+            Log.d(TAG, "消息状态变动");
+        }
+    };
+{% endhighlight %}
+
+然后调用的方式是这个:
+
+{% highlight java %}
+EMClient.getInstance().chatManager().addMessageListener(msgListener);
+{% endhighlight %}
+
+我们试一下把它加入到我们的ActivityB中，这个时候发生了什么呢？ActivityB变成了一个具有全局监听事件的Activity,那么我们再运行一下程序。
+
+**发生了什么？当我们进入到MainActivity的时候，写在ActivityB中的Log居然也打印出了信息**
+
+也就是说，在MainActivity产生的瞬间，ActivityB也产生了，具体的原理我不明白，但是反映出来android底部的一个机制：当Activtiy中具有全局的监听事件的话，那么它在程序运行最初就会获得调用，并且不会被销毁（具体时间没有测验过，猜测是整个程序的生命周期。）
+
+如果之后看到了相应的源码，会把相应的内容更了上来。

@@ -185,327 +185,262 @@
             ">
     			
 <div class="post-preview">
-    <a href="/2018/04/04/Redis-database/">
+    <a href="/2018/10/08/android%E7%9A%84%E5%9B%9E%E8%B0%83%E6%9C%BA%E5%88%B6(%E8%A7%A3%E5%86%B3%E5%AE%9E%E6%97%B6%E9%80%9A%E4%BF%A1%E7%9A%84%E9%97%AE%E9%A2%98)/">
         <h2 class="post-title">
-            Redis的基本语法
+            android的回调机制(解决实时通信的问题)
         </h2>
         
         <h3 class="post-subtitle">
-            How to grasp Redis's basic application?
+            Android's callback mechanism (solving the problem of real-time communication)
         </h3>
         
         <div class="post-content-preview">
-            
-  本章节部分内容转自菜鸟教程,记录在这里主要是为了方便学习的时候查阅使用，侵权即删。
-redis的string可以包含任何数据，甚至于jpg图片或者一个序列化对
-特性
+            背景提要
 
+我们往往会遇到这样一种固定的情景：当我们的Activity A发生变化的时候，我们的Activity B需要实时监听到A的变化，当A发生该变化的时候,Activity B就做出相应的改变。
 
-谈谈我的理解，Redis是一款开源免费的非关系型数据库，它不像MySQL那样是以表之间的形式来表示，因为表内的内容有很强的关联性，Redis是一款高性能的key-value数据库，它有下面几个特点：
+简单来说，让Activity B监听Activity A。
 
-
-  
-    ...
+实质上，这里地实时通信不单单是Activity间地，甚至是Service和Activity或者Activity和其Frament...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on April 4, 2018
+        Posted by Zxy on October 8, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2018/04/03/Type-conversion-of-Java/">
+    <a href="/2018/10/05/%E8%81%8A%E5%A4%A9%E7%95%8C%E9%9D%A2%E8%BD%AF%E9%94%AE%E7%9B%98%E5%BC%B9%E8%B5%B7%E5%B0%86%E6%B6%88%E6%81%AF%E5%B8%83%E5%B1%80%E9%81%AE%E7%9B%96%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
         <h2 class="post-title">
-            Java的String和Int类型的相互转换
+            聊天界面软键盘弹起将消息布局遮盖的解决方案
         </h2>
         
         <h3 class="post-subtitle">
-            Type conversion of Java
+            Chat interface soft keyboard flicker to cover the message layout solution
         </h3>
         
         <div class="post-content-preview">
-            String转换为int
+            在写聊天界面的时候，我们很容易遇到一种情况，通过RecyclerView处理的消息界面被EditText获取焦点时弹起的软键盘所遮盖，然而依照网上的方法，解决根本不完善，也许有合理的，但是我没找到，没有现有的，就自己想一个思路，然后把它实现就好了。
 
-你需要知道，不是什么字符串都可以转换为整形的。
-
-java不允许你随意转换任意的字符串为整形，你可以转换的只有全部由字符’0’-‘9’构成的字符串，其余的若是要进行转换，那么必须抛出一个异常。
-
-
-String i;
-number = Integer.parseInt(i);
+先来看一下效果：
 
 
 
-所以你在使用上述代码将字符串装箱Integer中并转成int时，会报错，因为你没有...
+那么直接来说下解决方案是什么：
+
+布局
+
+首先来看布局，我用ScrollView来包裹RecyclerView目的是为...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on April 3, 2018
+        Posted by Zxy on October 5, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2018/04/03/Java-read-data-from-outside-file/">
+    <a href="/2018/09/28/android%E4%B8%AD%E7%9A%84jni%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B%E4%B8%80%E8%A7%88/">
         <h2 class="post-title">
-            Java从文本读取数据
+            android中的jni开发流程一览
         </h2>
         
         <h3 class="post-subtitle">
-            Java read data from outside file!
+            Jni development process in android
         </h3>
         
         <div class="post-content-preview">
-            利用文本流从文本中读取数据
+            jni是什么？
 
-题目描述如下：
+刚开始学习android,往往不会很快的接触到jni，甚至哪怕说jni是java学习中的一部分，也少有人去涉及这一部分的内容（当然，前提是还没有进行项目开发，小的demo不算哦~）
 
-在文件in.dat中有200个正整数，且每个数均在1000至9999之间。函数ReadDat()读取这200个数存放到数组aa中。
+原因很明了，因为jni本身就是一个java和c/c++之间互相调用的一个桥梁，谁没事干去用java调c/c++呢？（当然，还是不说实际项目的情况下…）
 
-代码如下:
-
-public class question_5 {
-	public static void main(String[] args) throws IOException{
-		File f = ne...
+但是，在做android开发的时候，因...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on April 3, 2018
+        Posted by Zxy on September 28, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2018/03/30/gdb-registers-content/">
+    <a href="/2018/09/25/android%E4%B8%AD%E5%AD%90%E7%BA%BF%E7%A8%8B%E4%BD%BF%E7%94%A8Toast%E5%9C%B0%E6%96%B9%E6%B3%95/">
         <h2 class="post-title">
-            gdb编译查看寄存器内容
+            android中子线程使用Toast地方法
         </h2>
         
         <h3 class="post-subtitle">
-            How to use gdb know the register's content!
+            Android neutron threads use the Toast ground method
         </h3>
         
         <div class="post-content-preview">
-            查看寄存器的值
+            当你在子线程中使用Toast地时候，你突然发现调用这个子线程地UI界面崩溃了，并且Toast中地内容没有显示出来。
 
-gdb支持查看被调试进程当前常用寄存器的值，命令如下：
+这是为什么呢？
 
-(gdb)info registers[REGISTER]
-
-如果不加任何参数，则显示所有寄存器的值。如果只想看某个寄存器的值，则可以在参数中指定。
-
-例如：
-
-(gdb)info registers#查看当前所有寄存器当前的值
-(gdb)info registers pc#只查看PC寄存器当前的值
-
-前面的命令只会...
+当我对相应地子线程中设置了一个断点地时候，进行到Toast地方法时，跳到了一个单独地class中，大致就是说缺少了一个Handler地什么东西（抱歉，这里没仔细看，现在回想起来已经忘了，只记得大概），然后根据之前地开发经验，就很快可以联想到这是因为Toast...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on March 30, 2018
+        Posted by Zxy on September 25, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2018/03/30/View-and-modification-database/">
+    <a href="/2018/09/23/android%E4%B8%AD%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%A1%86%E5%92%8C%E8%80%97%E6%97%B6%E6%93%8D%E4%BD%9C%E9%97%B4%E4%B8%8D%E5%BE%97%E4%B8%8D%E8%AF%B4%E7%9A%84%E4%BA%8B%E6%83%85/">
         <h2 class="post-title">
-            MySQL中数据库/表编码格式的查看和修改
+            android中的加载框和耗时操作间不得不说的事情
         </h2>
         
         <h3 class="post-subtitle">
-            View and modification of database / table encoding format in MySQL
+            The loading boxes in android and the time-consuming operations have to be said
         </h3>
         
         <div class="post-content-preview">
-            对MySQL数据库中表或库编码格式的修改
+            如何在页面中使用加载框呢？
 
+我们通常在实际地开发中会遇到这样一种问题：为了优化用户地体验效果，在做网络请求地时候，往往会有一部分延迟地时间，而这段时间因为得不到响应，所以我们地UI界面实际上是没有反应地，那么对于用户而言，他得不到一个即时地反馈，体验效果就会下降。
 
-  
-    查看数据库编码格式
+所以为了避免这一点我们一般会怎么做呢？
 
-    mysql&gt; show variables like ‘character set database’;
-  
-  
-    查看数据表的编码格式
-
-    mysql&gt; show create table ;
-  
-  
-    创建数据库时指定数据库的字符集
-
-    mysql&gt;...
+我们通常地做法是使用加载框等待网络操作地同时显示加载框，并避免用户在网络请求地过程...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on March 30, 2018
+        Posted by Zxy on September 23, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2018/03/28/python-join-merge-list-element/">
+    <a href="/2018/09/18/Handler%E6%9C%BA%E5%88%B6%E7%9A%84%E7%90%86%E8%A7%A3/">
         <h2 class="post-title">
-            利用join将列表转换为字符串
+            Handler机制的理解
         </h2>
         
         <h3 class="post-subtitle">
-            Teaching you to use join reform the list to string!
+            Understanding the Handler mechanism
         </h3>
         
         <div class="post-content-preview">
-            利用join方法将列表转换为字符串
-描述
-Python join()方法用于将序列中的元素以指定的字符连接生成一个新的字符串。
+            关于Handler，一直都不明不白的，今天看了很多资料，打算从脱离源码的基础上来把整个Handler的流程走一遍，源码的部分之后详细深入后会新开一章进行补足。
 
-语法
-join()方法语法：
-str.join(sequence)
+那么先说说我们为什么要引入Handler？
 
-实例
+为什么需要引入Handler呢？
 
-a = ["1", "2", "3", "4", "5"]
-print a
-b = "".join(a)
-print b
+学过操作系统的同学都知道，当多个线程同时请求同一资源的时候，很有可能会导致死锁的产生，这时我们说这种资源调度的方式是不安全的。
 
-结果:
-
-['1', '2', '3', '4', '5']
-...
+为了避免多个线程同时...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on March 28, 2018
+        Posted by Zxy on September 18, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2018/03/28/hexadecimal-conversion/">
+    <a href="/2018/09/17/%E5%85%B3%E4%BA%8E%E6%9E%9A%E4%B8%BE%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%9A%84%E7%90%86%E8%A7%A3/">
         <h2 class="post-title">
-            python实现十进制和二进制的互相转换
+            关于枚举的原理和内存占用的理解
         </h2>
         
         <h3 class="post-subtitle">
-            Hexadecimal conversion
+            Understanding of enumeration principles and memory footprint
         </h3>
         
         <div class="post-content-preview">
-            利用python实现的纯手工进制转换方法
-实现的是二进制和十进制的相互转换，没有用python本身的bin和int方法，自己从内部进行实现。
+            枚举类型的原理
 
-#!usr/bin/env python
-# _*_coding: UTF-8 _*_
+简单的枚举类:
 
-if __name__ == '__main__':
-    print "1、十进制转二进制 2、二进制转十进制"
-    a = input("请输入进制转...
+public enum Operator{
+	Add,SUBTRACT,MULTIPLY,DIVIDE
+}
+
+这几行代码说明什么呢？有一个枚举类Operator，它内部有四个枚举的实例。
+
+那么一个关键点，为什么要使用java的枚举呢？
+
+1.枚举类不但更加直观，而且使用类型会更加安全
+2.enum(枚举)和class(类)、interface(接口)都是...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on March 28, 2018
+        Posted by Zxy on September 17, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2018/03/28/Linux_dir_setting/">
+    <a href="/2018/09/07/%E8%A7%A3%E5%86%B3Butterknife%E5%9C%A8Android-3.0%E4%B8%AD%E7%9A%84%E5%86%B2%E7%AA%81%E4%BA%A7%E7%94%9F%E7%9A%84%E9%94%99%E8%AF%AF/">
         <h2 class="post-title">
-            Linux目录设置
+            解决Butterknife在Android 3.0中的冲突产生的错误
         </h2>
         
         <h3 class="post-subtitle">
-            Bring you to konw how to understand linux dir!
+            Solve the error caused by Butterknife's conflict in Android 3.0
         </h3>
         
         <div class="post-content-preview">
-            Linux的目录配置标准：FHS
-有了所谓的FHS标准以后，规范了每个企业和个人的Linux配置，避免了商业上可能因目录配置不同而产生的混乱结果。
+            我们通常为了使用Butterknife的注解功能，会使用到一个叫做Android Butterknife Zelezny的插件，这个插件需要在配置了Butterknife的条件下就可以帮助我们方便快捷的进行findViewById()之类的标签注解，大大节省了写代码时候的时间开销。
 
-FHS一句文件系统使用的频繁与否允许用户随意改动，而将目录定义称为四种交互作用的形态，用下表来说明：
-
-
-
-      
-可分享的(sharable)
-不可分享的(unshareable)
-
-
-不变的(static)
-/usr(软件放置处)/o...
+然而添加Butterknife的时候，如果我们使用最新的8.8.1版本就会出现一个和Android 3.0版...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on March 28, 2018
+        Posted by Zxy on September 7, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2018/03/27/Java_input_way/">
+    <a href="/2018/08/28/Android%E4%B9%8B%E5%9C%A8Fragment%E4%B8%AD%E6%BA%A2%E5%87%BA%E5%BC%8F%E8%8F%9C%E5%8D%95%E5%92%8C%E4%B8%89%E7%82%B9%E8%8F%9C%E5%8D%95%E5%90%8C%E6%97%B6%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98/">
         <h2 class="post-title">
-            java的输入
+            Android之在Fragment中溢出式菜单和三点菜单同时出现问题
         </h2>
         
         <h3 class="post-subtitle">
-            How to input like c++/python in java?
+            Android has a problem in both the spillover and three-point menus at Fragment
         </h3>
         
         <div class="post-content-preview">
-            在java中，我们并不能找到一个直接的函数实现我们的输入操作，这一点比起c++、python来都不是很方便，想了一下，大概是因为java始终秉持对象的思想，所以它的输入模式也以对象的方式呈现。
+            我们有时会碰到这样一种场景：在fragment中需要使用到toolbar来设置标题栏，但是我们fragment所在的activity却不能有这个标题栏，因此我们就要自定义标题栏了。
 
-总共有三种方式，我个人认为没有必要都掌握，熟记一种就好了，然后，自我感觉这种比较简单，就简单说下这种模式的输入。
+我们通常会在layout中声明一个toolbar.xml：
 
-下面先给出一个实例程序,写了一个学生成绩类:
-
-import java.util....
+&lt;android.support.v7.widget.Toolbar xmlns:android="http://schemas.androi...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on March 27, 2018
+        Posted by Zxy on August 28, 2018
     </p>
 </div>
 <hr>
 
 <div class="post-preview">
-    <a href="/2018/03/25/Unix-common-command-record/">
+    <a href="/2018/08/27/Android%E4%B9%8B%E5%9C%A8Fragment%E4%B8%AD%E6%B7%BB%E5%8A%A0Toolbar%E7%BB%84%E4%BB%B6/">
         <h2 class="post-title">
-            Unix操作系统常用命令记录
+            Android之在Fragment中添加Toolbar组件
         </h2>
         
         <h3 class="post-subtitle">
-            Unix common command record!
+            Android adds Toolbar groups to Fragment
         </h3>
         
         <div class="post-content-preview">
-            常用命令
-mesg n
-用来屏蔽他人wall出的消息。
+            背景：在Fragment+ViewPager+RadioButton的类微信页面实现中，我需要在其中一个页面设置Toolbar导航栏，但是其余的几个页面都不需要，这样的话会出现一个矛盾：我必须先对fragment依赖的activity设置成为NoActionBar的主题，这样的话，我必须在我需要设置toolBar的fragment中动态的允许这个导航栏的出现。
 
-pwd
-用来查看当前目录
-
-ls -ld /home/sxxxxx
-用来查看当前目录有多长，一般是一个数字。
-
-ls -l
-列出目录下的文件的详细信息。
-
-ls -d
-列出某个目录文件的信息，而不是该目录下的文件。
-
-touch file
-利用touch创建一个名为file的文件
-
-ls -l mydir
-用来显示mydir的内容和文...
+看一下下面这个函数对于too...
         </div>
     </a>
     <p class="post-meta">
-        Posted by Zxy on March 25, 2018
+        Posted by Zxy on August 27, 2018
     </p>
 </div>
 <hr>
@@ -552,15 +487,13 @@ ls -l mydir
                             
                         
                             
-                                <a href="/tags/#python" title="python" rel="36">
+                                <a href="/tags/#python" title="python" rel="44">
                                     python
                                 </a>
                             
                         
                             
-                        
-                            
-                                <a href="/tags/#爬虫" title="爬虫" rel="20">
+                                <a href="/tags/#爬虫" title="爬虫" rel="22">
                                     爬虫
                                 </a>
                             
@@ -574,30 +507,46 @@ ls -l mydir
                             
                         
                             
-                                <a href="/tags/#algorithm" title="algorithm" rel="2">
+                                <a href="/tags/#algorithm" title="algorithm" rel="9">
                                     algorithm
                                 </a>
                             
                         
                             
-                                <a href="/tags/#Java" title="Java" rel="5">
+                                <a href="/tags/#数据库" title="数据库" rel="3">
+                                    数据库
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#Java" title="Java" rel="8">
                                     Java
                                 </a>
                             
                         
                             
-                                <a href="/tags/#MySQL" title="MySQL" rel="2">
-                                    MySQL
+                                <a href="/tags/#Linux" title="Linux" rel="3">
+                                    Linux
                                 </a>
                             
                         
                             
                         
                             
+                                <a href="/tags/#java" title="java" rel="5">
+                                    java
+                                </a>
+                            
                         
                             
-                                <a href="/tags/#Linux" title="Linux" rel="2">
-                                    Linux
+                                <a href="/tags/#机器学习" title="机器学习" rel="2">
+                                    机器学习
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#android" title="android" rel="25">
+                                    android
                                 </a>
                             
                         
@@ -686,6 +635,8 @@ ls -l mydir
                         <li><a href="http://poj.org">北大oj系统</a></li>
                     
                         <li><a href="http://docs.python-requests.org/en/latest/user/quickstart.html">requests的官方指南文档</a></li>
+                    
+                        <li><a href="https://www.addpdf.cn/pdf-to-word">最棒的pdf转换工具（完全免费）</a></li>
                     
                 </ul>
                 
