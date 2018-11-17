@@ -1,0 +1,279 @@
+---
+layout: post
+title: "github概论"
+subtitle: "Introduction of github"
+data: 2018-11-17
+author: "Zxy"
+tags:
+    - github
+---
+
+> 版权声明：转载必须注明出处。
+
+## Github是什么，有什么特点？
+
+github本身作为一个开源代码库和使用git作为唯一版本库格式的分布式版本控制系统，核心功能如下：
+
+- 一个优秀的代码托管平台
+- 将社交网络引入项目托管平台，用户可以star、fork、和关注其他用户来观察当前项目的进程和开发者的动态
+- 每一次提交的助评信息和历史提交记录帮助更好的了解项目发展的历程
+- 将托管的代码以web页面呈现在游览器上，配合相应的github游览器插件，使开发人员可以不用download库就可以方便的查看到各个文件的详细内容
+
+简而言之，它最大的特点就是一个开源的社交性代码托管平台，同时由于它本身作为版本控制工具的特性，通过对分支的简便控制，可以实现团队的项目搭建，且只支持git格式，所以不会因为其它版本控制系统产生冗余的负担。
+
+## 安装Git
+
+![](https://gitforwindows.org/img/git_logo.png)
+
+ubuntu的Git安装十分便捷，只需要一条命令：
+
+{% highlight linux %}
+sudo apt-get install git-core
+{% endhighlight %}
+
+而在Windows上，就要访问git的官方网址[https://git-for-windows.github.io/](https://git-for-windows.github.io/ "https://git-for-windows.github.io/")
+
+下载好以后一路下一步就可以了。
+
+## 创建代码仓库
+
+**身份配置**
+
+{% highlight git %}
+git config --global user.name "your name"
+git config --global user.email "xxxxx@mail.com"
+{% endhighlight %}
+
+使用图示命令检测是否成功：
+
+![](https://i.imgur.com/rZEGbTJ.png)
+
+会出现你配置好的名称就说明成功了
+
+**创建仓库**
+
+仓库(Respository)是用于保存版本管理所需信息的地方，所有本地提交的代码都会被提交到代码仓库中，也可以推送到远程仓库。
+
+- 我们要先通过cd进入到你要创建本地仓库地方
+
+![](https://i.imgur.com/ilmxHS0.png)
+
+- 通过git init命令来初始化仓库，然后就会发现当前文件夹中多了一个隐藏的.git文件夹，这个文件夹是用来记录本地所有的Git操作的，一般不需要手动去操作该文件夹。
+
+![](https://i.imgur.com/Bql61Cz.png)
+
+如果你想要删除本地仓库的话，只需要删除.git这个隐藏文件就好了
+
+## 提交本地代码
+
+一般而言，我们会把想要提交的代码放入本地库中（就是你刚建的那个文件夹里面），然后使用一些命令就可以把本地仓库的内容同步到远程仓库当中了，同步以后我们就可以在web端看到我们的代码了。
+
+- 提交单一文件README.md
+
+{% highlight git %}
+git add README.md
+{% endhighlight %}
+
+(README.me是呈现在远程端页面的markdown文件，这里只是举一个例子)
+
+- 提交一整个目录(假设有一个文件夹project)
+
+{% highlight git %}
+git add project
+{% endhighlight %}
+
+- 提交所有文件
+
+{% highlight git %}
+git add .
+{% endhighlight %}
+
+*你需要注意的是，仅仅通过git add，是将代码提交到了本地的缓存区，而此时你想要登录远程端的github页面是看不到任何改变的，因为你没有真正提交呢！*
+
+- 提交到远程仓库
+
+{% highlight git %}
+git commit -m "对你这次提交的描述，该描述会被记录在提交历史的每一次提交流程中"
+{% endhighlight %}
+
+实施了上述命令，之后通过git push一推就可以在游览器的github上看到我们提交的代码了。
+
+## 忽略文件
+
+Git提供了一种可配性很强的机制来允许用户将制定的文件或目录排除在版本控制之外（简单来说就是每次git操作忽略该文件），它会检查代码仓库的目录下面是否存在一个名为.gitgnore的文件，如果存在的话，就一行行去读取这个文件的内容，并把每一行制定的文件或目录排除在版本控制之外。注意.gitgnore中指定的文件或目录是可以使用“*”通配符的。
+
+然而，.gitgnore不需要我们自己去创建，因为在AS中已经自动帮我配置好了两个.gitgnore文件。
+
+![](https://i.imgur.com/N0Z86Ye.png)
+
+我们可以注意到，一个在app模块下，一个在根目录下。
+
+根目录下的.gitgnore文件内容如下：
+
+![](https://i.imgur.com/c3uYdHN.png)
+
+表示上述所有内容都不会被添加到版本控制当中。
+
+而app的.gitgnore文件内容如下：
+
+![](https://i.imgur.com/6UqiizT.png)
+
+只有一个build，表示默认情况下build目录不会被添加到版本控制当中。
+
+知道了.gitgnore的作用，就可以自己操控文件的内容来选择性的忽略提交的文件了。
+
+## 查看修改内容
+
+很多时候我们提交后会忘记之前提交过什么东西，这个时候就需要一条命令来查看我们自上次提交后修改的内容。
+
+{% highlight git %}
+git status
+{% endhighlight %}
+
+![](https://i.imgur.com/NujE4ml.png)
+
+就好比上述我提交了一个unity的项目文件，使用git status，发现一片绿色，绿色就是新增加的东西，而相应的红色就是删除的东西。
+
+**查看某个文件的修改内容**
+
+但是我们这个时候只能看到以文件为单位的变化情况，我们要是想看文件内容的变化该怎么办呢？
+
+{% highlight git %}
+git diff C:\Users\Administrator\Desktop\respository\FreeSurvivalRPGKit-master\Showcase\1.java
+{% endhighlight %}
+
+可以通过`git diff` + 文件路径的方式来得到文件的详细变化情况。
+
+## 撤销未提交的修改
+
+有的时候，我们已经执行了git commit -m ""命令完成一次提交，但是又对文件做了相应的修改，且没有执行git add命令，这个时候使用git status会发现所有修改文件前都会有一个modefied的标志符。
+
+这个时候，就比如我们存在一个文件readme.mk,我们想把它在工作区的修改全部撤销，恢复到和版本库一样的状态（上次commit的状态），我们就可以使用git checkout readme.mk来撤销这次修改。
+
+但是我们如果已经使用了`git add`该怎么办呢？
+
+此时直接使用git checkout是没有效果的，因为还没有取消添加状态，我们必须先取消已添加文件的添加状态，才能撤回提交。
+
+取消添加用的是reset命令
+
+比如：
+
+{% highlight git %}
+git reset HEAD C:\Users\Administrator\Desktop\respository\FreeSurvivalRPGKit-master\Showcase\login.java
+{% endhighlight %}
+
+然后我们发现login.java文件重新变成了未添加状态，这个时候再使用checkout就可以将修改的内容进行撤销了。
+
+## 查看提示记录
+
+当我们使用git管理一个库已经很长时间了，这个时候想要看看以前每一次提交的内容都是什么呢，就可以用下面这个命令来看：
+
+{% highlight git %}
+git log
+{% endhighlight %}
+
+![](https://i.imgur.com/aqZRsIC.png)
+
+就好比这里我提交了一张图片
+
+## 分支的用法
+
+分支是版本控制工具中比较高级且比较重要的一个概念，它主要的作用就是在现有代码的基础上开辟一个分叉口，使得代码在主干线和分干线上同时进行开发，且相互之间不会进行影响。
+
+可能我们一开始并不会理解到分支的重要性体会在哪里。
+
+这里举个例子，取自郭神《第二行代码》中的实例：
+
+你们公司研发了一款不错的软件，然后立刻推出了1.0版本，但是领导有更多的需求，要求立刻推出1.1版本，几个星期以后，1.1已经完成了一半，但这个时候有用户进行了反馈，之前的1.0版本发现了几个重大的bug,严重影响到了软件的使用，而领导此时要求立刻修复该bug...
+
+怎么办？当前项目为了满足新的需求适配1.1版本，相较之前的1.0版本可能不单单是多了几个文件那么简单。
+
+这个时候版本分支的作用就体现出来了，我们将新的开发到一半的1.1版本推送到一个新的分支上，然后修改bug的时候回到原来那个1.0版本的主分支再进行操作就好了。
+
+**查看当前已有分支**
+
+{% highlight git %}
+git branch
+{% endhighlight %}
+
+![](https://i.imgur.com/8AuI4P9.png)
+
+**添加分支**
+
+{% highlight git %}
+git branch version1.0
+{% endhighlight %}
+
+![](https://i.imgur.com/8CEkNUm.png)
+
+如图，已经添加了一个名为version1.0的分支
+
+对了，master前面那个星号表示的是当前位于的分支
+
+**切换分支**
+
+{% highlight git %}
+git checkout version1.0
+{% endhighlight %}
+
+![](https://i.imgur.com/prjz5xY.png)
+
+看到星号转移到了version1.0上面，就说明当前分支已经切换成功了。
+
+如果我们在master修复了一个bug，那问题我们该怎样将这个修复的bug同步到version1.0上面呢？不能一行行的复制吧！效率太低了。
+
+答案是通过merge命令完成合并操作。
+
+{% highlight git %}
+git checkout master
+git merge version1.0
+{% endhighlight %}
+
+![](https://i.imgur.com/mGju0yD.png)
+
+这样就将两个分支的内容进行合并了。
+
+**删除分支**
+
+{% highlight git %}
+git branch -D version1.0
+{% endhighlight %}
+
+不需要的话直接删除就好了。
+
+## 远程协作
+
+**拷贝远程库**
+
+{% highlight git %}
+git clone + 远程库Git地址
+{% endhighlight %}
+
+上述命令就可以将远程库直接copy下来了。
+
+**同步到远程库的某个分支上**
+
+{% highlight git %}
+git push origin master
+{% endhighlight %}
+
+推送到远程库的master分支上。
+
+**将远程库的修改同步到本地**
+
+{% highlight git %}
+git fetch origin master
+{% endhighlight %}
+
+然后通过git diff origin/master就可以看到远程库上修改了哪些内容。
+
+然后调用git merge origin/master将修改的内容合并到主分支上。
+
+**从远程库获取最新代码并合并到本地**
+
+{% highlight git %}
+git pull origin master
+{% endhighlight %}
+
+相当于git fetch 和git merge的合并
+
