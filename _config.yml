@@ -96,21 +96,12 @@ friends: [
         title: "Markdown语法手册",
         href: "http://blog.csdn.net/witnessai1/article/details/52551362"
     },{
-        title: "C++指针详解",
-        href: "http://blog.csdn.net/soonfly/article/details/51131141"
-    },{
         title: "最棒的图片素材网站",
         href: "https://www.pexels.com"
-    },{
-        title: "SQL详解",
-        href: "https://www.cnblogs.com/dmh365/archive/2011/08/15/2138967.html"
-    },{
-        title: "北大oj系统",
-        href: "http://poj.org"
     },{
         title: "requests的官方指南文档",
         href: "http://docs.python-requests.org/en/latest/user/quickstart.html"
     },{
-        title: "最棒的pdf转换工具（完全免费）",
-        href: "https://www.addpdf.cn/pdf-to-word"
+        title: "最棒的pdf转换工具（完全在线，免费）",
+        href: "https://smallpdf.com"
     }]
