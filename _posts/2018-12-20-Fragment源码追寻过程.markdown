@@ -1,0 +1,116 @@
+---
+layout: post
+title: "Fragment源码追寻过程"
+subtitle: "Fragment source search process"
+data: 2018-12-20
+author: "Zxy"
+tags:
+    - java
+    - android
+---
+
+> 版权声明：转载必须注明出处。
+
+**我想说下结论，本篇文章本质上并没有找到Fragment的getActivity和getContext的源头，所以要得到结果的请跳过本篇文章。**
+
+首先来看一下经常使用的getContext():
+
+{% highlight java %}
+@Nullable
+    public Context getContext() {
+        return this.mHost == null ? null : this.mHost.getContext();
+    }
+{% endhighlight %}
+
+再来看一下我们常用到的getActivity()
+
+{% highlight java %}
+@Nullable
+    public final FragmentActivity getActivity() {
+        return this.mHost == null ? null : (FragmentActivity)this.mHost.getActivity();
+    }
+{% endhighlight %}
+
+发现了吗？getActivity()和getContext()都是依据于一个host的方法，那我们就看看host是什么。
+
+然后我们看看mHost是什么？
+
+{% highlight java %}
+FragmentHostCallback mHost;
+{% endhighlight %}
+
+是的，我们在声明中找到了mHost的定义，是一个FragmentHostCallback，继续向底层走，看这到底是个什么。
+
+{% highlight java %}
+public abstract class FragmentHostCallback<E> extends FragmentContainer
+{% endhighlight %}
+
+是个继承了FragmentContainer的抽象类，先不用管FragmentContainer是什么，先看看这一层给了一个什么样的线索。
+
+因为上层是调用了mHost的两个方法，getActivity()和getContext()，所以我们就来这一层重点看一下这两个方法是做什么的。
+
+{% highlight java %}
+
+    @Nullable
+    private final Activity mActivity;
+    @NonNull
+    private final Context mContext;
+	
+	... ...
+
+    @Nullable
+    Activity getActivity() {
+        return this.mActivity;
+    }
+
+    @NonNull
+    Context getContext() {
+        return this.mContext;
+    }
+
+	... ... 
+{% endhighlight %}
+
+So, you know,只要找到mAciviy和mContext到底在哪里赋值的就可以了。
+
+{% highlight java %}
+    FragmentHostCallback(@Nullable Activity activity, @NonNull Context context, @NonNull Handler handler, int windowAnimations) {
+        this.mFragmentManager = new FragmentManagerImpl();
+        this.mActivity = activity;
+        this.mContext = (Context)Preconditions.checkNotNull(context, "context == null");
+        this.mHandler = (Handler)Preconditions.checkNotNull(handler, "handler == null");
+        this.mWindowAnimations = windowAnimations;
+    }
+{% endhighlight %}
+
+在构造函数里面，那接着去找，哪里调用了FragmentHostCallbck生成了对象。
+
+回到Fragment中，发现FragmentHostCallback对象不就是那个mHost吗?好了，兜了一个圈子，把Activity和Context都传到了FragmentHostCallback中。
+
+**然后奇怪的是，遍历了整个Fragment，找不到mHost的赋值在哪里！！！**
+
+大概不是我找不到，而是mHost的赋值就没有放在Fragment中，到底在哪里？我也不知道！！！
+
+比如你可以看它的onAttach函数:
+
+{% highlight java %}
+    @CallSuper
+    public void onAttach(Context context) {
+        this.mCalled = true;
+        Activity hostActivity = this.mHost == null ? null : this.mHost.getActivity();
+        if (hostActivity != null) {
+            this.mCalled = false;
+            this.onAttach(hostActivity);
+        }
+
+    }
+
+    /** @deprecated */
+    @Deprecated
+    @CallSuper
+    public void onAttach(Activity activity) {
+        this.mCalled = true;
+    }
+{% endhighlight %}
+
+mHost始终为null ...

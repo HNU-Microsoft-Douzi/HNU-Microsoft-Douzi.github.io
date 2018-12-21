@@ -1,0 +1,103 @@
+---
+layout: post
+title: "Message源码解析"
+subtitle: "Message source code analysis"
+data: 2018-12-22
+author: "Zxy"
+tags:
+    - java
+    - android
+---
+
+> 版权声明：转载必须注明出处。
+
+Handler通常通过Message来传递消息，所以我主观上，一直都以为Message就是一个单纯的消息类，除了继承了Pacelable实现了可序列化以外，应该就是只有what,arg1,arg2三个私有变量了，因为我们一般在外部确实只调用这三个变量居多。
+
+但问题是我看MessageQueue的源码的时候(因为想知道Handler.sendEmptyMessage()的原理一路追踪到这里)，发现执行到了MessageQueue.enqueueMessage()这个函数，先贴一下源码:
+
+{% highlight java %}
+boolean enqueueMessage(Message msg, long when) {
+        if (msg.target == null) {
+            throw new IllegalArgumentException("Message must have a target.");
+        }
+        if (msg.isInUse()) {
+            throw new IllegalStateException(msg + " This message is already in use.");
+        }
+        synchronized (this) {
+            if (mQuitting) {
+                IllegalStateException e = new IllegalStateException(
+                        msg.target + " sending message to a Handler on a dead thread");
+                Log.w(TAG, e.getMessage(), e);
+                msg.recycle();
+                return false;
+            }
+            msg.markInUse();
+            msg.when = when;
+            Message p = mMessages;
+            boolean needWake;
+            if (p == null || when == 0 || when < p.when) {
+                // New head, wake up the event queue if blocked.
+                msg.next = p;
+                mMessages = msg;
+                needWake = mBlocked;
+            } else {
+                // Inserted within the middle of the queue.  Usually we don't have to wake
+                // up the event queue unless there is a barrier at the head of the queue
+                // and the message is the earliest asynchronous message in the queue.
+                needWake = mBlocked && p.target == null && msg.isAsynchronous();
+                Message prev;
+                for (;;) {
+                    prev = p;
+                    p = p.next;
+                    if (p == null || when < p.when) {
+                        break;
+                    }
+                    if (needWake && p.isAsynchronous()) {
+                        needWake = false;
+                    }
+                }
+                msg.next = p; // invariant: p == prev.next
+                prev.next = msg;
+            }
+            // We can assume mPtr != 0 because mQuitting is false.
+            if (needWake) {
+                nativeWake(mPtr);
+            }
+        }
+        return true;
+    }
+{% endhighlight %}
+
+我不知道你是不是仔细看了上面这段代码，我一开始以为MessageQueue会有一个内部的私有变量使用链表实现的，用来存储当前所有的消息，就像下面这样:
+
+{% highlight java %}
+LinkedList<Message> queues = null;
+{% endhighlight %}
+
+结果，居然在enqueueMessage(Message msg, long when)中发现新的Message被链在了mMessages的前面。
+
+{% highlight java %}
+			Message p = mMessages;
+            boolean needWake;
+            if (p == null || when == 0 || when < p.when) {
+                // New head, wake up the event queue if blocked.
+                msg.next = p;
+                mMessages = msg;
+                needWake = mBlocked;
+            }
+{% endhighlight %}
+
+msg.next!!!
+
+发生了什么？这里的mMessages应该是一个消息队列的实例，然后这里通过next将新的消息链接到了mMessages的头部。
+
+在去看Message的成员变量:
+
+{% highlight java %}
+	... ...
+    // sometimes we store linked lists of these things
+    /*package*/ Message next;
+	... ...
+{% endhighlight %}
+
+就是链表结构嘛！对吧，也就是说，MessageQueue本质上是一个Message的链表实例，每产生一个新的Message，就连接到这个队列的头部。
