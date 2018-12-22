@@ -5,7 +5,7 @@ subtitle: "Collections in Java"
 data: 2018-07-26
 author: "Zxy"
 tags:
-    - Java
+    - java
 ---
 
 先说一下Collections和Collection的区别：

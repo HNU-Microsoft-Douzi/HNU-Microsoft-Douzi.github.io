@@ -5,7 +5,7 @@ subtitle: "Solve the error caused by Butterknife's conflict in Android 3.0"
 data: 2018-09-07
 author: "Zxy"
 tags:
-    - Java
+    - java
     - android
 ---
 

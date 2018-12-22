@@ -5,7 +5,7 @@ subtitle: "Understanding of enumeration principles and memory footprint"
 data: 2018-09-17
 author: "Zxy"
 tags:
-    - Java
+    - java
 ---
 
 > 版权声明：本文出自张晓翼的博客，转载必须注明出处。

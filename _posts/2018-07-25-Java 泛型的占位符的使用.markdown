@@ -5,7 +5,7 @@ subtitle: "The use of placeholders for Java generics"
 data: 2018-07-25
 author: "Zxy"
 tags:
-    - Java
+    - java
 ---
 
 关于Java的泛型，有两种写法，一种是泛型类，另一种就是泛型函数。

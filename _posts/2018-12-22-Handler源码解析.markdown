@@ -79,7 +79,7 @@ LinkedList<Message> queues = null;
 结果，居然在enqueueMessage(Message msg, long when)中发现新的Message被链在了mMessages的前面。
 
 {% highlight java %}
-			Message p = mMessages;
+Message p = mMessages;
             boolean needWake;
             if (p == null || when == 0 || when < p.when) {
                 // New head, wake up the event queue if blocked.
@@ -89,7 +89,7 @@ LinkedList<Message> queues = null;
             }
 {% endhighlight %}
 
-msg.next!!!
+**msg.next!!!**
 
 发生了什么？这里的mMessages应该是一个消息队列的实例，然后这里通过next将新的消息链接到了mMessages的头部。
 

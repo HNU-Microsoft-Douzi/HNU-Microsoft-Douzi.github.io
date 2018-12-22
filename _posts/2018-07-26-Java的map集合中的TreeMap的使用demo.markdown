@@ -5,7 +5,7 @@ subtitle: "Demo of the use of TreeMap in Java's map collection"
 data: 2018-07-26
 author: "Zxy"
 tags:
-    - Java
+    - java
 ---
 
 Java的map集合本身是一个键-键值的关系组合，而Collections中的map子类更是封装了不同属性的map框架。
