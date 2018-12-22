@@ -1,0 +1,284 @@
+---
+layout: post
+title: "Handler源码解析"
+subtitle: "Handler source code analysis"
+data: 2018-12-22
+author: "Zxy"
+tags:
+    - java
+    - android
+---
+
+> 版权声明：转载必须注明出处。
+
+### MessageQueue本质
+
+Handler通常通过Message来传递消息，所以我主观上，一直都以为Message就是一个单纯的消息类，除了继承了Pacelable实现了可序列化以外，应该就是只有what,arg1,arg2三个私有变量了，因为我们一般在外部确实只调用这三个变量居多。
+
+但问题是我看MessageQueue的源码的时候(因为想知道Handler.sendEmptyMessage()的原理一路追踪到这里)，发现执行到了MessageQueue.enqueueMessage()这个函数，先贴一下源码:
+
+{% highlight java %}
+boolean enqueueMessage(Message msg, long when) {
+        if (msg.target == null) {
+            throw new IllegalArgumentException("Message must have a target.");
+        }
+        if (msg.isInUse()) {
+            throw new IllegalStateException(msg + " This message is already in use.");
+        }
+        synchronized (this) {
+            if (mQuitting) {
+                IllegalStateException e = new IllegalStateException(
+                        msg.target + " sending message to a Handler on a dead thread");
+                Log.w(TAG, e.getMessage(), e);
+                msg.recycle();
+                return false;
+            }
+            msg.markInUse();
+            msg.when = when;
+            Message p = mMessages;
+            boolean needWake;
+            if (p == null || when == 0 || when < p.when) {
+                // New head, wake up the event queue if blocked.
+                msg.next = p;
+                mMessages = msg;
+                needWake = mBlocked;
+            } else {
+                // Inserted within the middle of the queue.  Usually we don't have to wake
+                // up the event queue unless there is a barrier at the head of the queue
+                // and the message is the earliest asynchronous message in the queue.
+                needWake = mBlocked && p.target == null && msg.isAsynchronous();
+                Message prev;
+                for (;;) {
+                    prev = p;
+                    p = p.next;
+                    if (p == null || when < p.when) {
+                        break;
+                    }
+                    if (needWake && p.isAsynchronous()) {
+                        needWake = false;
+                    }
+                }
+                msg.next = p; // invariant: p == prev.next
+                prev.next = msg;
+            }
+            // We can assume mPtr != 0 because mQuitting is false.
+            if (needWake) {
+                nativeWake(mPtr);
+            }
+        }
+        return true;
+    }
+{% endhighlight %}
+
+我不知道你是不是仔细看了上面这段代码，我一开始以为MessageQueue会有一个内部的私有变量使用链表实现的，用来存储当前所有的消息，就像下面这样:
+
+{% highlight java %}
+LinkedList<Message> queues = null;
+{% endhighlight %}
+
+结果，居然在enqueueMessage(Message msg, long when)中发现新的Message被链在了mMessages的前面。
+
+{% highlight java %}
+			Message p = mMessages;
+            boolean needWake;
+            if (p == null || when == 0 || when < p.when) {
+                // New head, wake up the event queue if blocked.
+                msg.next = p;
+                mMessages = msg;
+                needWake = mBlocked;
+            }
+{% endhighlight %}
+
+msg.next!!!
+
+发生了什么？这里的mMessages应该是一个消息队列的实例，然后这里通过next将新的消息链接到了mMessages的头部。
+
+在去看Message的成员变量:
+
+{% highlight java %}
+	... ...
+    // sometimes we store linked lists of these things
+    /*package*/ Message next;
+	... ...
+{% endhighlight %}
+
+就是链表结构嘛！对吧，也就是说，MessageQueue本质上是一个Message的链表实例，每产生一个新的Message，就连接到这个队列的头部。
+
+### 探寻Looper
+
+我一开始不大清楚Looper是怎样通过prepare()和looper()实现对于MessageQueue的遍历的，就看了一下源码。
+
+然后这里给出解析过程。
+
+{% highlight java %}
+	... ...
+	/** Initialize the current thread as a looper.
+      * This gives you a chance to create handlers that then reference
+      * this looper, before actually starting the loop. Be sure to call
+      * {@link #loop()} after calling this method, and end it by calling
+      * {@link #quit()}.
+      */
+    public static void prepare() {
+        prepare(true);
+    }
+    private static void prepare(boolean quitAllowed) {
+        if (sThreadLocal.get() != null) {
+            throw new RuntimeException("Only one Looper may be created per thread");
+        }
+        sThreadLocal.set(new Looper(quitAllowed));
+    }
+	... ...
+{% endhighlight %}
+
+我们先来看一下prepare()做的事情，它把当前的线程作为一个looper，然后让你创建handler(s)去关联当前的looper，在实际上开始循环之前，要先调用loop()这个方法通知looper开始循环，当消息队列的循环结束后，调用quit()来停止循环。
+
+然后就重点看一下loop这个函数:
+
+{% highlight java %}
+/**
+     * Run the message queue in this thread. Be sure to call
+     * {@link #quit()} to end the loop.
+     */
+    public static void loop() {
+        final Looper me = myLooper();
+        if (me == null) {
+            throw new RuntimeException("No Looper; Looper.prepare() wasn't called on this thread.");
+        }
+        final MessageQueue queue = me.mQueue;
+        // Make sure the identity of this thread is that of the local process,
+        // and keep track of what that identity token actually is.
+        Binder.clearCallingIdentity();
+        final long ident = Binder.clearCallingIdentity();
+        // Allow overriding a threshold with a system prop. e.g.
+        // adb shell 'setprop log.looper.1000.main.slow 1 && stop && start'
+        final int thresholdOverride =
+                SystemProperties.getInt("log.looper."
+                        + Process.myUid() + "."
+                        + Thread.currentThread().getName()
+                        + ".slow", 0);
+        boolean slowDeliveryDetected = false;
+        for (;;) {
+            Message msg = queue.next(); // might block
+            if (msg == null) {
+                // No message indicates that the message queue is quitting.
+                return;
+            }
+            // This must be in a local variable, in case a UI event sets the logger
+            final Printer logging = me.mLogging;
+            if (logging != null) {
+                logging.println(">>>>> Dispatching to " + msg.target + " " +
+                        msg.callback + ": " + msg.what);
+            }
+            final long traceTag = me.mTraceTag;
+            long slowDispatchThresholdMs = me.mSlowDispatchThresholdMs;
+            long slowDeliveryThresholdMs = me.mSlowDeliveryThresholdMs;
+            if (thresholdOverride > 0) {
+                slowDispatchThresholdMs = thresholdOverride;
+                slowDeliveryThresholdMs = thresholdOverride;
+            }
+            final boolean logSlowDelivery = (slowDeliveryThresholdMs > 0) && (msg.when > 0);
+            final boolean logSlowDispatch = (slowDispatchThresholdMs > 0);
+            final boolean needStartTime = logSlowDelivery || logSlowDispatch;
+            final boolean needEndTime = logSlowDispatch;
+            if (traceTag != 0 && Trace.isTagEnabled(traceTag)) {
+                Trace.traceBegin(traceTag, msg.target.getTraceName(msg));
+            }
+            final long dispatchStart = needStartTime ? SystemClock.uptimeMillis() : 0;
+            final long dispatchEnd;
+            try {
+                msg.target.dispatchMessage(msg);
+                dispatchEnd = needEndTime ? SystemClock.uptimeMillis() : 0;
+            } finally {
+                if (traceTag != 0) {
+                    Trace.traceEnd(traceTag);
+                }
+            }
+            if (logSlowDelivery) {
+                if (slowDeliveryDetected) {
+                    if ((dispatchStart - msg.when) <= 10) {
+                        Slog.w(TAG, "Drained");
+                        slowDeliveryDetected = false;
+                    }
+                } else {
+                    if (showSlowLog(slowDeliveryThresholdMs, msg.when, dispatchStart, "delivery",
+                            msg)) {
+                        // Once we write a slow delivery log, suppress until the queue drains.
+                        slowDeliveryDetected = true;
+                    }
+                }
+            }
+            if (logSlowDispatch) {
+                showSlowLog(slowDispatchThresholdMs, dispatchStart, dispatchEnd, "dispatch", msg);
+            }
+            if (logging != null) {
+                logging.println("<<<<< Finished to " + msg.target + " " + msg.callback);
+            }
+            // Make sure that during the course of dispatching the
+            // identity of the thread wasn't corrupted.
+            final long newIdent = Binder.clearCallingIdentity();
+            if (ident != newIdent) {
+                Log.wtf(TAG, "Thread identity changed from 0x"
+                        + Long.toHexString(ident) + " to 0x"
+                        + Long.toHexString(newIdent) + " while dispatching to "
+                        + msg.target.getClass().getName() + " "
+                        + msg.callback + " what=" + msg.what);
+            }
+            msg.recycleUnchecked();
+        }
+    }
+{% endhighlight %}
+
+一行一行看不是看源码的态度和方法，下面给出简化后的代码:
+
+{% highlight java %}
+    public static void loop() {
+		... ...
+        for (;;) {
+            Message msg = queue.next(); // might block
+			... ...
+            try {
+                msg.target.dispatchMessage(msg);
+                dispatchEnd = needEndTime ? SystemClock.uptimeMillis() : 0;
+            }
+			... ...
+			msg.recycleUnchecked();
+			}
+}
+{% endhighlight %}
+
+这样就会好理解很多，这里你要注意两个要点，一个是`msg = queue.next()`，这里实现了从消息队列中获取下一个消息的实例，然后它是怎样处理这个实例的呢?
+
+你接着往下看到msg.target.dispatchMessage(msg),这里就是处理消息的关键，这个target是什么呢？
+
+你去到Message的源码里面看到target就是当前发送Message的Handler，而dispatchMessage(Message msg)自然就是Handler处理消息的地方了。
+
+发现了吗？
+
+**从Handler起始，经过MessageQueue，又通过Looper从MessageQueue把Message取出来再传递给Handler的dispatchMessage()**
+
+这就是Handler的核心。
+
+然后再看下dispatchMessage（）是怎样处理Message的:
+
+{% highlight java %}
+    public void dispatchMessage(Message msg) {
+        if (msg.callback != null) {
+            handleCallback(msg);
+        } else {
+            if (mCallback != null) {
+                if (mCallback.handleMessage(msg)) {
+                    return;
+                }
+            }
+            handleMessage(msg);
+        }
+    }
+{% endhighlight %}
+
+可以看到，有两条路径，一条是当Message的Runnable不为null的时候，就通过Runnable的run()来执行消息。
+
+第二条则是通过复写handleMessage(Message msg)来处理消息的执行的。
+
+发现了吗？总算回到了我们平时的写法上面。
+
+明了了吗？万物有始有终，从哪里起始，就得从哪里结束，解铃还须系铃人，大概就是这个道理吧！
