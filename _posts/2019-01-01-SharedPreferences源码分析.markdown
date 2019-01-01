@@ -366,7 +366,7 @@ public interface SharedPreferences {
      */
     void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener);
 }
-{% endhighlight 5}
+{% endhighlight %}
 
 然后分析了一下主要的内容，先来看看Editor的commit和apply的**区别**：
 
