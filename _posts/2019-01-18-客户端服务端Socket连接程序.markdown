@@ -1,0 +1,154 @@
+---
+title: "客户端服务端Socket连接程序"
+subtitle: "Client - server Socket connector"
+layout: post
+data: 2019-01-18
+author: "Zxy"
+tags:
+    - java
+---
+
+> 版权声明：转载请注明博客地址和作者名称
+
+我们总是会遇到客户端和服务端交互的情境，最典型的就是聊天室的实现了。
+
+我一开始没有能理解Socket到底是什么，结果写到聊天程序的时候还以为是某种特殊的回调，也不明白服务器是怎样接收到客户端的连接请求的，也不知道服务器怎样把信息返回给客户端。
+
+**这一系列的问题的关键就在于Socket**
+
+### Socket是什么?
+
+Socket是网络连接的一个对象，被java封装在java.net.*下面;
+
+一般而言，当我们要实现客户端和服务器的互联时， Socket这个对象一定会出现两个，说过它是用来连接的对象，那么必然是双向的，客户端要建立对服务器的Socket，当服务器监听到有客户端来访问它的端口，就会返回一个Socket，在服务端构建一个新的Socket。
+
+那么Socket连接需要哪些信息呢？这就不得不说到IP和TCP端口了
+
+### TCP/IP
+
+当我们要建立Socket连接的时候，需要哪些信息？
+
+**TCP和IP！**
+
+为什么？
+
+因为你总是得找到服务器的位置到底在哪里？找到位置以后我们要连接到哪个程序上？毕竟服务器应用程序那么多，总不能你发送请求，所有的程序都接受到吧！太浪费资源了。所以我们需要一个***窗口***。
+
+该怎样找到对应服务器的位置呢？
+
+**就是通过ip地址，ip地址相当于街道号**
+
+该怎样找到对应的程序呢？
+
+**就是通过TCP端口，TCP端口的0~1023被系统服务占用，所以我们要连接自己的程序就要在1024~65535中开辟没有被使用过的端口**。
+
+### 连接程序
+
+ - 客户端
+
+{% highlight java %}
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+
+/**
+ * Copyright (C), 2015-2019, XXX有限公司
+ * FileName: DailyAdviceClient
+ * Author:   Administrator
+ * Date:     2019/1/18 0018 7:42
+ * Description: 建立Socket，通过其他串流来制作BufferedReader，并从服务器应用程序上读取一行信息
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * 作者姓名           修改时间           版本号              描述
+ */
+
+
+public class DailyAdviceClient {
+    public void go() {
+        try{
+            Socket s = new Socket("127.0.0.1", 4242);
+            InputStreamReader streamReader = new InputStreamReader(s.getInputStream());
+            BufferedReader reader = new BufferedReader(streamReader);
+
+            String advice = reader.readLine();
+            System.out.println("Today you should:" + advice);
+
+            // 记得要关闭链接流的最后一个结点
+            reader.close();
+        }catch(IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        DailyAdviceClient client = new DailyAdviceClient();
+        client.go();
+    }
+}
+
+{% endhighlight %}
+
+ - 服务端
+
+{% highlight java %}
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+/**
+ * Copyright (C), 2015-2019, XXX有限公司
+ * FileName: DailyAdviceServer
+ * Author:   Administrator
+ * Date:     2019/1/18 0018 8:22
+ * Description: 创建ServerSocket并等待客户端的请求。当它收到客户端请求时，服务器会建立与客户端的Socket连接。服务器接着会建立PrintWriter来送出信息给客户端
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * 作者姓名           修改时间           版本号              描述
+ */
+
+
+public class DailyAdviceServer {
+
+    public static final String[] ADVICE_LIST = {"生命是场赞歌", "我们没有人能活到永久", "直到生命走到了尽头，我们也只能仰望" +
+            "星空", "别妄想去挑战命运，因为那是只有我才能做到的事情"};
+
+    public void go() {
+        try{
+            // ServerSocket会坚挺客户端对这台机器在4242端口上的要求
+            ServerSocket serverSocket = new ServerSocket(4242);
+
+            // 服务器进入无限等待服务客户端的请求(原来实时监听是用while实现的，
+            // 还以为会是巧妙的特殊回调，low到爆了)
+            while (true) {
+                // 这个方法会停下来等待要求到达之后才会继续
+                Socket socket = serverSocket.accept();
+
+                PrintWriter writer = new PrintWriter(socket.getOutputStream());
+                String advice = getAdvice();
+                writer.println(advice);
+                writer.close();
+                System.out.println(advice);
+            }
+        }catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private String getAdvice() {
+        int random = (int) (Math.random() * ADVICE_LIST.length);
+        return ADVICE_LIST[random];
+    }
+
+    public static void main(String[] args) {
+        DailyAdviceServer server = new DailyAdviceServer();
+        server.go();
+    }
+}
+
+{% endhighlight %}
+
+由上面可见，我们这里写了一个demo，客户端程序连接的是自己主机的ip的4242端口，服务端程序监听的也是自己的4242端口。
+
+运行的时候，先开启服务端程序进入监听状态，然后运行客户端程序，两端都会得到反馈的一个结果。
