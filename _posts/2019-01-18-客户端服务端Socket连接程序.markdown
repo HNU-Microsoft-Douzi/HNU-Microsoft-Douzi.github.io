@@ -119,10 +119,9 @@ public class DailyAdviceServer {
             // ServerSocket会坚挺客户端对这台机器在4242端口上的要求
             ServerSocket serverSocket = new ServerSocket(4242);
 
-            // 服务器进入无限等待服务客户端的请求(原来实时监听是用while实现的，
-            // 还以为会是巧妙的特殊回调，low到爆了)
+            // 服务器进通过while循环来不断的处理多个用户的请求
             while (true) {
-                // 这个方法会停下来等待要求到达之后才会继续
+                // 这个方法会停下来等待要求到达之后才会继续，相当于会阻塞当前线程
                 Socket socket = serverSocket.accept();
 
                 PrintWriter writer = new PrintWriter(socket.getOutputStream());
