@@ -313,7 +313,7 @@ public class ThreadLocalExt extends ThreadLocal {
 
 方法：用一个新的类InheritableThreadLocalExt继承于InheritableThreadLocal去覆盖它的childValue方法
 
-{% highlight %}
+{% highlight java %}
 public class InheritableThreadLocalExt extends InheritableThreadLocal {
     @Override
     protected Object initialValue() {
@@ -349,7 +349,7 @@ ReentrantLock必须手动加锁和手动解锁。
 {% highlight java %}
 private Lock lock = new ReentrantLock();// 声明一个Lock对象
 private Condition condition = lock.newCondition();// 从Lock中创建一个Condition对象
-{% endhighlight%}
+{% endhighlight %}
 
 使用Condition.await()的时候，必须要在Lock.lock和Lock.unlock中，不然拿不到对象的监视器，会报出一个异常IlleaglMonitorStateException。
 
@@ -432,7 +432,7 @@ Lock unfair_lock = new ReentrantLock(false); // 非公平锁
 
 **4.2.1 类ReentrantReadWriteLock：读读共享**
 
-{% highlight java%}
+{% highlight java %}
 private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 lock.readLock().lock(); // 设置读锁
 lock.readLock().unlock(); // 释放读锁
@@ -446,7 +446,7 @@ lock.readLock().unlock(); // 释放读锁
 
 **4.2.2 类ReentrantReadWriteLock:写写互斥**
 
-{% highlight java%}
+{% highlight java %}
 private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 lock.writeLock().lock(); // 设置写锁
 lock.writeLock().unlock(); // 释放写锁
@@ -475,7 +475,7 @@ Timer类的主要作用就是设置计划任务，但封装任务的类确实Tim
 	
 1.执行任务的时间晚于当前时间——在未来执行的效果。
 
-{% highlight java%}
+{% highlight java %}
 Calendar calendarRef = Calendar.getInstance();
 calendarRef.add(Calendar.SECOND, 10);
 Date runDate = calendarRef.getTime();
@@ -490,7 +490,7 @@ timer.schedule(task, runDate);
 
 但我们可以通过下面这种方式将Timer设定为非守护线程，当所有除它以外的线程都执行完毕后，它自身也会结束，就不会去执行后面的任务。
 
-{% highlight java%}
+{% highlight java %}
 Timer timer = new Timer(true);
 {% endhighlight %}
 
