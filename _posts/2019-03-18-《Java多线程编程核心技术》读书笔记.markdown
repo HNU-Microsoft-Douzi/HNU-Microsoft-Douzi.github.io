@@ -1,0 +1,656 @@
+---
+title: "《Java多线程编程核心技术》读书笔记"
+subtitle: ""Core technology of Java multithreaded programming" book notes"
+layout: post
+data: 2019-03-18
+author: "Zxy"
+tags:
+    - java
+---
+
+> 转载请附上博客地址
+
+## 前言
+
+从3.14日开始阅读的《Java多线程编程核心技术》，到18号早上才算读完，其实很早就想要系统的学习一下Java，一直被各种各样的事情耽搁，总算在春招的空隙抽出来三天的时间，仔细读了一下，对多线程的理解和使用确实更加透彻了，毕竟自己从一开始就在无意识的使用多线程，过程中看了很多博客，所以这本书理解起来没有太大难度，有些难以理解的地方敲一遍跑一下也基本ok，我看书的过程喜欢将书中的重点用笔记记录下来，这样方便下一次看书的时候回顾，尽可能的减少下一次的阅读时间，事实证明，我的这种读书方式，效率极高。
+
+## 正文
+
+### 第一章 Java多线程技能
+
+线程创建的两种方式：
+
+- 继承Thread类实现run()方法
+- 实现Runnable接口
+
+使用继承Thread类的方式来开发多线程应用程序在设计上是有局限性的，因为Java是单根继承，不支持多继承。
+
+使用Thread往往会出现多个线程并发修改同一个数据的问题，为了解决这个问题，产生了synchornized关键字。
+
+通过在run()前加入synchornized关键字，使多个线程在执行run方法的时候，以排队的方式进行处理。当一个线程调用run()方法时，以排队的方式进行处理。当一个线程调用run()前，先判断run()有没有被上锁，如果上锁，说明有其它线程正在调用run()，必须等其它线程堆run()调用结束后才可以执行run()，这也就实现了排队调用run()的目的。
+
+如果一个线程想要执行同步方法里面的代码时，线程首先尝试去拿这把锁，如果能拿到这把锁，那么这个线程就可以执行synchornized里面的代码。如果不能拿到这把锁，那么这个线程就会不断地尝试拿这把锁，直到能够拿到为止，而且是由多个线程同时去竞争这把锁。
+
+**i--与System.out.println()的异常**
+
+{% highlight java %}
+System.out.println("i=" + (i--) + "threadName=" +Thread.currentThread().getName());
+{% endhighlight %}
+
+虽然println()方法内部是同步的，但i--的操作却是在进入println()之前发生的，所以有发生非线程安全问题的概率。
+
+**currentThread()**
+
+currentThread()方法可返回代码段正在被哪个线程调用的信息。
+
+线程的构造函数是运行在调用它的线程中的，只有暴露出来的run()才是运行在一个新开的异步线程中，而只有通过线程对象调用start()才会开启异步线程，而直接调用run()方法只是在原线程中执行了一次run()的内容，并且一个线程对象的run()方法只会执行一次，如果多次执行的话，会报'IllegalThreadStateException'异常。
+
+**isAlive()**
+
+isAlive()用来判断当前的线程是否处于活动状态。
+
+### 第二章 对象及变量的并发访问
+
+**2.1.7 出现异常，锁自动释放**
+
+当一个线程执行的代码出现异常时，其所持有的锁会自动释放。
+
+**2.1.8 同步不具有继承性**
+
+子类多态的方法不能继承父类方法的synchornized关键字。
+
+**2.2 synchornized同步语句块**
+
+用关键字synchornized声明方法在某些情况下是有弊端的，比如A线程调用同步方法执行一个长时间的任务，那么B线程则必须等待比较长的时间。这种情况就可以用synchornized同步语句块来解决。
+
+synchornized(this) // 使用synchornized来构建同步代码块的时候，可以向里面传入一个任意对象。synchornized方法是对当前对象进行加锁，而synchornized代码块则可以传入任意对象。
+
+**2.2.4 一半异步，一半同步**
+
+不在synchornized块中就是异步执行，在synchornized块中就是同步执行。
+
+**2.2.5 synchornized代码块间的同步性**
+
+在使用同步synchornized(this)代码块时需要注意的是，当一个线程访问object的一个synchornized(this)同步代码块的时候，其他线程对同一个object中所有其他synchornized(this)同步代码块的访问将被阻塞，这说明synchornized使用的“对象监视器”是同一个。
+
+**2.2.6 synchornized(this)是锁定当前对象的**
+
+锁非this对象有一定的优点：如果在一个类中有很多个synchornized方法，这时虽然能实现同步，但会受到阻塞，所以影响效率;但如果使用同步代码块锁非this对象，则synchornized(非this)代码块中的程序与同步方法是异步的（因为持的不是同一个锁，同步性是针对同一个对象锁而言的），则可大大提高运行效率。
+
+**2.2.8 细化验证三个结论**
+
+synchornized(非this对象x)格式的写法是将x对象本身作为“对象监视器”，这样就可以得出下面的3个结论。
+
+1. 当多个线程同时执行synchornized(x){}同步代码块时呈同步效果。
+2. 当其它线程执行x对象中synchornized同步方法时呈同步效果。
+3. 当其它线程执行x对象方法里的synchornized(this)代码块时也呈同步调用。
+
+
+上面三个意思就是说不论synchornized是传this对象还是其它对象，因为synchornized锁住的代码块一定是属于某个对象的，所以我们使用某个对象对该段代码块进行访问的时候一定要获得该代码块或者说该函数持有的一个锁，也就是说，不论this，还是x，我们都不能使用相同的锁对象去并发访问，因为此时它是同步的，但是如果用不是synchornized持有的锁对象的对象去访问，则访问顺序是异步的，不会受到影响。
+
+**2.2.9 静态同步synchornized方法与synchornized(class) 代码块**
+
+关键字synchornized还可以应用在static静态方法上，如果这样写，那是对当前的*.java对应的Class类进行持锁。
+要区分清除给类上锁和给对象上锁的区别，如果给类上锁，而用对象调用了方法，那么执行结果就会是异步的。所以你可以看成类锁对象无关。
+
+然后类锁也可以用做局部代码块，和对象锁的效果是一样的。
+
+**2.2.10 数据类型String的常量池特性**
+
+在JVM中具有String常量池缓存功能。
+
+比如String a = "AA"; String b = "AA";但实际上现在的a和b是指向了相同的引用。
+
+所以a和b配合synchornized使用的时候就需要注意，当锁对象为参数传进来的String类型的时候，我们传入两个相同值的不同String对象，但它实际上传的引用是相同的，这个时候会产生一个问题，我们原本该代码块是异步执行的，但现在变成了同步执行。因此大多数情况下，synchornized代码块都不能用String作为锁对象。可以改为传一个Object对象。
+
+**2.2.12 多线程的死锁**
+
+当线程中资源请求出现了死锁的时候，我们可以用jdk自带的工具来检测是否有死锁现象。
+
+进入CMD，进入jdk文件夹的bin目录，执行jps命令，发现运行的线程的id为3244，然后再用jstack -l 3244看结果。
+
+**2.2.13 内置类与静态内置类**
+
+当我们有一个类A，然后A的内部有一个内部类B。
+
+我们如何创建一个B的对象呢：
+
+A a = new A();
+
+B b = a.new B();
+
+如果B是一个静态内部类，那么创建过程如下：
+
+A a = new A();
+
+B b = new B();
+
+**2.2.16 锁对象的改变**
+
+在将任何数据类型作为同步锁的时候，需要注意的是，是否由多个线程同时持有锁对象，如果同时持有相同的锁对象，则这些线程之间就是同步的;如果是分别获得锁对象，那么这些线程之间就是异步的。
+
+当我们给一个synchornized传入对象的时候，只要该对象不变，即使对象的属性被改变，运行的结果依旧是同步的。
+
+**2.3 volatile关键字**
+
+volatile关键字的主要作用是使变量在多个线程之间可见。（volatile的作用是强制从公共堆栈中取得变量的值，而不是从线程私有数据栈中取得变量的值。）
+
+有的时候造成异步数据不同步的原因就是因为私有堆栈中的值和公共堆栈中的值不同步造成的，当JVM设定为-server模式的时候，JVM为了优化速率会让异步线程从线程私有栈中读取数据。
+
+使用volatile关键字增加了实例变量在多个线程之间的可见性，但是volatile关键字最为致命的一点在于不支持原子性。
+
+下面将关键字synchornized和volatile进行比较：
+
+1. 关键字volatile是线程同步的轻量级实现，所以volatile的性能肯定比synchornized要好，并且volatile只能修饰于变量，而synchornized可以修饰方法，以及代码块。随着JDK新版本的发布，synchornized关键字在执行效率上得到很大的提升，在开发中使用synchornized关键字的比率还是比较大的。
+2. 多线程访问volatile不会发生阻塞，而synchornized会出现阻塞。
+3. volatile能保证数据的可见性，但不能保证原子性;而synchornized可以保证原子性，也可以间接保证可见性，因为它会将私有内存和公共内存中的数据做同步。
+4. volatile解决的是变来那个在多个线程之间的可见性;而synchornized关键字解决的是多个线程之间访问资源的同步性。
+
+**2.3.4 volatile非原子的特性**
+
+**2.3.5 使用原子类进行i++操作**
+
+除了在i++操作时使用synchornized关键字实现同步外，还可以使用AtomicInteger原子类来进行实现。
+
+{% highlight java %}
+private AtomicInteger count = new AtomicInteger(0); // 声明一个原子性的整数对象
+count.incrementAndGet(); // 原子性自加操作
+{% endhighlight %}
+
+**2.3.6 原子性并不是同步性**
+
+即使两个方法是原子性的，但无法保证它们之间的执行顺序，就需要用synchornized保证方法间的同步。
+
+**2.3.7 synchornized代码块有volatile同步的功能**
+
+关键字synchornized可以使多个线程访问同一个资源具有同步性，最重要的是它还具有**将线程工作内存中的私有变量与公共内存中的变量同步的功能。**
+
+### 第三章 线程间通信
+
+**3.1 等待/通知机制**
+
+**3.1.1 不使用等待/通知机制实现线程间通信**
+
+其实线程B是可以通过while()轮询来检测线程A的某一个条件是否完成，但是这样很浪费CPU资源。
+
+如果轮询的时间间隔很小，更浪费CPU资源;如果轮询的时间间隔很大，有可能会取不到想要得到的数据，这就是为什么等待/通知机制出现的原因。
+
+**3.1.3 等待/通知机制的实现**
+
+见书p136-137页
+
+调用wait和notify或者notifyAll之前，线程必须获得该对象的对象级别锁，所以它们只能用在一个同步方法或同步代码块中。
+
+如果调用wait()和notify或者notifyAll没有获得适当的锁，比如当前对象的锁正在被别的线程使用，那么就会扔出一个继承与RuntimeException的异常IllegalMonitorStateException。
+
+然后在执行notify()后，当前线程不会马上释放锁，而是等同步语句块执行完才释放，wait()也因此不能立刻获得锁。
+
+简单来说：wait()让线程停止，而notify()让停止的线程继续运行。
+
+如果某个对象发出了notify()命令，但是此时没有任何线程获得该对象的锁，所以没有处在等待状态的线程，那么此时的notify()命令就会被忽略。
+
+**wait和sleep最大的差别在于sleep不会释放当前持有对象的锁，而wait会。**
+
+线程的状态切換图谱：
+
+![](https://i.imgur.com/pCPyQZi.png)
+
+每个锁对象都有两个队列，一个是**就绪队列**，一个是**阻塞队列**。就绪队列存储了将要获得锁的线程，阻塞队列存储了被阻塞的线程。一个线程被唤醒后，才会进入就绪队列，等待CPU的调度;反之，一个线程被wait()后，就会进入阻塞队列，等待下一次被唤醒。
+
+**3.1.4 方法wait()锁释放与notify()锁不释放**
+
+**3.1.5 当interrupt方法遇到wait方法**
+
+当线程呈wait()状态的时候，调用线程对象的interrupt()方法会出现InterruptedException异常。
+
+**3.1.7 唤醒所有线程notifyAll()**
+
+**3.1.8 方法wait(long)的使用**
+
+带一个参数的wait(long)方法的功能是等待某一时间段内是否有线程对锁进行唤醒，如果超过这个时间则自动唤醒。
+
+**3.1.9 通知过早**
+
+注意wait()和notify()的一个相对顺序，如果先notify()了，那么wait()就没有执行的必要了。
+
+**3.1.10 等待wait的条件发生变化在使用**
+
+wait/notify模式时，还需要注意另外一种情况，也就是wait等待的条件发生了变化，也容易造成程序逻辑的混乱。
+
+**3.1.11 生产者/消费者模式的实现**
+
+等待/通知模式最经典的案例就是“生产者/消费者”模式。但此模式在使用上有几种”变形“。
+
+**3.1.12 通过管道进行线程间通信：字节流**
+
+借助管道流，在不同的线程间直接传送数据。一个线程发送数据到输出管道，另一个线程从输入管道中读数据。通过使用管道，实现不同线程间的通信，而无需借助于类似于临时文件之类的东西。
+
+在Java的JDK中提供了4个类来使线程间可以进行通信。
+
+1) PipedInputStream和PipedOutputStream（字节流）
+
+2) PipedReader和PipedWriter（字符流）
+
+使用管道的关键点在于对PipedIntputStream和PipedOutputStream的对象之间建立联系。
+
+{% highlight java %}
+PipedInputStream inputStream = new PipedInputStream();
+PipedOutputStream outputStream = new PipedOutputStream();
+// 建立联系。
+inputStream.connect(outStream);
+{% endhighlight %}
+
+而字符流的PipedReader和PipedWriter的用法和字节流完全一样，只要将对应的对象进行替换就可以了。
+
+**3.1.14 实战：等待/通知之交叉备份**
+
+实现两个线程的交叉执行的关键在于要设定一个volatile的关键字对两个线程执行方法的条件进行限制，保证其中的一个先执行，另一个就不能继续执行，为了防止条件判断可能产生的问题，最好还是将条件判断语句设定为while，详细代码见书p177页。
+
+**3.2 方法join的使用（本质是使用wait）**
+
+很多时候，主线程创建并启动子线程，如果子线程中要进行大量的耗时运算，主线程往往将早于子线程结束之前结束。这时，如果主线程想等待子线程执行完成之后再结束，比如子线程处理一个数据，主线程想要获得这个数据中的值，就要用到一个join()方法了。方法join()的作用就是等待线程对象销毁。
+
+{% highlight java %}
+public static void main(String[] args) {
+    MyThread threadTest = new MyThread();
+    threadTest.start();
+    try {
+        threadTest.join(); // 关键点：执行子线程的join方法
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+    System.out.println("我想当threadTest对象执行完毕后我再执行，我做到了。");
+}
+{% endhighlight %}
+
+方法join()的作用是使所属线程对象x正常执行run()方法中的任务，而使当前线程z无限阻塞，等待线程x销毁后再继续执行线程z后面的代码。
+
+**方法join具有使线程排队运行的作用，有些类似同步的运行效果。join与synchornized的区别是：join在内部使用wait()方法（会释放当前锁，等待唤醒）进行等待，而synchornized使用的是“对象监视器”原理（会持有对象/类锁）做同步。**
+
+**3.2.3 方法join的异常**
+
+在join的过程中，如果当前线程对象被中断，则当前线程出现异常。
+
+**3.2.4 方法join(long)的使用**
+
+方法join(long)中的参数是设定等待的时间，如果等待时间小于被等待线程的执行时间，则不管被等待线程何时销毁，到设定时间唤醒当前线程，继续执行;如果等待时间大于被等待线程的执行时间，则被等待线程销毁，当前线程继续执行。
+
+**3.2.5 方法join(long)与sleep(long)的区别**
+
+方法join(long)的功能内部是使用wait(long)来实现的，所以join(long)会释放锁，但sleep(long)不会。
+
+不论是join()还是wait()，它们释放的不单单是自身的锁，甚至释放的还有对象的监视器！！！（这对于synchronized而言至关重要，意味着执行了join()或者是wait()之后，当前synchornized将不会继续持有对象的监视器，转而可以执行该对象的其它synchronized方法/代码块）
+
+有的时候，使用join很有可能会造成意外情况，这是因为join和其它线程抢夺对象的锁导致的，是的，join因为使用wait必须要持有对象的锁。
+
+提问：为什么wait必须要在同步代码块中使用而利用wait实现的join不用？
+回答：因为join本身就是个同步方法呀。
+
+**3.3 类ThreadLocal的使用（已经验证隔离性）**
+
+ThreadLocal的关键点在于线程隔离性，解决的是变量在不同的线程之间的隔离性，也就是不同的线程拥有自己的值，不同线程中的值是可以放入ThreadLocal类中进行保存的。
+
+**3.3.3 解决get()返回null的问题**
+
+创建一个类ThreadLocalExt继承于ThreadLocal。
+
+{% highlight java %}
+public class ThreadLocalExt extends ThreadLocal {
+    @Override
+    protected Object initialValue() {
+        return "我是ThreadLocal的初始化值，这样我就有内容了";
+    }
+}
+{% endhighlight %}
+
+**3.4 类InheritableThreadLocal的使用（就是可继承的ThreadLocal）**
+
+使用类InheritableThreadLocal可以在子线程中取得父线程继承下来的值。
+
+这里的父子线程关系指的是：main线程启动了A线程，那么main线程就是A线程的父线程，A线程就可以从main线程的InheritableThreadLocal中获得ThreadLocal的值。
+
+**3.4.2 值继承再修改**
+
+方法：用一个新的类InheritableThreadLocalExt继承于InheritableThreadLocal去覆盖它的childValue方法
+
+{% highlight %}
+public class InheritableThreadLocalExt extends InheritableThreadLocal {
+    @Override
+    protected Object initialValue() {
+        return new Data().getTime();
+    }
+    
+    @Override
+    protcted Object childValue(Object parentValue) {
+        return parentValue + " 我在子线程里加的~！";
+    }
+}
+{% endhighlight %}
+
+*这里的childValue中的parentValue就是父线程中对应的ThreadLocal的值。
+使用InheritableThreadLocal类的时候需要注意，如果子线程在取得值的时候，主线程将InheritableThreadLocal中的值进行更改，那么子线程取得的值还是旧值。*
+
+### 第四章 Lock的使用
+
+**(Lock和synchronized都是可重入锁,但Lock默认是非公平锁)**
+
+**4.1 使用ReentrantLoak类**
+
+ReentrantLock不但能实现synchornized的功能，并且在扩展功能上更加强大，比如具有嗅探锁定，多路分支通知等功能。
+
+ReentrantLock必须手动加锁和手动解锁。
+
+**4.1.3 使用Condition实现等待/通知：错误用法与解决**
+
+借助Condition可以帮助ReentrantLock实现等待/通知模式，并且可以实现多路通知功能，灵活的控制某个线程的调度，实现选择性通知。
+
+而synchornized就相当于整个Lock只有单一的Condition对象，所有的线程都注册在它一个对象身上。线程开始notifyAll()时，需要通知所有的WAITING线程，没有选择权，会出现相当大的效率问题。
+
+{% highlight java %}
+private Lock lock = new ReentrantLock();// 声明一个Lock对象
+private Condition condition = lock.newCondition();// 从Lock中创建一个Condition对象
+{% endhighlight%}
+
+使用Condition.await()的时候，必须要在Lock.lock和Lock.unlock中，不然拿不到对象的监视器，会报出一个异常IlleaglMonitorStateException。
+
+**4.1.4 正确使用Condition实现等待/通知 **
+
+必须先说明:Condition配合Lock使用是用来替代原本对象的wait()和notify()的，所以Condition也有自己的两个方法用来替代它们：Condition.await()和Condition.signal();
+
+比较：
+
+- Object的wait()相当于Condition的await()
+- Object的wait(long timeout)相当于Condition的await(long time, TimeUnit unit)
+- Object的notify()方法相当于Condition类的signal()方法
+- Object的notifyAll()相当于Condition类中的signalAll()方法
+
+**4.1.5 使用多个Condition实现通知部分线程**
+
+如果想要唤醒部分Condition等待的线程，就必须创建多个Condition对象，需要对哪个进行唤醒，就使用对应的Condition.signal()。
+
+{% highlight java %}
+private Lock lock = new ReentrantLock();// 声明一个Lock对象
+private Condition conditionA = lock.newCondition();// 从Lock中创建一个Condition对象A
+private Condition conditionB = lock.newCondition();// 从Lock中创建一个Condition对象B
+{% endhighlight %}
+
+使用的时候，只要分别用conditionA和conditionB进行await()就可以了。
+
+Lock和synchronized比较：
+
+**所以，指定ReentrantLock对象比之synchornized要更加灵活，可以唤醒指定种类的线程。**
+
+**4.1.9 公平锁与非公平锁**
+
+公平与非公平锁：锁Lock分为"公平锁"和“非公平锁”，公平锁表示是按照线程加锁的顺序来分配的，即先来先得的FIFO先进先出的顺序，而非公平所就是一种获取锁的抢占机制，是随机获得锁的，和公平锁不一样的是先来的不一定先得到锁，这个方式可能造成某些线程一直拿不到锁，结果也就是不公平的了。
+
+公平锁和非公平锁的创建方式如下：
+
+{% highlight java %}
+Lock fair_lock= new ReentrantLock(true); // 公平锁
+Lock unfair_lock = new ReentrantLock(false); // 非公平锁
+{% endhighlight %}
+
+*下面是Lock的一些方法*
+
+**4.1.10 方法getHoldCount()、getQueueLength()和getWaitQueueLength(Condition condition)**
+
+1. int getHoldCount(): 查询当前线程保持此锁定的个数（调用lock()方法的次数）
+2. int getQueueLength(): 返回正等待获取此锁定的线程估计数
+3. int getWaitQueueLength(Condition condition): 返回等待与此锁定相关的给定条件Condition的线程估计数，比如由5个线程，每个线程都执行了同一个condition对象的await()方法，则此时返回的int值就是5。
+
+**4.1.11 方法heasQueueThread(Thread thread)、hasQueuedThreads()和hasWaiters(Condition condition)**
+	
+1. boolean hasQueuedThread(Thread thread); // 查询指定的线程是否正在等待获取此锁定
+2. boolean hasWaiters(Condition condition); // 查询是否有线程正在等待与此锁定有关的condition条件。
+
+**4.1.12 方法isFair()、isHeldByCurrentThread()和isLocked()**
+	
+1. boolean isFair(); // 判断是不是公平锁
+2. boolean isHeldByCurrentThread(); // 查询当前线程是否保持此锁定（比如lock.lock之前是持有此锁定的，而执行了lock.lock之后就是持有此锁定的）
+3. boolean isLocked(); // 查询此锁定是否由任意线程保持（看有没有线程处在lock.lock()和lock.unlock()之间执行）
+
+**4.1.13 lockInterruptibly()、tryLock()和tryLock(long timeout, TimeUnit unit)**
+	
+1. void lockInterruptibly(); // 如果当前线程未被中断，则获取锁定，如果已经中断，则出现异常。(书上p228页有详细解释)
+2. boolean tryLock(); // 仅在调用时锁定，只有当未被另一个线程保持的情况下，才获取该锁定。（也就是说不会产生阻塞）
+3. boolean tryLock(long timeout, TimeUnit unit); // 如果锁定在给定等待时间内没有被另一个线程保持，且当前线程未被中断，则获取该锁定。
+
+**4.1.14 awaitUninterruptibly()**
+
+使用condition.awaitUninterruptibly代替condition.await()在阻塞状态被中断就不会报异常了，程序会继续执行。
+
+**4.1.15 awaitUntil()的使用**
+
+在等待时间到达之前，可以被其它线程提前唤醒。
+
+**4.1.16 使用Condition实现顺序执行（常见面试题，让线程顺序执行）**
+
+详细见书p234页，实现比较简单，利用多个condition对象和相应的await()、signal()方法实现线程的顺序执行。
+
+**4.2 使用ReenReadWriteLock类**
+
+**4.2.1 类ReentrantReadWriteLock：读读共享**
+
+{% highlight java%}
+private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+lock.readLock().lock(); // 设置读锁
+lock.readLock().unlock(); // 释放读锁
+{% endhighlight %}
+
+为了提高ReentrantLock完全互斥排他的效率低下问题，有了相应的ReentrantReadWriteLock类，在某些不需要操作实例变量的方法中，使用该读写锁来加快效率。
+
+读写锁也有两个锁，一个是读操作相关的锁，也称为共享锁;另一个是写操作相关的锁，也叫排他锁。读锁与写锁互斥，写锁与写锁互斥。
+
+这样的话，同时读是并发进行的，效率较高。
+
+**4.2.2 类ReentrantReadWriteLock:写写互斥**
+
+{% highlight java%}
+private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+lock.writeLock().lock(); // 设置写锁
+lock.writeLock().unlock(); // 释放写锁
+{% endhighlight %}
+
+**4.2.3 类ReentrantReadWriteLock:读写互斥，写读互斥**
+
+读写互斥案例较复杂，详见书p239页
+不但读写互斥，写读也是互斥的。
+
+总结：Lock完全可以将synchronized关键字替换掉，而且其具有的独特功能也是synchronized所不具有的。Lock是synchronized关键字的进阶，在并发包中大量的类使用了Lock接口作为同步的处理方式。
+
+### 第五章 定时器Timer
+
+**5.1 定时器Timer的使用**
+
+Timer类主要负责计划任务的功能，也就是在制定的时间开始执行某一个任务。
+
+Timer类的主要作用就是设置计划任务，但封装任务的类确实TimerTask类。
+
+执行计划任务的代码要放入TimerTask的子类中，因为TimerTask是一个抽象类。
+
+**5.1.1 方法schedule(TimerTask task, Date time)**
+
+该方法的作用是在制定的日期执行一次某一任务。
+	
+1.执行任务的时间晚于当前时间——在未来执行的效果。
+
+{% highlight java%}
+Calendar calendarRef = Calendar.getInstance();
+calendarRef.add(Calendar.SECOND, 10);
+Date runDate = calendarRef.getTime();
+MyTask task = new MyTask();
+Timer timer = new Timer();
+timer.schedule(task, runDate);
+{% endhighlight %}
+
+任务会在指定时间到达的时候执行，但是执行完成后，进程却不会销毁。
+
+实际上，一个Timer就是启动一个新的县城，但这个新启动的线程并不是守护线程，一直在运行。
+
+但我们可以通过下面这种方式将Timer设定为非守护线程，当所有除它以外的线程都执行完毕后，它自身也会结束，就不会去执行后面的任务。
+
+{% highlight java%}
+Timer timer = new Timer(true);
+{% endhighlight %}
+
+
+2. 计划时间早于当前时间——提前运行的效果
+
+
+	结果：会在schedule()的瞬间就执行。
+
+3. Timer中允许有多个TimerTask任务及延时的测试
+
+
+方式就是通过调度多个timer.schedule(task,runDate); // 只要指定不同的task就好了。
+
+**5.1.2 方法schedule(TimerTask task, Date firstTime, long period)**
+
+该方法的作用是在指定的日期后按制定的间隔周期，无限循环地执行某一任务。（period的是毫秒）
+
+唯一需要注意的是TimerTask类中的cancel()方法会将自身从任务队列中清除，其它任务不受影响。
+
+Timer中的cancel()方法和TimerTask中的cancel()方法不同，前者的cancel()方法会将任务队列中的全部任务清空。
+
+但是需要注意有的时候Timer的cancel()方法并不一定会停止计划任务，而是正常执行。
+
+原因是因为Timer()类中的cancel()方法有时并没有争抢到queue锁，则让TimerTask类中的任务正常执行。
+
+**5.1.3 schedule(TimerTask task, long delay)**
+
+该方法的作用是以当前执行该语句时间为基准，延迟delay时间执行的TimerTask任务。
+
+**5.1.4 schedule(TimerTask task, long delay, long period)**
+
+该方法是建立在上一条语句上进行循环执行的。
+
+在不延迟的情况下，如果执行任务的时间没有延时，则第一次执行任务的时间是任务开始时间加上delay时间，接下来执行任务的时间是上一次任务的开始时间加上period的时间。
+
+在有延迟的情况下，如果执行任务的时间被延迟，那么下一次任务的执行时间是以上一次任务“结束”时的时间作为参考来计算。
+
+### 第六章 单例模式与多线程
+
+第六章因为很多东西看书前是知道的，所以这边会比起上面更加简略。
+
+**6.1 立即加载 /“饿汉模式”**
+
+**6.2 延迟加载 / "懒汉模式"（多线程情况下是不安全的，所以会有DCL）**
+
+**6.3 静态内部类实现单例模式**
+
+**6.4 序列化与反序列化的单例模式实现**
+
+静态内部类可以达到线程安全问题，但如果遇到序列化对象时，使用默认的方式运行的结果还是多例的。
+
+因为反序列化后创建一个新的对象，所以解决办法就是在反序列化中使用**readResolve()**方法，该方法内部返回原类的单例对象就好了。
+
+**6.5 使用static代码块实现单例模式**
+
+静态代码块中的代码在使用类的时候就已经执行了，所以应用静态代码块的这个特性来实现单例模式。
+
+**6.6 使用enum枚举数据类型实现单例模式**
+
+枚举enum和静态代码块的特性相似，在使用枚举类时，构造方法会被自动调用，也可以应用其这个特性实现单例设计模式。
+
+### 第七章 适遗增补
+
+**7.1 线程的状态**
+
+线程对象在不同的运行时期有不同的状态，状态信息就存在于State枚举类中。
+
+线程状态：
+
+- NEW:至今尚未启动的线程处于这种状态
+- RUNTIME:正在Java虚拟机中执行的线程处于这种状态。
+- BLOCKED:受阻塞并等待某个监视器锁的线程处于这种状态。
+- WAITING:无限期地等待另一个线程来执行某一特定操作的线程处于这种状态。
+- TIMED_WAITING:等待另一个线程来执行取决于指定等待时间的操作的线程处于这种状态。
+- TERMINATED:已退出的线程处于这种状态
+
+![](https://i.imgur.com/emEkHW2.png)
+
+我们可以通过Thread.currentThread().getState()来获得当前正在执行的线程状态。
+
+**7.2 线程组**
+
+可以把把线程归属到某一个线程组中，线程组可以有线程对象，也可以有线程组，组中还可以有线程。这样的组织结构有些类似于树的形式。
+
+![](https://i.imgur.com/7CQ0kEb.png)
+
+线程组的作用是：可以批量的管理线程或线程组对象，有效地对线程或线程组对象进行组织。
+
+**7.2.1线程对象关联线程组：1级关联**
+
+{% highlight java %}
+ThreadGroup group = new ThreadGroup("group_name"); // 创建线程组对象
+Thread aThread = new Thread(group, aRunnable); // 将a线程加入到线程组对象
+Thread bThread = new Thread(group, bRunnable); // 将b线程加入到线程组对象
+group.activeCount(); // 活动的线程数
+group.getName(); // 线程组的名称
+{% endhighlight %}
+
+注意：线程必须启动后才能归入到线程组中
+
+**7.2.2 线程对象关联线程组：多级关联**
+**7.2.3 线程组自动归属特性**
+
+就是创建的线程组如果不指定所属的线程组，则会自动归属到当前所在的线程组中。
+
+**7.2.4 获取根线程组**
+
+`Thread.currebtThread().getThreadGroup().getParent().getName(); `
+
+获取根线程组的名称，在main中获取main线程的线程组，输出了main。
+
+在main中获取main线程的父线程组，输出了system。
+继续输出system的父线程组，产生NPE，说明当前整个JVM的根线程组就是system。
+
+**7.2.5 组内的线程批量停止**
+
+`group.interrupt(); `
+
+通过将线程归属到线程组中，当调用线程组ThreadGroup.interrupt()方法时，可以将该组中的正在运行的线程批量停止。7.3 使线程具有有序性很重要，详细见书p292页。
+
+**7.4 SimpleDateFormat非线程安全**
+
+类simpleDateFormat主要负责日期的转换与格式化，但在多线程的环境中，使用此类容易造成数据转换及处理的不正确，因为SimpleDateFormat类并不是线程安全的。
+
+解决方法：
+
+创建多个SimpleDateFormat类的实例
+
+7.5 线程中出现异常的处理
+在Java多线程技术中，可以对多线程中的异常进行“捕捉”，使用的是UncaughtExceptionHandler类，从而可以对发生的一场进行有效的处理。
+
+{% highlight java %}
+MyThread t1 = new MyThread();
+t1.setName("线程1");
+t1.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {})
+{% endhighlight %}
+
+方法setUncaughtExceptionHandler的作用是对指定的线程对象设置默认的异常处理器。
+
+setDefaultUncaughtExceptionHandler()方法对所有线程对象设置异常处理器。
+
+{% highlight java %}
+MyThreadd.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler{})
+{% endhighlight %}
+
+
+**7.6 线程组内处理异常**
+
+默认情况下，线程组中的一个线程出现异常不会影响其它线程的运行。
+
+如果想实现线程组内一个线程出现异常后全部线程都停止该怎么做呢？
+
+答案是复写ThreadGroup的uncaughtException()方法.
+
+{% highlight java %}
+public void uncaughtException(Thread t, Throwable e) {
+        super.uncaughtException(t, e);
+        this.interrupr();
+}
+{% endhighlight %}
+
+全力看书这几天肝到爆炸，每天100页的专业书，估计还得多看几遍才能彻底巩固...
