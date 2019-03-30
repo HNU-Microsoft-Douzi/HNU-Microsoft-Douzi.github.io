@@ -1,6 +1,6 @@
 ---
 title: "《Java多线程编程核心技术》读书笔记"
-subtitle: ""Core technology of Java multithreaded programming" book notes"
+subtitle: "Core technology of Java multithreaded programming book notes"
 layout: post
 data: 2019-03-18
 author: "Zxy"
