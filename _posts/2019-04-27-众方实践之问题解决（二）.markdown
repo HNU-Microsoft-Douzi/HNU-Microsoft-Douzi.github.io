@@ -23,7 +23,7 @@ tags:
 我先说说这个同步指令池，我们用一个单独的Runnable构建一个worker用来作为处理指令的容器，经过处理后构造成一个单独的指令执行池，有指令的时候，我们就将所有的Runnable在一个while(true)的循环中迭代执行。
 
 我们先来看看这个worker:
-{% highlighe java %}
+{% highlight java %}
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
