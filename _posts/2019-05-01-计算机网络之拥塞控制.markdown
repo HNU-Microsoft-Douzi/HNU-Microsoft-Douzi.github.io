@@ -55,15 +55,46 @@ TCP是通过维护一个拥塞窗口来进行拥塞控制的，拥塞控制的�
 
 ## 详细讲述几种拥塞控制算法
 
-### 慢开始
+### 拥塞算法
+
+发送方维持一个拥塞窗口cwnd(congestion window)的状态变量。拥塞窗口的大小取决于网络的拥塞程度，并且动态地在变化。发送方让自己的发送窗口等于拥塞。
+
+发送方控制拥塞窗口的原则是：只要网络没有出现拥塞，拥塞窗口就要再增大一些，以便把更多的分组发送出去。但只要网络出现拥塞，拥塞窗口就减小一些，以减少注入到网络中的分组数。
+
+### 慢开始算法
+
+当主机开始发送数据时，如果立即将大量数据字节注入到网络，那么就有可能引起网络拥塞，因为现在并不清楚网络的符合情况。因此，比较好的方法是先探测一下，即由小到大逐渐增大发送窗口，也就是说，由小到大逐渐增大拥塞窗口的数值。通常在刚刚开始发送报文段时，先把拥塞窗口cwnd设置为一个最大报文段MSS的数据。而在每收到一个对新的报文段的确认号，把拥塞窗口增加至多一个MSS的数值。用这样的方法逐步增大发送方的拥塞窗口cwnd,可以使分组注入到网络的速率更加合理。
+
+**每经过一个传输轮次，拥塞窗口cwnd就加倍**。一个传输轮次所经历的时间启示就是往返时间RTT。不过“传输轮次”更加强调：把拥塞窗口cwnd所允许发送的报文段都连续发送出去，并收到了对已发送的最后一个字节的确认。
+
+另，慢开始的“慢”并不是指cwnd的增长速率慢，而是指在TCP开始发送报文段时先设置cwnd=1，使得发送方在开始时只发送一个报文段（目的是试探一下网络的拥塞情况），然后再逐渐增大cwnd。
+
+为了防止拥塞窗口cwnd增长过大而引起网络拥塞，还需要设置一个曼开始门限ssthresh状态变量。慢开始门限ssthresh的用法如下：
+
+- 当cwnd < ssthresh时，使用上述的慢开始算法。
+- 当cwnd > ssthresh时，停止使用慢开始算法而改用拥塞避免算法。
+- 当cwnd = ssthresh时，既可使用慢开始算法，也可使用拥塞控制避免算法。
 
 ### 拥塞避免
 
+让拥塞窗口cwnd缓慢增大，**即每经过一个往返时间RTT就把发送方的拥塞窗口cwnd加1**，而不是加倍。这样拥塞窗口cwnd按线性规律缓慢增长，比慢开始算法的拥塞窗口增长速率缓慢的多。
+
+**拥塞避免并非指完全能够避免了拥塞。利用以上措施要完全避免网络拥塞是不可能的。“拥塞避免”是说在拥塞避免阶段将拥塞窗口控制为按线性规律增长，使网络比较不容易出现拥塞。**
+
+不论是慢开始算法还是拥塞避免算法，只要发送发送方判断网络出现拥塞（有没有收到确认），就要把慢开始门限ssthresh设置为出现拥塞时的发送方窗口值的一半（但不能小于2）。然后把拥塞窗口Cwnd重新设置为1，执行慢开始算法。这样做的目的就是要迅速减少主机发送到网络中的分组数，使得发生拥塞的路由器有足够时间把队列中积压的分组处理完毕。
+
 ### 快重传
+
+接收方收到了M1和M2后都分别发出了确认。现在假定接收方没有收到M3但接着收到了M4。显然，接收方不能确认M4，因为M4是收到的失序报文段。根据可靠传输原理，接收方可以什么都不做，也可以在适当时机发送一次对M2的确认。但按照快重传算法的规定，接收方应及时发送对M2的重复确认，这样做可以让发送方及早知道报文段M3没有到达接收方。发送方接着发送了M5和M6。接收方收到这两个报文后，也还要再次发出对M2的重复确认。这样，发送方共收到了接收方的四个对M2的确认，其中后三个都是重复确认。快重传算法还规定，发送方只要一连收到三个重复确认就应当立即重传对方尚未收到的报文段M3，而不必继续等待M3设置的重传计时器到期。由于发送方尽早重传未被确认的报文段，因此采用快重传后可以使整个网络吞吐量提高约20%。
 
 ### 快恢复
 
+- 当发送方连续收到三个重复确认，就执行“乘法减小”算法，把慢开始门限ssthresh减半。这是为了预防网络发生拥塞。请注意：接下去不执行慢开始算法。
+- 由于发送方现在认为网络很可能没有发生拥塞，因此与慢开始不同之处是现在不执行慢开始算法（即拥塞窗口cwnd现在不设置为1），而是把cwnd值设置为慢开始门限ssthresh减半后的数值，然后开始执行拥塞避免算法（“加法增大”），使拥塞窗口缓慢地线性增大。
+- 
 ## Vegas算法
+
+Vegas1994年提出，是对TCP Reno(快恢复)做了一些修改。这个算法通过对RTT的监控来计算一个基准RTT。然后通过这个基准RTT来估计当前网络实际带宽，如果实际带宽比我们期望的带宽要小或是要多的话，那么就开始线性地减少或增加cwnd的大小。如果这个计算出来的RTT大于了Timeout后，那么，不等ack超时就直接重传。
 
 Vegas将时延RTT的增加作为网络出现拥塞的信号，RTT增加，拥塞窗口减小，RTT减小，拥塞窗口增加。具体来说，Vegas通过比较实际吞吐量和期望吞吐量来调节拥塞窗口的大小。
 
@@ -81,6 +112,10 @@ diff = (Excepted - Actual) * BaseRTT
 
 Vegas定义了两个阈值a,b，当diff > b时，拥塞窗口减小，当a <= diff <= b时，拥塞窗口不变，当diff < a时，拥塞窗口增加。
 
+提出Vegas的核心思想是《TCP Vegas: End to End Congestion Avoidance on a Global Internet》，这篇论文给了Vegas和New Reno对比：
+
+![](http://coolshell.cn//wp-content/uploads/2014/05/tcp_vegas_newreno-1024x555.jpg)
+
 Vegas算法采用RTT的改变来判断网络的可用带宽，能精确地测量网络的可用带宽，效率比较好。但是，网络中Vegas与其它算法共存的情况下，基于丢包的拥塞控制算法会尝试填满网络中的缓冲区，导致Vegas计算的RTT增大，进而降低拥塞窗口，使得传输速度越来越慢，因此Vegas未能在Internet上普遍采用。
 
 Vegas的适用场景：
@@ -89,4 +124,443 @@ Vegas的适用场景：
 
 > 该段是引自如下:[https://www.cnblogs.com/lolau/p/9188476.html](https://www.cnblogs.com/lolau/p/9188476.html "https://www.cnblogs.com/lolau/p/9188476.html")
 
+**Vegas的源码：**
+
+我从linux源码中找到了Vegas算法的实现：
+
+先是一个定义了宏的头文件tcp_vegas.h：
+
+{% highlight c++ %}
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ * TCP Vegas congestion control interface
+ */
+#ifndef __TCP_VEGAS_H
+#define __TCP_VEGAS_H 1
+
+/* Vegas variables */
+struct vegas {
+	u32	beg_snd_nxt;	/* right edge during last RTT */
+	u32	beg_snd_una;	/* left edge  during last RTT */
+	u32	beg_snd_cwnd;	/* saves the size of the cwnd */
+	u8	doing_vegas_now;/* if true, do vegas for this RTT */
+	u16	cntRTT;		/* # of RTTs measured within last RTT */
+	u32	minRTT;		/* min of RTTs measured within last RTT (in usec) */
+	u32	baseRTT;	/* the min of all Vegas RTT measurements seen (in usec) */
+};
+
+void tcp_vegas_init(struct sock *sk);
+void tcp_vegas_state(struct sock *sk, u8 ca_state);
+void tcp_vegas_pkts_acked(struct sock *sk, const struct ack_sample *sample);
+void tcp_vegas_cwnd_event(struct sock *sk, enum tcp_ca_event event);
+size_t tcp_vegas_get_info(struct sock *sk, u32 ext, int *attr,
+			  union tcp_cc_info *info);
+
+#endif	/* __TCP_VEGAS_H */
+{% endhighlight %}
+
+tcp_vegas.c
+
+{% highlight c++ %}
+#include <linux/mm.h>
+#include <linux/module.h>
+#include <linux/skbuff.h>
+#include <linux/inet_diag.h>
+
+#include <net/tcp.h>
+
+#include "tcp_vegas.h"
+
+static int alpha = 2;
+static int beta  = 4;
+static int gamma = 1;
+
+module_param(alpha, int, 0644);
+MODULE_PARM_DESC(alpha, "lower bound of packets in network");
+module_param(beta, int, 0644);
+MODULE_PARM_DESC(beta, "upper bound of packets in network");
+module_param(gamma, int, 0644);
+MODULE_PARM_DESC(gamma, "limit on increase (scale by 2)");
+
+/* There are several situations when we must "re-start" Vegas:
+ *
+ *  o when a connection is established
+ *  o after an RTO
+ *  o after fast recovery
+ *  o when we send a packet and there is no outstanding
+ *    unacknowledged data (restarting an idle connection)
+ *
+ * In these circumstances we cannot do a Vegas calculation at the
+ * end of the first RTT, because any calculation we do is using
+ * stale info -- both the saved cwnd and congestion feedback are
+ * stale.
+ *
+ * Instead we must wait until the completion of an RTT during
+ * which we actually receive ACKs.
+ */
+static void vegas_enable(struct sock *sk)
+{
+	const struct tcp_sock *tp = tcp_sk(sk);
+	struct vegas *vegas = inet_csk_ca(sk);
+
+	/* Begin taking Vegas samples next time we send something. */
+	vegas->doing_vegas_now = 1;
+
+	/* Set the beginning of the next send window. */
+	vegas->beg_snd_nxt = tp->snd_nxt;
+
+	vegas->cntRTT = 0;
+	vegas->minRTT = 0x7fffffff;
+}
+
+/* Stop taking Vegas samples for now. */
+static inline void vegas_disable(struct sock *sk)
+{
+	struct vegas *vegas = inet_csk_ca(sk);
+
+	vegas->doing_vegas_now = 0;
+}
+
+void tcp_vegas_init(struct sock *sk)
+{
+	struct vegas *vegas = inet_csk_ca(sk);
+
+	vegas->baseRTT = 0x7fffffff;
+	vegas_enable(sk);
+}
+EXPORT_SYMBOL_GPL(tcp_vegas_init);
+
+/* Do RTT sampling needed for Vegas.
+ * Basically we:
+ *   o min-filter RTT samples from within an RTT to get the current
+ *     propagation delay + queuing delay (we are min-filtering to try to
+ *     avoid the effects of delayed ACKs)
+ *   o min-filter RTT samples from a much longer window (forever for now)
+ *     to find the propagation delay (baseRTT)
+ */
+void tcp_vegas_pkts_acked(struct sock *sk, const struct ack_sample *sample)
+{
+	struct vegas *vegas = inet_csk_ca(sk);
+	u32 vrtt;
+
+	if (sample->rtt_us < 0)
+		return;
+
+	/* Never allow zero rtt or baseRTT */
+	vrtt = sample->rtt_us + 1;
+
+	/* Filter to find propagation delay: */
+	if (vrtt < vegas->baseRTT)
+		vegas->baseRTT = vrtt;
+
+	/* Find the min RTT during the last RTT to find
+	 * the current prop. delay + queuing delay:
+	 */
+	vegas->minRTT = min(vegas->minRTT, vrtt);
+	vegas->cntRTT++;
+}
+EXPORT_SYMBOL_GPL(tcp_vegas_pkts_acked);
+
+void tcp_vegas_state(struct sock *sk, u8 ca_state)
+{
+	if (ca_state == TCP_CA_Open)
+		vegas_enable(sk);
+	else
+		vegas_disable(sk);
+}
+EXPORT_SYMBOL_GPL(tcp_vegas_state);
+
+/*
+ * If the connection is idle and we are restarting,
+ * then we don't want to do any Vegas calculations
+ * until we get fresh RTT samples.  So when we
+ * restart, we reset our Vegas state to a clean
+ * slate. After we get acks for this flight of
+ * packets, _then_ we can make Vegas calculations
+ * again.
+ */
+void tcp_vegas_cwnd_event(struct sock *sk, enum tcp_ca_event event)
+{
+	if (event == CA_EVENT_CWND_RESTART ||
+	    event == CA_EVENT_TX_START)
+		tcp_vegas_init(sk);
+}
+EXPORT_SYMBOL_GPL(tcp_vegas_cwnd_event);
+
+static inline u32 tcp_vegas_ssthresh(struct tcp_sock *tp)
+{
+	return  min(tp->snd_ssthresh, tp->snd_cwnd);
+}
+
+static void tcp_vegas_cong_avoid(struct sock *sk, u32 ack, u32 acked)
+{
+	struct tcp_sock *tp = tcp_sk(sk);
+	struct vegas *vegas = inet_csk_ca(sk);
+
+	if (!vegas->doing_vegas_now) {
+		tcp_reno_cong_avoid(sk, ack, acked);
+		return;
+	}
+
+	if (after(ack, vegas->beg_snd_nxt)) {
+		/* Do the Vegas once-per-RTT cwnd adjustment. */
+
+		/* Save the extent of the current window so we can use this
+		 * at the end of the next RTT.
+		 */
+		vegas->beg_snd_nxt  = tp->snd_nxt;
+
+		/* We do the Vegas calculations only if we got enough RTT
+		 * samples that we can be reasonably sure that we got
+		 * at least one RTT sample that wasn't from a delayed ACK.
+		 * If we only had 2 samples total,
+		 * then that means we're getting only 1 ACK per RTT, which
+		 * means they're almost certainly delayed ACKs.
+		 * If  we have 3 samples, we should be OK.
+		 */
+
+		if (vegas->cntRTT <= 2) {
+			/* We don't have enough RTT samples to do the Vegas
+			 * calculation, so we'll behave like Reno.
+			 */
+			tcp_reno_cong_avoid(sk, ack, acked);
+		} else {
+			u32 rtt, diff;
+			u64 target_cwnd;
+
+			/* We have enough RTT samples, so, using the Vegas
+			 * algorithm, we determine if we should increase or
+			 * decrease cwnd, and by how much.
+			 */
+
+			/* Pluck out the RTT we are using for the Vegas
+			 * calculations. This is the min RTT seen during the
+			 * last RTT. Taking the min filters out the effects
+			 * of delayed ACKs, at the cost of noticing congestion
+			 * a bit later.
+			 */
+			rtt = vegas->minRTT;
+
+			/* Calculate the cwnd we should have, if we weren't
+			 * going too fast.
+			 *
+			 * This is:
+			 *     (actual rate in segments) * baseRTT
+			 */
+			target_cwnd = (u64)tp->snd_cwnd * vegas->baseRTT;
+			do_div(target_cwnd, rtt);
+
+			/* Calculate the difference between the window we had,
+			 * and the window we would like to have. This quantity
+			 * is the "Diff" from the Arizona Vegas papers.
+			 */
+			diff = tp->snd_cwnd * (rtt-vegas->baseRTT) / vegas->baseRTT;
+
+			if (diff > gamma && tcp_in_slow_start(tp)) {
+				/* Going too fast. Time to slow down
+				 * and switch to congestion avoidance.
+				 */
+
+				/* Set cwnd to match the actual rate
+				 * exactly:
+				 *   cwnd = (actual rate) * baseRTT
+				 * Then we add 1 because the integer
+				 * truncation robs us of full link
+				 * utilization.
+				 */
+				tp->snd_cwnd = min(tp->snd_cwnd, (u32)target_cwnd+1);
+				tp->snd_ssthresh = tcp_vegas_ssthresh(tp);
+
+			} else if (tcp_in_slow_start(tp)) {
+				/* Slow start.  */
+				tcp_slow_start(tp, acked);
+			} else {
+				/* Congestion avoidance. */
+
+				/* Figure out where we would like cwnd
+				 * to be.
+				 */
+				if (diff > beta) {
+					/* The old window was too fast, so
+					 * we slow down.
+					 */
+					tp->snd_cwnd--;
+					tp->snd_ssthresh
+						= tcp_vegas_ssthresh(tp);
+				} else if (diff < alpha) {
+					/* We don't have enough extra packets
+					 * in the network, so speed up.
+					 */
+					tp->snd_cwnd++;
+				} else {
+					/* Sending just as fast as we
+					 * should be.
+					 */
+				}
+			}
+
+			if (tp->snd_cwnd < 2)
+				tp->snd_cwnd = 2;
+			else if (tp->snd_cwnd > tp->snd_cwnd_clamp)
+				tp->snd_cwnd = tp->snd_cwnd_clamp;
+
+			tp->snd_ssthresh = tcp_current_ssthresh(sk);
+		}
+
+		/* Wipe the slate clean for the next RTT. */
+		vegas->cntRTT = 0;
+		vegas->minRTT = 0x7fffffff;
+	}
+	/* Use normal slow start */
+	else if (tcp_in_slow_start(tp))
+		tcp_slow_start(tp, acked);
+}
+
+/* Extract info for Tcp socket info provided via netlink. */
+size_t tcp_vegas_get_info(struct sock *sk, u32 ext, int *attr,
+			  union tcp_cc_info *info)
+{
+	const struct vegas *ca = inet_csk_ca(sk);
+
+	if (ext & (1 << (INET_DIAG_VEGASINFO - 1))) {
+		info->vegas.tcpv_enabled = ca->doing_vegas_now,
+		info->vegas.tcpv_rttcnt = ca->cntRTT,
+		info->vegas.tcpv_rtt = ca->baseRTT,
+		info->vegas.tcpv_minrtt = ca->minRTT,
+
+		*attr = INET_DIAG_VEGASINFO;
+		return sizeof(struct tcpvegas_info);
+	}
+	return 0;
+}
+EXPORT_SYMBOL_GPL(tcp_vegas_get_info);
+
+static struct tcp_congestion_ops tcp_vegas __read_mostly = {
+	.init		= tcp_vegas_init,
+	.ssthresh	= tcp_reno_ssthresh,
+	.undo_cwnd	= tcp_reno_undo_cwnd,
+	.cong_avoid	= tcp_vegas_cong_avoid,
+	.pkts_acked	= tcp_vegas_pkts_acked,
+	.set_state	= tcp_vegas_state,
+	.cwnd_event	= tcp_vegas_cwnd_event,
+	.get_info	= tcp_vegas_get_info,
+
+	.owner		= THIS_MODULE,
+	.name		= "vegas",
+};
+
+static int __init tcp_vegas_register(void)
+{
+	BUILD_BUG_ON(sizeof(struct vegas) > ICSK_CA_PRIV_SIZE);
+	tcp_register_congestion_control(&tcp_vegas);
+	return 0;
+}
+
+static void __exit tcp_vegas_unregister(void)
+{
+	tcp_unregister_congestion_control(&tcp_vegas);
+}
+
+module_init(tcp_vegas_register);
+module_exit(tcp_vegas_unregister);
+
+MODULE_AUTHOR("Stephen Hemminger");
+MODULE_LICENSE("GPL");
+MODULE_DESCRIPTION("TCP Vegas");
+{% endhighlight %}
+
+
 ## Veno算法
+
+### 概要
+
+Veno算法是2001年的一片论文"TCP Veno: TCP Enhancement for
+Transmission Over Wireless Access Networks"所提出的。
+
+Veno因为是结合了Vegas和Reno所以才叫做Veno。
+
+Veno的主要目的在于区分随机丢包和无线丢包（丢包）。
+
+Vegas能够测量网络路由器中属于此连接的数据包个数，Veno正是利用这一变量来区分随机丢包和拥塞丢包，并采取不同的措施。
+
+Veno也改进了窗口增长函数，当网络路由器中属于此连接的数据包个数超过一定值时，放缓窗口增长速度。
+
+### 原理
+
+1. 如何区分随机丢包和拥塞丢包？
+
+Vegas能够测量网络瓶颈路由器中属于此连接的数据包的个数diff，并以此来进行主动的拥塞控制，避免数据包的丢失。
+
+Veno并不进行主动的拥塞控制，而是利用diff来区分随机丢包和拥塞丢包。
+
+当检测到丢包时：
+
+(1) diff < 3 ，说明此时路由器缓存的数据包不多，路由器很可能没有拥塞，所以判定此丢包为随机丢包。
+
+- 由于没有发生拥塞，所以拥塞窗口和阈值的减小幅度不宜太大。
+
+- 拥塞窗口和阈值设置为：0.8 * snd_cwnd。
+
+(2) diff >= 3，说明此时路由器缓存的数据包较多，路由器很可能发生拥塞，所以判定此丢包为拥塞丢包。
+
+- 由于发生了拥塞，所以拥塞窗口和阈值的减小幅度需要适当加大。
+
+- 拥塞窗口和阈值设置为：0.5 * snd_cwnd。
+
+2. 拥塞窗口增长函数的改进
+
+(1) diff < 3，说明此时路由器缓存的数据包不多，采用和Reno相同的窗口增长函数，即每个RTT后cwnd增加一个数据包。
+
+(2) diff >= 3，说明此时路由器缓存的数据包较多，不久之后可能发生拥塞，所以应该放缓窗口增长速度，
+
+这样就可以延迟拥塞事件的到来，使cwnd保持在接近网络容量处较长时间，从而达到减少拥塞丢包和增加网络带宽利用率的效果。
+
+在此期间，每两个RTT才使cwnd增加一个数据包，拥塞窗口增长速度减半。
+
+3. 如何测量网络瓶颈路由器中属于此连接的数据包个数diff?
+
+diff的测量方法和Vegas中的相同：
+
+期望吞吐量：Expected = cwnd / baseRTT
+
+实际吞吐量：Actual = cwnd / minRTT
+
+吞吐量差值：Diff = Expected - Actual
+
+其中，baseRTT代表当路由器缓存中没有数据包时的RTT值。minRTT为上个RTT的测量值，由于此时路由器中已有数据包，需要排队，故minRTT > baseRTT。
+
+网络瓶颈路由器中缓存此连接的数据包个数：
+
+diff = Diff * baseRTT = (Expected - Actual) * baseRTT
+
+### 对Vegas的评价和比较
+
+在Vegas中，diff是每个RTT后才计算一次的，因为其中的minrtt的取值是上个RTT内的最小采样值。
+
+这样做得好处是：由于minrtt是多个样本中的最小值，所以可以避免一些异常的RTT样本，比如delayed ACK。minrtt能代表一段时间内的网络瓶颈路由器的情况，计算得到的diff会更准确一些。
+
+在Veno中，diff是每收到一个ACK计算一次的，因为其中的minrtt的取值是本次ACK的RTT测量值。
+
+这样一来，diff的值可能会有偏差。
+
+这两种方法的区别在于对diff准确性和检测及时性的权衡。
+
+Vegas注重于diff的准确性，所以用一个RTT的时间来测量。
+
+Veno注重于检测的及时性，对每个ACK都做diff计算，为了更及时的检测到网络拥塞。
+
+因为以上原因，Veno可能会出现误判，比如一个ACK的RTT值偏大，却不是由于路由器拥塞，但是计算得到的diff可能会判定路由器拥塞，这样一些随机丢包可能会被判定成拥塞丢包。
+
+veno在随机丢包率较高的无线网络中有较好的表现。
+
+veno能够区分随机丢包和拥塞丢包，因此避免了随机丢包时不必要的降低吞吐量。
+
+veno改进了窗口增长函数，试图使cwnd停留在接近网络容量处较长时间，延迟丢包事件的到来，
+
+这样不仅能减少丢包，还能提高吞吐量。但实际上这也会导致veno的带宽竞争力变弱。
+
+veno的不足：它对拥塞丢包的判断有着较高的准确率，但是对随机丢包的判断准确率不高，经常
+
+把随机丢包判成拥塞丢包。所以它对随机丢包判断的准确率还有待提高。
+
+此外，beta设为3纯粹是一个经验值，很多场合并不适用。
