@@ -5,7 +5,7 @@ layout: post
 data: 2019-05-01
 author: "Zxy"
 tags:
-    - java
+    - 计算机网络
 ---
 
 4.30日众方项目初步完成，交由leader验收，抽出来一点间隙把拥塞窗口这边总结一下，结合下个周的小班课，会重点讲解一下Vegas和Veno这两个拥塞控制算法。
